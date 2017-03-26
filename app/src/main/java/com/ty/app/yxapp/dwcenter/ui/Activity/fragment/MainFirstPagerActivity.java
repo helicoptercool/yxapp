@@ -97,7 +97,7 @@ public class MainFirstPagerActivity extends Fragment implements View.OnClickList
         bottomCon.setOrientation(LinearLayout.HORIZONTAL);
         LinearLayout.LayoutParams bcLL = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        bcLL.setMargins(0,AndroidUtils.dp(15),0,0);
+        bcLL.setMargins(0,AndroidUtils.dp(25),0,0);
         selectCon.addView(bottomCon,bcLL);
 
         blBtn = new ImageButtonCell(context,AndroidUtils.getString(R.string.all_st));

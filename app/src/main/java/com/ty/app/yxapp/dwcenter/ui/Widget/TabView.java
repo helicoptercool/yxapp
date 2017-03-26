@@ -28,7 +28,7 @@ public class TabView extends LinearLayout {
         super(context);
         this.context = context;
         setOrientation(HORIZONTAL);
-        setBackgroundColor(Color.GRAY);
+        setBackgroundColor(0xFF161616);
         setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         TabItem firstPager = new TabItem(context,R.mipmap.ic_launcher,R.mipmap.ic_launcher, "首页");
@@ -128,21 +128,23 @@ public class TabView extends LinearLayout {
             imageView = new ImageView(context);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setBackgroundResource(defaultRes);
-            imageView.setLayoutParams(new ViewGroup.LayoutParams(AndroidUtils.dp(38), AndroidUtils.dp(38)));
+            imageView.setLayoutParams(new ViewGroup.LayoutParams(AndroidUtils.dp(30), AndroidUtils.dp(30)));
             container.addView(imageView);
 
             textView = new TextView(context);
-            textView.setTextSize(10);
-            textView.setTextColor(Color.BLACK);
+            textView.setTextSize(12);
+            textView.setTextColor(0xFF838288);
             textView.setText(tabName);
             textView.setGravity(Gravity.CENTER_HORIZONTAL);
-            container.addView(textView,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT));
+            LinearLayout.LayoutParams tvll = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            tvll.setMargins(0,0,0,AndroidUtils.dp(5));
+            container.addView(textView,tvll);
         }
 
         public void setCurrent(boolean focus) {
             imageView.setBackgroundResource(focus ? pressRes : defaultRes);
-            textView.setTextColor(focus ? 0x56000000 : 0xFF000000);
+            textView.setTextColor(focus ? 0xFFff237d : 0xFF838288);
         }
     }
 }
