@@ -20,4 +20,8 @@ public class AndroidUtils {
         }
         return (int) Math.ceil(density * value);
     }
+
+    public static String getString(int res){
+        return MyApplication.context.getString(res);
+    }
 }

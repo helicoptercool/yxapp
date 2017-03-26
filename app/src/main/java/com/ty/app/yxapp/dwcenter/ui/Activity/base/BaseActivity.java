@@ -8,12 +8,17 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+
+import com.ty.app.yxapp.dwcenter.ui.Widget.ActionBar;
 
 /**
  * Created by kss on 2017/3/26.
  */
 
 public abstract class BaseActivity extends AppCompatActivity {
+    private ActionBar actionBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,12 +27,22 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         View view = onCreate();
         if(view != null){
-            FrameLayout container = new FrameLayout(this);
+            LinearLayout container = new LinearLayout(this);
             container.setBackgroundColor(Color.WHITE);
+            container.setOrientation(LinearLayout.VERTICAL);
             container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT));
 
-            container.addView(view);
+            actionBar = new ActionBar(this);
+            actionBar.setVisibility(View.GONE);
+            container.addView(actionBar,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            FrameLayout frameLayout = new FrameLayout(this);
+            container.addView(frameLayout,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT));
+
+            frameLayout.addView(view);
             setContentView(container);
         }
     }

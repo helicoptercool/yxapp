@@ -19,7 +19,8 @@
         </activity>
 
         <activity
-            android:name=".ui.Activity.MainActivity">
+            android:name=".ui.Activity.MainActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
     </application>
 

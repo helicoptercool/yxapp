@@ -41,6 +41,7 @@ public class LooperImgCell extends FrameLayout {
         sfl.gravity = Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL;
         sfl.setMargins(0,0,0,AndroidUtils.dp(5));
         addView(slidePoint,sfl);
+
     }
 
     public void setResList(List<Integer> ress){
