@@ -94,7 +94,6 @@ public class LooperImgCell extends FrameLayout {
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT));
-            imageView.setBackgroundColor(0xFFFF0000);
 
             imageView.setBackgroundResource(resList.get(position));
             con.addView(imageView);

@@ -1,5 +1,6 @@
 package com.ty.app.yxapp.dwcenter.ui.Activity.base;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -22,7 +23,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         View view = onCreate();
         if(view != null){
             FrameLayout container = new FrameLayout(this);
-            container.setBackgroundColor(0xFFFFFFFF);
+            container.setBackgroundColor(Color.WHITE);
             container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT));
 
