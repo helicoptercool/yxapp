@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -49,7 +50,7 @@ public class MainActivity extends BaseActivity {
         LinearLayout container = new LinearLayout(context);
         container.setOrientation(LinearLayout.VERTICAL);
 
-        viewPager = new ViewPager(context);
+        viewPager = new MyViewPager(context);
         viewPager.setId(R.id.main_pager);
         viewPager.setOnPageChangeListener(onPagerChangerListener);
         LinearLayout.LayoutParams pagerLl = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,0);
@@ -65,6 +66,23 @@ public class MainActivity extends BaseActivity {
 
         init();
         return container;
+    }
+
+    private class MyViewPager extends ViewPager{
+
+        public MyViewPager(Context context) {
+            super(context);
+        }
+
+        @Override
+        public boolean onTouchEvent(MotionEvent ev) {
+            return false;
+        }
+
+        @Override
+        public boolean onInterceptTouchEvent(MotionEvent ev) {
+            return false;
+        }
     }
 
     private void init(){
