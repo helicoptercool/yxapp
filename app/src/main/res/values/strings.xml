@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">DWCenter</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- the buttom items-->
+    <string name="events">事件</string>
+    <string name="done">事件</string>
+    <string name="self_info">事件</string>
+    <string name="video_chat">视频聊天</string>
+
+    <string name="weather">天气信息</string>
+</resources>
