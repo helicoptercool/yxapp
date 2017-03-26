@@ -42,7 +42,7 @@ public class GuideActivity extends BaseActivity {
     private Runnable toMainRun = new Runnable() {
         @Override
         public void run() {
-            Intent intent = new Intent(GuideActivity.this,MainActivity.class);
+            Intent intent = new Intent(GuideActivity.this,LoginActivity.class);
             startActivity(intent);
             GuideActivity.this.finish();
         }
