@@ -20,4 +20,11 @@
     <string name="user_center">便民中心</string>
     <string name="video_chat">视频通话</string>
 
+    <string name="my_location">我的位置</string>
+    <string name="sm_name">事件名称</string>
+    <string name="sm_desc">事件描述</string>
+    <string name="take_photo">拍照上传</string>
+    <string name="voice_push">语音上传</string>
+    <string name="video_push">视频上传</string>
+
 </resources>
