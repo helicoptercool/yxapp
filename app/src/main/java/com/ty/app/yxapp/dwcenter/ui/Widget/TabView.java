@@ -134,7 +134,7 @@ public class TabView extends LinearLayout {
             textView.setTextColor(0xFF838288);
             textView.setText(tabName);
             textView.setGravity(Gravity.CENTER_HORIZONTAL);
-            LinearLayout.LayoutParams tvll = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams tvll = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT);
             tvll.setMargins(0, 0, 0, AndroidUtils.dp(5));
             container.addView(textView, tvll);
