@@ -1,4 +1,4 @@
-package com.ty.app.yxapp.dwcenter.ui.Activity;
+package com.ty.app.yxapp.dwcenter.ui.activities;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;

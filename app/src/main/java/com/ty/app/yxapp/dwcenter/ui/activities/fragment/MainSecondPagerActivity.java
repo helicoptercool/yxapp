@@ -1,15 +1,12 @@
-package com.ty.app.yxapp.dwcenter.ui.Activity.fragment;
+package com.ty.app.yxapp.dwcenter.ui.activities.fragment;
 
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.ty.app.yxapp.dwcenter.ui.Activity.base.BaseActivity;
 
 /**
  * Created by kss on 2017/3/26.

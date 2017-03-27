@@ -1,17 +1,14 @@
-package com.ty.app.yxapp.dwcenter.ui.Activity;
+package com.ty.app.yxapp.dwcenter.ui.activities;
 
-import android.app.Application;
 import android.content.Intent;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.ty.app.yxapp.dwcenter.ui.Activity.base.BaseActivity;
-import com.ty.app.yxapp.dwcenter.ui.Activity.base.MyApplication;
+import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseActivity;
+import com.ty.app.yxapp.dwcenter.ui.activities.base.MyApplication;
 
 /**
  * Created by kss on 2017/3/26.

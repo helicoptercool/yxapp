@@ -1,4 +1,4 @@
-package com.ty.app.yxapp.dwcenter.ui.Activity.base;
+package com.ty.app.yxapp.dwcenter.ui.activities.base;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -17,7 +17,7 @@ import com.ty.app.yxapp.dwcenter.ui.Widget.ActionBar;
  */
 
 public abstract class BaseActivity extends AppCompatActivity {
-    private ActionBar actionBar;
+    protected ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_bg"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:orientation="vertical"
-    tools:context="com.ty.app.yxapp.dwcenter.ui.activities.LoginActivity">
+    android:background="@drawable/login_bg"
+    tools:context="com.ty.app.yxapp.dwcenter.ui.activities.ForgetPwdActivity">
 
     <RelativeLayout
-        android:id="@+id/register_layout"
+        android:id="@+id/forget_password_layout"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="20dp"
@@ -28,14 +27,15 @@
             android:gravity="center">
 
             <EditText
-                android:id="@+id/username"
+                android:id="@+id/phone"
                 android:layout_width="fill_parent"
                 android:layout_height="@dimen/default_edittext_height"
                 android:layout_marginTop="5dp"
                 android:inputType="number"
                 android:maxLength="20"
-                android:paddingLeft="55dp"
-                android:paddingRight="60dp"/>
+                android:hint="输入接收验证码的电话号码"
+                android:paddingLeft="65dp"
+                android:paddingRight="50dp"/>
 
 
             <TextView
@@ -44,17 +44,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:gravity="center"
-                android:text="用户名"
+                android:text="电话号码"
                 android:textColor="@android:color/black"/>
 
-            <Button
-                android:id="@+id/bt_username_clear"
-                android:layout_width="23dp"
-                android:layout_height="23dp"
-                android:layout_gravity="right|center_vertical"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/close"
-                android:visibility="invisible" />
         </FrameLayout>
 
         <FrameLayout
@@ -78,27 +70,20 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="密\t\t码"
+                android:text="验 证 码"
                 android:layout_gravity="center_vertical"
                 android:textColor="@android:color/black"
                 />
 
             <Button
                 android:id="@+id/bt_pwd_eye"
-                android:layout_width="23dp"
-                android:layout_height="23dp"
-                android:layout_gravity="end|center_vertical"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/eye_off" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="获取验证码"
+                />
 
-            <Button
-                android:id="@+id/bt_pwd_clear"
-                android:layout_width="23dp"
-                android:layout_height="23dp"
-                android:layout_gravity="end|center_vertical"
-                android:layout_marginRight="33dp"
-                android:background="@drawable/close"
-                android:visibility="invisible" />
+
         </FrameLayout>
 
 
@@ -110,32 +95,10 @@
             android:layout_marginTop="80dp"
             android:background="#ff336699"
             android:gravity="center"
-            android:text="登录"
+            android:text="确定"
             android:textSize="18sp"
             android:textColor="@android:color/white" />
 
-        <Button
-            android:id="@+id/login_error"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignRight="@id/login"
-            android:layout_below="@id/login"
-            android:background="#00000000"
-            android:text="忘记密码"
-            android:textSize="16sp" />
-
-        <Button
-            android:id="@+id/register"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/login"
-            android:layout_below="@id/login"
-            android:background="#00000000"
-            android:gravity="center"
-            android:text="注\t\t\t\t册"
-            android:textSize="16sp"
-            android:visibility="visible" />
     </RelativeLayout>
 
-
-</LinearLayout>
+</RelativeLayout>

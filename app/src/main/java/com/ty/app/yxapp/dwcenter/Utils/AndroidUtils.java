@@ -1,6 +1,6 @@
 package com.ty.app.yxapp.dwcenter.Utils;
 
-import com.ty.app.yxapp.dwcenter.ui.Activity.base.MyApplication;
+import com.ty.app.yxapp.dwcenter.ui.activities.base.MyApplication;
 
 /**
  * Created by kss on 2017/3/26.

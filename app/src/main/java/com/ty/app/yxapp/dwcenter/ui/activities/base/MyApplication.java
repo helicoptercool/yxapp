@@ -1,4 +1,4 @@
-package com.ty.app.yxapp.dwcenter.ui.Activity.base;
+package com.ty.app.yxapp.dwcenter.ui.activities.base;
 
 import android.app.Application;
 import android.content.Context;
