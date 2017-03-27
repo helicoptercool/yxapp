@@ -6,7 +6,6 @@
     <string name="events">事件</string>
     <string name="done">事件</string>
     <string name="self_info">事件</string>
-    <string name="video_chat">视频聊天</string>
 
     <string name="weather">天气信息</string>
     <string name="first_pager">首页</string>
@@ -14,4 +13,11 @@
     <string name="handered_st">已完成的事件</string>
     <string name="all_st">全部事件</string>
     <string name="time_location">实时地图</string>
+
+    <!--tabView-->
+    <string name="my_work">我的工作</string>
+    <string name="push_work">事件上报</string>
+    <string name="user_center">便民中心</string>
+    <string name="video_chat">视频通话</string>
+
 </resources>

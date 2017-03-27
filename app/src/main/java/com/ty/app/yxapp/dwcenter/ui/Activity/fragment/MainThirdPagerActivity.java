@@ -1,28 +1,27 @@
 package com.ty.app.yxapp.dwcenter.ui.Activity.fragment;
 
-import android.support.v4.app.Fragment;
 import android.content.Context;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.ty.app.yxapp.dwcenter.ui.Activity.base.BaseActivity;
+import com.ty.app.yxapp.dwcenter.ui.Activity.base.BaseFragment;
 
 /**
  * Created by kss on 2017/3/26.
  */
 
-public class MainThirdPagerActivity extends Fragment {
+public class MainThirdPagerActivity extends BaseFragment {
     private Context context;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreate() {
         context = getContext();
         TextView textView = new TextView(context);
         textView.setText("MainThirdPagerActivity");
         return textView;
+    }
+
+    @Override
+    public void onBeforeCreate() {
+
     }
 }
