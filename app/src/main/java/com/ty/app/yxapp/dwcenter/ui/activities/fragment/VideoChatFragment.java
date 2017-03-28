@@ -128,7 +128,7 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
 
 
     private void initData(){
-
+        if(peopleList.size() > 0) peopleList.clear();
         for(int i=0;i<20;i++){
             peopleList.add("people "+i);
         }

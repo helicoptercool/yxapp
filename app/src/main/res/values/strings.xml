@@ -33,4 +33,6 @@
     <string name="voice_push">语音上传</string>
     <string name="video_push">视频上传</string>
 
+    <string name="choice">选择</string>
+
 </resources>

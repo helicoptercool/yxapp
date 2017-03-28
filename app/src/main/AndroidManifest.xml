@@ -30,7 +30,8 @@
         <activity
             android:name=".ui.activities.ForgetPwdActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".ui.activities.SelectAreaActivity"></activity>
+        <activity android:name=".ui.activities.SelectAreaActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
     </application>
 
 </manifest>

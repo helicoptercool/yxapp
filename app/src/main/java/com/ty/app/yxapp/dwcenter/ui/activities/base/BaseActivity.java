@@ -25,26 +25,26 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         onBeforeCreate();
 
+        LinearLayout container = new LinearLayout(this);
+        container.setBackgroundColor(Color.WHITE);
+        container.setOrientation(LinearLayout.VERTICAL);
+        container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
+
+        actionBar = new ActionBar(this);
+        actionBar.setVisibility(View.GONE);
+        container.addView(actionBar,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        FrameLayout frameLayout = new FrameLayout(this);
+        container.addView(frameLayout,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
+
         View view = onCreate();
         if(view != null){
-            LinearLayout container = new LinearLayout(this);
-            container.setBackgroundColor(Color.WHITE);
-            container.setOrientation(LinearLayout.VERTICAL);
-            container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT));
-
-            actionBar = new ActionBar(this);
-            actionBar.setVisibility(View.GONE);
-            container.addView(actionBar,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT));
-
-            FrameLayout frameLayout = new FrameLayout(this);
-            container.addView(frameLayout,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT));
-
             frameLayout.addView(view);
-            setContentView(container);
         }
+        setContentView(container);
     }
 
     public abstract void onBeforeCreate();

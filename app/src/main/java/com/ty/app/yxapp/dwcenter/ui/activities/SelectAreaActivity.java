@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import com.ty.app.yxapp.dwcenter.R;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseActivity;
+import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,10 @@ public class SelectAreaActivity extends BaseActivity implements AdapterView.OnIt
 
     @Override
     public View onCreate() {
+        if(actionBar != null){
+            actionBar.setVisibility(View.VISIBLE);
+            actionBar.setCenterView(AndroidUtils.getString(R.string.choice));
+        }
         String from = getIntent().getStringExtra("from");
         names = new ArrayList<>();
         adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,names);
