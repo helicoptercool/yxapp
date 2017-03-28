@@ -11,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ty.app.yxapp.dwcenter.R;
 import com.ty.app.yxapp.dwcenter.ui.activities.SelectAreaActivity;
@@ -106,8 +107,14 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
         }
 
         @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
+        public View getView(final int i, View view, ViewGroup viewGroup) {
             LinearLayout peopleCon = new LinearLayout(context);
+            peopleCon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(context,peopleList.get(i),Toast.LENGTH_SHORT).show();
+                }
+            });
             peopleCon.setOrientation(LinearLayout.VERTICAL);
 
             TextView titleView = new TextView(context);
