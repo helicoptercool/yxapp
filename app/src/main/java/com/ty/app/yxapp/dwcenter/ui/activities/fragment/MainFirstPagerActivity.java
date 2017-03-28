@@ -9,10 +9,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ty.app.yxapp.dwcenter.R;
-import com.ty.app.yxapp.dwcenter.Utils.AndroidUtils;
-import com.ty.app.yxapp.dwcenter.ui.Activity.base.BaseFragment;
-import com.ty.app.yxapp.dwcenter.ui.Widget.ImageButtonCell;
-import com.ty.app.yxapp.dwcenter.ui.Widget.LooperImgCell;
+import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
+import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseFragment;
+import com.ty.app.yxapp.dwcenter.ui.widget.ImageButtonCell;
+import com.ty.app.yxapp.dwcenter.ui.widget.LooperImgCell;
 
 import java.util.ArrayList;
 import java.util.List;

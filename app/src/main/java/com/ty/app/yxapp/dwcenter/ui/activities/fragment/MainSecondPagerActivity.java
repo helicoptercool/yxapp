@@ -8,11 +8,11 @@ import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.ty.app.yxapp.dwcenter.R;
-import com.ty.app.yxapp.dwcenter.Utils.AndroidUtils;
-import com.ty.app.yxapp.dwcenter.ui.Activity.base.BaseFragment;
-import com.ty.app.yxapp.dwcenter.ui.Widget.AddMoreCell;
-import com.ty.app.yxapp.dwcenter.ui.Widget.EditeItemCell;
-import com.ty.app.yxapp.dwcenter.ui.Widget.SectionView;
+import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
+import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseFragment;
+import com.ty.app.yxapp.dwcenter.ui.widget.AddMoreCell;
+import com.ty.app.yxapp.dwcenter.ui.widget.EditeItemCell;
+import com.ty.app.yxapp.dwcenter.ui.widget.SectionView;
 
 /**
  * Created by kss on 2017/3/26.

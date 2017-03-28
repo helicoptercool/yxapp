@@ -1,4 +1,4 @@
-package com.ty.app.yxapp.dwcenter.ui.Widget;
+package com.ty.app.yxapp.dwcenter.ui.widget;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.ty.app.yxapp.dwcenter.R;
-import com.ty.app.yxapp.dwcenter.Utils.AndroidUtils;
+import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.ty.app.yxapp.dwcenter.ui.Widget;
+package com.ty.app.yxapp.dwcenter.ui.widget;
 
 import android.content.Context;
 import android.os.Build;
@@ -13,7 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ty.app.yxapp.dwcenter.R;
-import com.ty.app.yxapp.dwcenter.Utils.AndroidUtils;
+import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
 
 
 /**

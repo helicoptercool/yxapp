@@ -1,4 +1,4 @@
-package com.ty.app.yxapp.dwcenter.ui.Widget;
+package com.ty.app.yxapp.dwcenter.ui.widget;
 
 import android.content.Context;
 import android.graphics.Canvas;

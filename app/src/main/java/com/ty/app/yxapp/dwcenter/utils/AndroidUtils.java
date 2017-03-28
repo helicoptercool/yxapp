@@ -1,4 +1,4 @@
-package com.ty.app.yxapp.dwcenter.Utils;
+package com.ty.app.yxapp.dwcenter.utils;
 
 import com.ty.app.yxapp.dwcenter.ui.activities.base.MyApplication;
 

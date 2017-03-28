@@ -1,13 +1,12 @@
-package com.ty.app.yxapp.dwcenter.ui.Widget;
+package com.ty.app.yxapp.dwcenter.ui.widget;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.ty.app.yxapp.dwcenter.Utils.AndroidUtils;
+import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
 
 /**
  * Created by kss on 2017/3/26.

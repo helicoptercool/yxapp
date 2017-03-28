@@ -10,7 +10,7 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import com.ty.app.yxapp.dwcenter.ui.Widget.ActionBar;
+import com.ty.app.yxapp.dwcenter.ui.widget.ActionBar;
 
 /**
  * Created by kss on 2017/3/26.

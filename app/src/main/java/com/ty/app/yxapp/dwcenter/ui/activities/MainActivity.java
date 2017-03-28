@@ -11,18 +11,13 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.ty.app.yxapp.dwcenter.R;
-import com.ty.app.yxapp.dwcenter.Utils.AndroidUtils;
-import com.ty.app.yxapp.dwcenter.ui.Activity.base.BaseActivity;
-import com.ty.app.yxapp.dwcenter.ui.Activity.fragment.MainFirstPagerActivity;
-import com.ty.app.yxapp.dwcenter.ui.Activity.fragment.VideoChatFragment;
-import com.ty.app.yxapp.dwcenter.ui.Activity.fragment.MainSecondPagerActivity;
-import com.ty.app.yxapp.dwcenter.ui.Activity.fragment.MainThirdPagerActivity;
+import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
+import com.ty.app.yxapp.dwcenter.ui.activities.fragment.VideoChatFragment;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseActivity;
 import com.ty.app.yxapp.dwcenter.ui.activities.fragment.MainFirstPagerActivity;
-import com.ty.app.yxapp.dwcenter.ui.activities.fragment.MainFourPagerActivity;
 import com.ty.app.yxapp.dwcenter.ui.activities.fragment.MainSecondPagerActivity;
 import com.ty.app.yxapp.dwcenter.ui.activities.fragment.MainThirdPagerActivity;
-import com.ty.app.yxapp.dwcenter.ui.Widget.TabView;
+import com.ty.app.yxapp.dwcenter.ui.widget.TabView;
 
 import java.util.ArrayList;
 

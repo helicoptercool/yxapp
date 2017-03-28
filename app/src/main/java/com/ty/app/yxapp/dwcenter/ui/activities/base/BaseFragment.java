@@ -1,4 +1,4 @@
-package com.ty.app.yxapp.dwcenter.ui.Activity.base;
+package com.ty.app.yxapp.dwcenter.ui.activities.base;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -8,9 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.ty.app.yxapp.dwcenter.ui.Widget.ActionBar;
+import com.ty.app.yxapp.dwcenter.ui.widget.ActionBar;
 
 /**
  * Created by kss on 2017/3/27.
