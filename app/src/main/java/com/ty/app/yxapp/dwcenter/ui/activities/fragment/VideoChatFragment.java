@@ -3,13 +3,25 @@ package com.ty.app.yxapp.dwcenter.ui.activities.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ty.app.yxapp.dwcenter.R;
 import com.ty.app.yxapp.dwcenter.ui.activities.SelectAreaActivity;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseFragment;
+import com.ty.app.yxapp.dwcenter.ui.widget.DividerSmallCell;
+import com.ty.app.yxapp.dwcenter.ui.widget.EditeItemCell;
+import com.ty.app.yxapp.dwcenter.ui.widget.SectionView;
+import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by kss on 2017/3/26.
@@ -21,14 +33,18 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
     private static final int STREET_RETURN = 1;
     private static final int VILLAGE_RETURN = 2;
     private Context context;
-    private TextView areaTv;
-    private TextView streetTv;
-    private TextView villageTv;
-    private String areaName;
-    private String streetName;
-    private String villageName;
-
     private int returnFlag = -1;
+    private EditeItemCell areaCon;
+    private EditeItemCell street;
+    private EditeItemCell village;
+
+    private List<String> peopleList = new ArrayList<>();
+    private MyAdapter myAdapter;
+
+    @Override
+    public void onBeforeCreate() {
+
+    }
 
     @Override
     public View onCreate() {
@@ -41,46 +57,98 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
 
             }
         });
-        View view = getLayoutInflater(null).inflate(R.layout.layout_video_chat_fragment,null);
-        initViews(view);
-        return view;
+
+        LinearLayout container = new LinearLayout(context);
+        container.setOrientation(LinearLayout.VERTICAL);
+
+        LinearLayout headView = new LinearLayout(context);
+        headView.setOrientation(LinearLayout.VERTICAL);
+
+        areaCon = new EditeItemCell(context,AndroidUtils.getString(R.string.area));
+        areaCon.setOnClickListener(this);
+        headView.addView(areaCon);
+
+        street = new EditeItemCell(context,AndroidUtils.getString(R.string.street));
+        street.setOnClickListener(this);
+        headView.addView(street);
+
+        village = new EditeItemCell(context,AndroidUtils.getString(R.string.village));
+        village.setOnClickListener(this);
+        headView.addView(village);
+
+        ListView listView = new ListView(context);
+        listView.setDivider(null);
+        listView.setDividerHeight(0);
+        myAdapter = new MyAdapter();
+        listView.setAdapter(myAdapter);
+        listView.addHeaderView(headView);
+        container.addView(listView);
+
+        initData();
+        return container;
     }
 
-    private void initViews(View view) {
-        LinearLayout areaLayout = (LinearLayout) view.findViewById(R.id.area_layout);
-        LinearLayout streetLayout = (LinearLayout) view.findViewById(R.id.street_layout);
-        LinearLayout villageLayout = (LinearLayout) view.findViewById(R.id.village_layout);
-        areaTv = (TextView) view.findViewById(R.id.area_name_tv);
-        streetTv = (TextView) view.findViewById(R.id.street_name_tv);
-        villageTv = (TextView) view.findViewById(R.id.village_name_tv);
-        areaLayout.setOnClickListener(this);
-        streetLayout.setOnClickListener(this);
-        villageLayout.setOnClickListener(this);
+    private class MyAdapter extends BaseAdapter{
+
+        @Override
+        public int getCount() {
+            return peopleList.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return peopleList.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            LinearLayout peopleCon = new LinearLayout(context);
+            peopleCon.setOrientation(LinearLayout.VERTICAL);
+
+            TextView titleView = new TextView(context);
+            titleView.setPadding(AndroidUtils.dp(15), 0, 0, 0);
+            titleView.setBackgroundColor(0xFFFFFFFF);
+            titleView.setTextColor(0xFF8F9098);
+            titleView.setTextSize(14);
+            titleView.setGravity(Gravity.CENTER);
+            titleView.setText(peopleList.get(i));
+            peopleCon.addView(titleView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                    AndroidUtils.dp(45)));
+
+            DividerSmallCell div = new DividerSmallCell(context);
+            peopleCon.addView(div,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,1));
+            return peopleCon;
+        }
     }
 
-    @Override
-    public void onBeforeCreate() {
 
+    private void initData(){
+
+        for(int i=0;i<20;i++){
+            peopleList.add("people "+i);
+        }
+        myAdapter.notifyDataSetChanged();
     }
+
+
 
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(context, SelectAreaActivity.class);
-        switch (v.getId()){
-            case R.id.area_layout:
-                returnFlag = 0;
-                intent.putExtra("from","area");
-                break;
-            case R.id.street_layout:
-                returnFlag = 1;
-                intent.putExtra("from","street");
-                break;
-            case R.id.village_layout:
-                returnFlag = 2;
-                intent.putExtra("from","village");
-                break;
-            default:
-                break;
+        if(v == areaCon){
+            returnFlag = 0;
+            intent.putExtra("from","area");
+        }else if(v == street){
+            returnFlag = 1;
+            intent.putExtra("from","street");
+        }else if(v == village){
+            returnFlag = 2;
+            intent.putExtra("from","village");
         }
         startActivityForResult(intent,0);
     }
@@ -94,16 +162,17 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
         String retStr = data.getStringExtra("return");
         switch (returnFlag){
             case AREA_RETURN:
-                areaTv.setText(retStr);
+                areaCon.setTitleValue(retStr);
                 break;
             case STREET_RETURN:
-                streetTv.setText(retStr);
+                street.setTitleValue(retStr);
                 break;
             case VILLAGE_RETURN:
-                villageTv.setText(retStr);
+                village.setTitleValue(retStr);
                 break;
             default:
                 break;
         }
+        if(myAdapter != null) myAdapter.notifyDataSetChanged();
     }
 }

@@ -46,8 +46,8 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
                 ViewGroup.LayoutParams.MATCH_PARENT));
         scrollView.addView(container);
 
-        SectionView myLocation = new SectionView(context,AndroidUtils.getString(R.string.my_work));
-        loaction = new EditeItemCell(context,AndroidUtils.getString(R.string.my_work));
+        SectionView myLocation = new SectionView(context,AndroidUtils.getString(R.string.my_location));
+        loaction = new EditeItemCell(context,AndroidUtils.getString(R.string.my_location));
         loaction.setOnClickListener(this);
         myLocation.addView(loaction);
         container.addView(myLocation);
