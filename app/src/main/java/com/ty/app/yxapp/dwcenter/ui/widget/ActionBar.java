@@ -21,7 +21,7 @@ public class ActionBar extends LinearLayout {
     public ActionBar(Context context) {
         super(context);
         this.context = context;
-        setBackgroundColor(0xFFFFFFFF);
+        setBackgroundColor(0xFFEEEEEE);
         FrameLayout container = new FrameLayout(context);
         addView(container,new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,AndroidUtils.dp(48)));
 
