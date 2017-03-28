@@ -87,6 +87,9 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(data == null){
+            return;
+        }
         Log.e(TAG,"onActivityResult = " + data.getStringExtra("return"));
         String retStr = data.getStringExtra("return");
         switch (returnFlag){
