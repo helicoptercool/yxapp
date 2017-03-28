@@ -1,11 +1,9 @@
 package com.ty.app.yxapp.dwcenter.ui.Widget;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -31,7 +29,7 @@ public class TabView extends LinearLayout {
         setBackgroundColor(0xFF161616);
         setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-        TabItem firstPager = new TabItem(context,R.mipmap.ic_launcher,R.mipmap.ic_launcher, "首页");
+        TabItem firstPager = new TabItem(context, R.mipmap.ic_launcher, R.mipmap.ic_launcher, AndroidUtils.getString(R.string.my_work));
         firstPager.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,7 +41,7 @@ public class TabView extends LinearLayout {
         items[0] = firstPager;
         addView(firstPager, frl);
 
-        TabItem secondPager = new TabItem(context, R.mipmap.ic_launcher,  R.mipmap.ic_launcher, "二页");
+        TabItem secondPager = new TabItem(context, R.mipmap.ic_launcher, R.mipmap.ic_launcher, AndroidUtils.getString(R.string.push_work));
         secondPager.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,7 +53,7 @@ public class TabView extends LinearLayout {
         items[1] = secondPager;
         addView(secondPager, srl);
 
-        TabItem ThirdPager = new TabItem(context,  R.mipmap.ic_launcher, R.mipmap.ic_launcher, "我");
+        TabItem ThirdPager = new TabItem(context, R.mipmap.ic_launcher, R.mipmap.ic_launcher, AndroidUtils.getString(R.string.user_center));
         ThirdPager.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,7 +65,7 @@ public class TabView extends LinearLayout {
         items[2] = ThirdPager;
         addView(ThirdPager, trl);
 
-        TabItem FourPager = new TabItem(context,  R.mipmap.ic_launcher,  R.mipmap.ic_launcher, "视频");
+        TabItem FourPager = new TabItem(context, R.mipmap.ic_launcher, R.mipmap.ic_launcher, AndroidUtils.getString(R.string.video_chat));
         FourPager.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -136,10 +134,10 @@ public class TabView extends LinearLayout {
             textView.setTextColor(0xFF838288);
             textView.setText(tabName);
             textView.setGravity(Gravity.CENTER_HORIZONTAL);
-            LinearLayout.LayoutParams tvll = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams tvll = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT);
-            tvll.setMargins(0,0,0,AndroidUtils.dp(5));
-            container.addView(textView,tvll);
+            tvll.setMargins(0, 0, 0, AndroidUtils.dp(5));
+            container.addView(textView, tvll);
         }
 
         public void setCurrent(boolean focus) {

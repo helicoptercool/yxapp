@@ -28,6 +28,7 @@ public class ActionBar extends LinearLayout {
 
         leftImg = new TextView(context);
         leftImg.setVisibility(GONE);
+        leftImg.setTextColor(0xff2D2D34);
         FrameLayout.LayoutParams lfl = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,
                 FrameLayout.LayoutParams.WRAP_CONTENT);
         lfl.gravity = Gravity.LEFT|Gravity.CENTER_VERTICAL;
@@ -36,12 +37,14 @@ public class ActionBar extends LinearLayout {
 
         centerImg = new TextView(context);
         centerImg.setVisibility(GONE);
+        centerImg.setTextColor(0xff2D2D34);
         FrameLayout.LayoutParams cfl = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,
                 FrameLayout.LayoutParams.WRAP_CONTENT);
         cfl.gravity = Gravity.CENTER;
         container.addView(centerImg,cfl);
 
         rightImg = new TextView(context);
+        rightImg.setTextColor(0xff2D2D34);
         rightImg.setVisibility(GONE);
         FrameLayout.LayoutParams rfl = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,
                 FrameLayout.LayoutParams.WRAP_CONTENT);

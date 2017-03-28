@@ -1,9 +1,6 @@
 package com.ty.app.yxapp.dwcenter.ui.activities.fragment;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -13,7 +10,7 @@ import android.widget.Toast;
 
 import com.ty.app.yxapp.dwcenter.R;
 import com.ty.app.yxapp.dwcenter.Utils.AndroidUtils;
-import com.ty.app.yxapp.dwcenter.ui.Widget.ActionBar;
+import com.ty.app.yxapp.dwcenter.ui.Activity.base.BaseFragment;
 import com.ty.app.yxapp.dwcenter.ui.Widget.ImageButtonCell;
 import com.ty.app.yxapp.dwcenter.ui.Widget.LooperImgCell;
 
@@ -24,17 +21,17 @@ import java.util.List;
  * Created by kss on 2017/3/26.
  */
 
-public class MainFirstPagerActivity extends Fragment implements View.OnClickListener{
+public class MainFirstPagerActivity extends BaseFragment implements View.OnClickListener{
     private Context context;
     private LooperImgCell looperImgCell;
-    private ActionBar actionBar;
     private ImageButtonCell tlBtn;
     private ImageButtonCell trBtn;
     private ImageButtonCell blBtn;
     private ImageButtonCell brBtn;
 
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreate() {
         context = getContext();
         ScrollView scrollView = new ScrollView(context);
 
@@ -43,7 +40,7 @@ public class MainFirstPagerActivity extends Fragment implements View.OnClickList
         scrollView.addView(cont,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));
 
-        actionBar = new ActionBar(context);
+        actionBar.setVisibility(View.VISIBLE);
         actionBar.setCenterView(AndroidUtils.getString(R.string.first_pager));
         actionBar.setRightView("", R.mipmap.ic_launcher, new View.OnClickListener() {
             @Override
@@ -51,8 +48,6 @@ public class MainFirstPagerActivity extends Fragment implements View.OnClickList
                 Toast.makeText(context,"饿呢奥尔够昂偶", Toast.LENGTH_SHORT).show();
             }
         });
-        cont.addView(actionBar,new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
 
         looperImgCell = new LooperImgCell(context);
         cont.addView(looperImgCell,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
@@ -115,6 +110,10 @@ public class MainFirstPagerActivity extends Fragment implements View.OnClickList
 
         init();
         return scrollView;
+    }
+
+    @Override
+    public void onBeforeCreate() {
     }
 
     private void init(){

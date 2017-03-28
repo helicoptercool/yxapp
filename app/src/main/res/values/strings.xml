@@ -6,7 +6,6 @@
     <string name="events">事件</string>
     <string name="done">事件</string>
     <string name="self_info">事件</string>
-    <string name="video_chat">视频聊天</string>
 
     <string name="weather">天气信息</string>
     <string name="first_pager">首页</string>
@@ -14,4 +13,24 @@
     <string name="handered_st">已完成的事件</string>
     <string name="all_st">全部事件</string>
     <string name="time_location">实时地图</string>
+
+    <!--tabView-->
+    <string name="my_work">我的工作</string>
+    <string name="push_work">事件上报</string>
+    <string name="user_center">便民中心</string>
+    <string name="video_chat">视频通话</string>
+    
+    <!-- video chat-->
+    <string name="area">区\t\t\t域</string>
+    <string name="street">镇/街道</string>
+    <string name="village">村/社区</string>
+    <string name="manager">网格员</string>
+
+    <string name="my_location">我的位置</string>
+    <string name="sm_name">事件名称</string>
+    <string name="sm_desc">事件描述</string>
+    <string name="take_photo">拍照上传</string>
+    <string name="voice_push">语音上传</string>
+    <string name="video_push">视频上传</string>
+
 </resources>

@@ -12,6 +12,11 @@ import android.widget.LinearLayout;
 
 import com.ty.app.yxapp.dwcenter.R;
 import com.ty.app.yxapp.dwcenter.Utils.AndroidUtils;
+import com.ty.app.yxapp.dwcenter.ui.Activity.base.BaseActivity;
+import com.ty.app.yxapp.dwcenter.ui.Activity.fragment.MainFirstPagerActivity;
+import com.ty.app.yxapp.dwcenter.ui.Activity.fragment.VideoChatFragment;
+import com.ty.app.yxapp.dwcenter.ui.Activity.fragment.MainSecondPagerActivity;
+import com.ty.app.yxapp.dwcenter.ui.Activity.fragment.MainThirdPagerActivity;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseActivity;
 import com.ty.app.yxapp.dwcenter.ui.activities.fragment.MainFirstPagerActivity;
 import com.ty.app.yxapp.dwcenter.ui.activities.fragment.MainFourPagerActivity;
@@ -84,7 +89,7 @@ public class MainActivity extends BaseActivity {
         MainThirdPagerActivity thirdPager = new MainThirdPagerActivity();
         fragments.add(thirdPager);
 
-        MainFourPagerActivity fourPager = new MainFourPagerActivity();
+        VideoChatFragment fourPager = new VideoChatFragment();
         fragments.add(fourPager);
 
         tabView.setCurrent(0);
