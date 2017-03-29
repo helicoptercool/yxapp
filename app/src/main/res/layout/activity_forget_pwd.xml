@@ -13,11 +13,12 @@
     <RelativeLayout
         android:id="@+id/forget_password_layout"
         android:layout_width="fill_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_gravity="center"
-        android:gravity="center">
+        android:background="@drawable/rounded_rectangle_shape"
+        android:layout_centerInParent="true">
 
         <FrameLayout
             android:id="@+id/username_layout"
