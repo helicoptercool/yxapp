@@ -32,6 +32,10 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".ui.activities.SelectAreaActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="7d60be3cc0d247dc3dab3c6b63db7deffa876d44" />
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
