@@ -34,5 +34,13 @@
     <string name="video_push">视频上传</string>
 
     <string name="choice">选择</string>
+    
+    <!--login-->
+    <string name="phone">电话</string>
+    <string name="password">密码</string>
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="forget_password">忘记密码</string>
+    <string name="confirm_password">确认密码</string>
 
 </resources>

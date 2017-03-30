@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,9 +11,11 @@ import android.widget.EditText;
 import com.ty.app.yxapp.dwcenter.R;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseActivity;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
     private EditText etName, etPass;
-    private Button mLoginButton, mLoginError, mRegister;
     boolean isReLogin = false;
 
 
@@ -45,9 +46,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         etName.addTextChangedListener(usernameWatcher);
         etPass.addTextChangedListener(passwordWatcher);
 
-        mLoginButton = (Button) loginView.findViewById(R.id.login);
-        mLoginError = (Button) loginView.findViewById(R.id.login_error);
-        mRegister = (Button) loginView.findViewById(R.id.register);
+        Button mLoginButton = (Button) loginView.findViewById(R.id.login);
+        Button mLoginError = (Button) loginView.findViewById(R.id.forget_password);
+        Button mRegister = (Button) loginView.findViewById(R.id.register);
         mLoginButton.setOnClickListener(this);
         mLoginError.setOnClickListener(this);
         mRegister.setOnClickListener(this);
@@ -92,16 +93,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.login:  //登陆
+            case R.id.login:
                 //   login();
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.login_error: //无法登陆(忘记密码了吧)
+            case R.id.forget_password:
                 Intent pwdIntent = new Intent(this,ForgetPwdActivity.class);
                 startActivity(pwdIntent);
                 break;
-            case R.id.register:    //注册新的用户
+            case R.id.register:
                 Intent regIntent = new Intent();
                 regIntent.setClass(LoginActivity.this, RegisterActivity.class);
                 startActivity(regIntent);
@@ -127,21 +128,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-            if (isReLogin) {
-                Intent mHomeIntent = new Intent(Intent.ACTION_MAIN);
-                mHomeIntent.addCategory(Intent.CATEGORY_HOME);
-                mHomeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                        | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                LoginActivity.this.startActivity(mHomeIntent);
-            } else {
-                LoginActivity.this.finish();
-            }
-            return false;
-        } else {
-            return super.onKeyDown(keyCode, event);
-        }
+    private void login(){
+        String phone = etName.getText().toString();
+        String password = etPass.getText().toString();
+        Pattern p = Pattern.compile("^[1][3,4,5,7,8][0-9]{9}$");
+        Matcher m = p.matcher(phone);
+        boolean b = m.matches();
+
     }
+
 }
