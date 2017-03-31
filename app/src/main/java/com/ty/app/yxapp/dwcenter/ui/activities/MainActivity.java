@@ -1,6 +1,7 @@
 package com.ty.app.yxapp.dwcenter.ui.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -18,10 +19,12 @@ import com.ty.app.yxapp.dwcenter.ui.activities.fragment.MainFirstPagerActivity;
 import com.ty.app.yxapp.dwcenter.ui.activities.fragment.MainSecondPagerActivity;
 import com.ty.app.yxapp.dwcenter.ui.activities.fragment.MainThirdPagerActivity;
 import com.ty.app.yxapp.dwcenter.ui.widget.TabView;
+import com.ty.app.yxapp.dwcenter.utils.GetWeatherListener;
+import com.ty.app.yxapp.dwcenter.utils.MapService;
 
 import java.util.ArrayList;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity{
     private Context context;
     private ArrayList<Fragment> fragments = new ArrayList<>();
     private FragmentAdapter fragmentAdapter;
@@ -89,6 +92,8 @@ public class MainActivity extends BaseActivity {
 
         tabView.setCurrent(0);
         fragmentAdapter.notifyDataSetChanged();
+
+        getApplicationContext().startService(new Intent(this, MapService.class));
     }
 
     private TabView.OnSelectorListener onSelectorListener = new TabView.OnSelectorListener() {
