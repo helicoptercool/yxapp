@@ -1,6 +1,8 @@
 package com.ty.app.yxapp.dwcenter.ui.activities.fragment;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -9,10 +11,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ty.app.yxapp.dwcenter.R;
+import com.ty.app.yxapp.dwcenter.ui.activities.BasicMapActivity;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseFragment;
 import com.ty.app.yxapp.dwcenter.ui.widget.ImageButtonCell;
 import com.ty.app.yxapp.dwcenter.ui.widget.LooperImgCell;
+import com.ty.app.yxapp.dwcenter.utils.GetWeatherListener;
+import com.ty.app.yxapp.dwcenter.utils.MapService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,13 +26,14 @@ import java.util.List;
  * Created by kss on 2017/3/26.
  */
 
-public class MainFirstPagerActivity extends BaseFragment implements View.OnClickListener{
+public class MainFirstPagerActivity extends BaseFragment implements View.OnClickListener, GetWeatherListener{
     private Context context;
     private LooperImgCell looperImgCell;
     private ImageButtonCell tlBtn;
     private ImageButtonCell trBtn;
     private ImageButtonCell blBtn;
     private ImageButtonCell brBtn;
+    private TextView weather;
 
 
     @Override
@@ -53,7 +59,7 @@ public class MainFirstPagerActivity extends BaseFragment implements View.OnClick
         cont.addView(looperImgCell,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 AndroidUtils.dp(200)));
 
-        TextView weather = new TextView(context);
+        weather = new TextView(context);
         weather.setText("天气预报");
         weather.setPadding(AndroidUtils.dp(10),AndroidUtils.dp(10),AndroidUtils.dp(10),AndroidUtils.dp(10));
         LinearLayout.LayoutParams weatherLL = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
@@ -122,6 +128,7 @@ public class MainFirstPagerActivity extends BaseFragment implements View.OnClick
             resList.add(R.drawable.timg);
         }
         looperImgCell.setResList(resList);
+        MapService.setGetWeatherListener(this);
     }
 
     @Override
@@ -133,7 +140,14 @@ public class MainFirstPagerActivity extends BaseFragment implements View.OnClick
         }else if(view == blBtn){
             Toast.makeText(context,"agrargarg",Toast.LENGTH_SHORT).show();
         }else if(view == brBtn){
-            Toast.makeText(context,"agrargarg",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(context, BasicMapActivity.class);
+            startActivity(intent);
         }
+    }
+
+    @Override
+    public void onGetWeather(String weatherStr) {
+        Log.e("MainFirstPagerActivity",weatherStr);
+        weather.setText(weatherStr);
     }
 }
