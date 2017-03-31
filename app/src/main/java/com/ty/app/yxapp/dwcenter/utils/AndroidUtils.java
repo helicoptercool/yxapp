@@ -1,5 +1,7 @@
 package com.ty.app.yxapp.dwcenter.utils;
 
+import android.widget.Toast;
+
 import com.ty.app.yxapp.dwcenter.ui.activities.base.MyApplication;
 
 /**
@@ -23,5 +25,9 @@ public class AndroidUtils {
 
     public static String getString(int res){
         return MyApplication.context.getString(res);
+    }
+
+    public static void ShowToast(String message){
+        Toast.makeText(MyApplication.context,message,Toast.LENGTH_SHORT).show();
     }
 }
