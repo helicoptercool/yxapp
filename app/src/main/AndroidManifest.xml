@@ -2,6 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ty.app.yxapp.dwcenter">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
     <application
         android:name=".ui.activities.base.MyApplication"
         android:allowBackup="true"
@@ -9,6 +15,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="79d109f8df7edc028d2954e580e75427" />
+
         <activity
             android:name=".ui.activities.GuideActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
@@ -30,12 +40,19 @@
         <activity
             android:name=".ui.activities.ForgetPwdActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".ui.activities.SelectAreaActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+        <activity
+            android:name=".ui.activities.SelectAreaActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="7d60be3cc0d247dc3dab3c6b63db7deffa876d44" />
+
+        <service
+            android:name=".utils.MapService"
+            android:exported="false" />
+
+        <activity android:name=".ui.activities.BasicMapActivity"></activity>
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
