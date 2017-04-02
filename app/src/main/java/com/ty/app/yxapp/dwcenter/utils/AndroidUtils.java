@@ -30,4 +30,6 @@ public class AndroidUtils {
     public static void ShowToast(String message){
         Toast.makeText(MyApplication.context,message,Toast.LENGTH_SHORT).show();
     }
+
+
 }

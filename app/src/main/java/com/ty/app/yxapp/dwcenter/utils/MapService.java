@@ -19,6 +19,7 @@ public class MapService extends IntentService implements AMapLocationListener, W
 
     private static final String TAG = "MapService";
     private static GetWeatherListener mWeatherListener;
+    private String city = "";
 
     public MapService() {
         super("MapService");
@@ -30,7 +31,7 @@ public class MapService extends IntentService implements AMapLocationListener, W
         setUpWeather();
     }
 
-    public static void setGetWeatherListener(GetWeatherListener weatherListener){
+    public static void setGetWeatherListener(GetWeatherListener weatherListener) {
         mWeatherListener = weatherListener;
     }
 
@@ -45,7 +46,12 @@ public class MapService extends IntentService implements AMapLocationListener, W
     }
 
     private void setUpWeather() {
-        WeatherSearchQuery mquery = new WeatherSearchQuery("北京", WeatherSearchQuery.WEATHER_TYPE_LIVE);
+        WeatherSearchQuery mquery = null;
+        if (city.equals("")) {
+            mquery = new WeatherSearchQuery("北京", WeatherSearchQuery.WEATHER_TYPE_LIVE);
+        }else {
+            mquery = new WeatherSearchQuery(city, WeatherSearchQuery.WEATHER_TYPE_LIVE);
+        }
         WeatherSearch mweathersearch = new WeatherSearch(this);
         mweathersearch.setOnWeatherSearchListener(this);
         mweathersearch.setQuery(mquery);
@@ -54,6 +60,7 @@ public class MapService extends IntentService implements AMapLocationListener, W
 
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
+        city = aMapLocation.getCity();
         Log.e(TAG, "locationChanged-->>" + aMapLocation.getLongitude() + ",," + aMapLocation.getLatitude());
         AndroidUtils.ShowToast("location:" + aMapLocation.getLatitude() + "," + aMapLocation.getLongitude());
     }

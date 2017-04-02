@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.ty.app.yxapp.dwcenter.R;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseActivity;
@@ -47,8 +48,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         etPass.addTextChangedListener(passwordWatcher);
 
         Button mLoginButton = (Button) loginView.findViewById(R.id.login);
-        Button mLoginError = (Button) loginView.findViewById(R.id.forget_password);
-        Button mRegister = (Button) loginView.findViewById(R.id.register);
+        TextView mLoginError = (TextView) loginView.findViewById(R.id.forget_password);
+        TextView mRegister = (TextView) loginView.findViewById(R.id.register);
         mLoginButton.setOnClickListener(this);
         mLoginError.setOnClickListener(this);
         mRegister.setOnClickListener(this);
@@ -133,7 +134,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         String password = etPass.getText().toString();
         Pattern p = Pattern.compile("^[1][3,4,5,7,8][0-9]{9}$");
         Matcher m = p.matcher(phone);
-        boolean b = m.matches();
+        if(!m.matches()){
+
+        }
 
     }
 
