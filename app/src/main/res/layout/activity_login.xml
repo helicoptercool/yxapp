@@ -13,19 +13,27 @@
 
     <RelativeLayout
         android:id="@+id/register_layout"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:layout_centerInParent="true"
         android:background="@drawable/rounded_rectangle_shape"
         android:gravity="center">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="@string/login_title"
+            android:gravity="center"
+            android:background="@drawable/rounded_top_shape"
+            />
 
         <FrameLayout
             android:id="@+id/username_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:gravity="center">
 
             <EditText
@@ -64,6 +72,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/username_layout"
             android:layout_marginTop="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:gravity="center">
 
             <EditText
@@ -108,28 +118,34 @@
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:layout_below="@id/usercode_layout"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="30dp"
             android:background="#ff336699"
             android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:text="@string/login"
             android:textSize="18sp"
             android:textColor="@android:color/white" />
 
-        <Button
+        <TextView
             android:id="@+id/forget_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignRight="@id/login"
             android:layout_below="@id/login"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:background="#00000000"
             android:text="@string/forget_password"
             android:textSize="16sp" />
 
-        <Button
+        <TextView
             android:id="@+id/register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/login"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:layout_below="@id/login"
             android:background="#00000000"
             android:gravity="center"
