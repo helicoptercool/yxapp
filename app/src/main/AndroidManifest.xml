@@ -52,7 +52,8 @@
             android:name=".network.MapService"
             android:exported="false" />
 
-        <activity android:name=".ui.activities.BasicMapActivity"></activity>
+        <activity android:name=".ui.activities.BasicMapActivity" />
+        <activity android:name=".ui.activities.AllEventActivity"></activity>
     </application>
 
 </manifest>
