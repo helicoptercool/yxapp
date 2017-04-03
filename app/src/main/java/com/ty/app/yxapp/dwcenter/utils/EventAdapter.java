@@ -12,6 +12,7 @@ import com.ty.app.yxapp.dwcenter.bean.Event;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,14 +23,23 @@ public class EventAdapter extends BaseAdapter {
     private Context mContext;
     private List<Event> mList;
     private LayoutInflater mInflater;
-    public EventAdapter(Context context, List<Event> list){
+    public EventAdapter(Context context){
         mContext = context;
-        mList = list;
+        mList = new ArrayList<>();
         mInflater = LayoutInflater.from(mContext);
     }
+
+    public void setList( List<Event> list){
+        if(mList != null && !mList.isEmpty()) mList.clear();
+        if(list != null && !list.isEmpty()){
+            mList = list;
+            notifyDataSetChanged();
+        }
+    }
+
     @Override
     public int getCount() {
-        return mList.size();
+        return mList == null ? 0 : mList.size();
     }
 
     @Override

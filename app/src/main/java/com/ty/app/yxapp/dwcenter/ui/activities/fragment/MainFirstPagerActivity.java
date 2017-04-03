@@ -47,7 +47,6 @@ public class MainFirstPagerActivity extends BaseFragment implements View.OnClick
     private ImageButtonCell brBtn;
     private TextView weather;
     private RequestServer mReqServer;
-    public static List<Event> allEvents;
 
     @Override
     public View onCreate() {
@@ -142,7 +141,6 @@ public class MainFirstPagerActivity extends BaseFragment implements View.OnClick
         }
         looperImgCell.setResList(resList);
         MapService.setGetWeatherListener(this);
-        allEvents = new ArrayList<>();
     }
 
     @Override
@@ -152,20 +150,8 @@ public class MainFirstPagerActivity extends BaseFragment implements View.OnClick
         } else if (view == trBtn) {
             Toast.makeText(context, "agrargarg", Toast.LENGTH_SHORT).show();
         } else if (view == blBtn) {
-            RetrofitHelper.getInstance().getEvents("wangjie", new RetrofitHelper.OnResultListener() {
-                @Override
-                public void onResult(Result result) {
-                    if(result.isOK()){
-                        allEvents = (List<Event>) result.getData();
-                        if(allEvents != null && !allEvents.isEmpty()){
-                            Intent intent = new Intent(context, AllEventActivity.class);
-                            startActivity(intent);
-                        }
-                    }else{
-                        Toast.makeText(context,result.getMessage(),Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
+            Intent intent = new Intent(context, AllEventActivity.class);
+            startActivity(intent);
         } else if (view == brBtn) {
             Intent intent = new Intent(context, BasicMapActivity.class);
             startActivity(intent);

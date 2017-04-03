@@ -11,7 +11,7 @@ import retrofit2.Response;
  */
 
 public class Result implements Serializable {
-    private int code;
+    private int code = -1;
     private String message;
     private Object data;
 
