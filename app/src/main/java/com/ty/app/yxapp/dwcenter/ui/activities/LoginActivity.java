@@ -3,6 +3,7 @@ package com.ty.app.yxapp.dwcenter.ui.activities;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ty.app.yxapp.dwcenter.R;
+import com.ty.app.yxapp.dwcenter.network.Result;
 import com.ty.app.yxapp.dwcenter.network.RetrofitHelper;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseActivity;
 import com.ty.app.yxapp.dwcenter.network.RequestServer;
@@ -146,23 +148,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         Pattern p = Pattern.compile("^[1][3,4,5,7,8][0-9]{9}$");
         Matcher m = p.matcher(phone);
 
-        Retrofit retrofit = RetrofitHelper.getInstance().getRetrofit();
-        RequestServer requestServer = retrofit.create(RequestServer.class);
-        Call<String> call = requestServer.getLoginStatus("wangjie", "wangjie123456");
-        call.enqueue(new Callback<String>() {
+        RetrofitHelper.getInstance().Login("wangjie", "wangjie123456", new RetrofitHelper.OnResultListener() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if (response != null) {
-                    Log.e(TAG, response.body());
+            public void onResult(Result result) {
+                if(result.isOK()){
+                    //TODO:登录成功
+                }else{
+                    //TODO:登录失败
                 }
             }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                Log.e(TAG, t.toString());
-            }
         });
-//        }
 
     }
 
