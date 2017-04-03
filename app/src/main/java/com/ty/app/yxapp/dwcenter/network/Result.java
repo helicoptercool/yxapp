@@ -2,9 +2,9 @@ package com.ty.app.yxapp.dwcenter.network;
 
 import android.text.TextUtils;
 
-import com.google.gson.Gson;
-
 import java.io.Serializable;
+
+import retrofit2.Response;
 
 /**
  * Created by kss on 2017/4/3.
@@ -53,11 +53,20 @@ public class Result implements Serializable {
         this.data = data;
     }
 
-    public Result LoginResult(String res){
-        setData(res);
-        if(!TextUtils.isEmpty(res) && "1".equals(res)) setCode(0);
+    public Result LoginResult(Response response){
+        if(response.body() == null) new Result();
+        setData(response.body().toString());
+        if(!TextUtils.isEmpty(response.body().toString()) &&
+                "1".equals(response.body().toString())) setCode(0);
         else setCode(-1);
-        return new Result();
+        return this;
+    }
+
+    public Result getEvents(Response response){
+        if(response.body() == null) new Result();
+        setCode(0);
+        setData(response.body());
+        return this;
     }
 
 }

@@ -1,6 +1,17 @@
 package com.ty.app.yxapp.dwcenter.network;
 
 import android.util.Log;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.ty.app.yxapp.dwcenter.BuildConfig;
+import com.ty.app.yxapp.dwcenter.bean.Event;
+
+import java.io.IOException;
+import java.util.List;
+
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -56,6 +67,15 @@ public class RetrofitHelper {
         if(call != null)  call.enqueue(onCallBackListener);
     }
 
+    /**
+     * 获取事件
+     */
+    public void getEvents(String account,OnResultListener onResultListener){
+        OnCallBackListener onCallBackListener = new OnCallBackListener("getEvents",onResultListener);
+        Call<List<Event>> call = requestServer.getEvents(account);
+        if(call != null) call.enqueue(onCallBackListener);
+    }
+
 
     public interface OnResultListener{
         void onResult(Result result);
@@ -85,19 +105,17 @@ public class RetrofitHelper {
                 }
             }else{
                 code = response.code();
-                message = response.message();
-                String res ;
                 try {
                     Result result = new Result(code,message);
-                    res = response.body().toString();
-
-                    if(res != null){
+                    if(response != null){
                         if("Login".equals(flag)){
-                            result = result.LoginResult(res);
+                            result = result.LoginResult(response);
+                        }else if("getEvents".equals(flag)){
+                            result = result.getEvents(response);
                         }
                     }
                     if(onResultListener != null) onResultListener.onResult(result);
-                    Log.d(TAG,"url :"+url +" result: "+res);
+                    Log.d(TAG,"url :"+url +" result: "+response.body());
                 }catch (Exception e){
                     Log.e(TAG,"url :"+url + " ,"+ new Throwable(e).toString());
                     if(onResultListener != null){

@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.ty.app.yxapp.dwcenter.R;
 import com.ty.app.yxapp.dwcenter.bean.Event;
 import com.ty.app.yxapp.dwcenter.network.RequestServer;
+import com.ty.app.yxapp.dwcenter.network.Result;
 import com.ty.app.yxapp.dwcenter.network.RetrofitHelper;
 import com.ty.app.yxapp.dwcenter.ui.activities.AllEventActivity;
 import com.ty.app.yxapp.dwcenter.ui.activities.BasicMapActivity;
@@ -45,8 +46,6 @@ public class MainFirstPagerActivity extends BaseFragment implements View.OnClick
     private ImageButtonCell blBtn;
     private ImageButtonCell brBtn;
     private TextView weather;
-
-    private Retrofit mRetrofit;
     private RequestServer mReqServer;
     public static List<Event> allEvents;
 
@@ -143,8 +142,6 @@ public class MainFirstPagerActivity extends BaseFragment implements View.OnClick
         }
         looperImgCell.setResList(resList);
         MapService.setGetWeatherListener(this);
-        mRetrofit = RetrofitHelper.getInstance().getRetrofit();
-        mReqServer = mRetrofit.create(RequestServer.class);
         allEvents = new ArrayList<>();
     }
 
@@ -155,27 +152,20 @@ public class MainFirstPagerActivity extends BaseFragment implements View.OnClick
         } else if (view == trBtn) {
             Toast.makeText(context, "agrargarg", Toast.LENGTH_SHORT).show();
         } else if (view == blBtn) {
-            Toast.makeText(context, "agrargarg", Toast.LENGTH_SHORT).show();
-            Call<List<Event>> call = mReqServer.getEvents("wangjie");
-            call.enqueue(new Callback<List<Event>>() {
+            RetrofitHelper.getInstance().getEvents("wangjie", new RetrofitHelper.OnResultListener() {
                 @Override
-                public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
-                    if (response != null) {
-                        Log.e(TAG, call.toString() + ",," + response.body().toString());
-                        allEvents = response.body();
-                        Log.e(TAG, allEvents.get(0).getAccount());
-                        Intent intent = new Intent(context, AllEventActivity.class);
-                        startActivity(intent);
+                public void onResult(Result result) {
+                    if(result.isOK()){
+                        allEvents = (List<Event>) result.getData();
+                        if(allEvents != null && !allEvents.isEmpty()){
+                            Intent intent = new Intent(context, AllEventActivity.class);
+                            startActivity(intent);
+                        }
+                    }else{
+                        Toast.makeText(context,result.getMessage(),Toast.LENGTH_SHORT).show();
                     }
-
-                }
-
-                @Override
-                public void onFailure(Call<List<Event>> call, Throwable t) {
-                    Log.e(TAG, t.toString());
                 }
             });
-
         } else if (view == brBtn) {
             Intent intent = new Intent(context, BasicMapActivity.class);
             startActivity(intent);
