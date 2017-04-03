@@ -153,7 +153,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response != null) {
-                    Log.e(TAG, response.body());
+                    Log.e(TAG,"login return = " + response.message()+","+response.code());
+                    Log.e(TAG, response.body().toString());
                 }
             }
 
@@ -162,7 +163,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 Log.e(TAG, t.toString());
             }
         });
-//        }
 
     }
 

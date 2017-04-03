@@ -27,7 +27,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
-    compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'//Retrofit2ËùÐèÒªµÄ°ü
-    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'//ConverterFactoryµÄGsonÒÀÀµ°ü
-    compile 'com.squareup.retrofit2:converter-scalars:2.0.0-beta4'//ConverterFactoryµÄStringÒÀÀµ°ü
+    compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'//Retrofit2ï¿½ï¿½ï¿½ï¿½Òªï¿½Ä°ï¿½
+    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'//ConverterFactoryï¿½ï¿½Gsonï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    compile 'com.squareup.retrofit2:converter-scalars:2.0.0-beta4'//ConverterFactoryï¿½ï¿½Stringï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 }
