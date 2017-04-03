@@ -49,7 +49,7 @@
             android:value="7d60be3cc0d247dc3dab3c6b63db7deffa876d44" />
 
         <service
-            android:name=".utils.MapService"
+            android:name=".network.MapService"
             android:exported="false" />
 
         <activity android:name=".ui.activities.BasicMapActivity"></activity>

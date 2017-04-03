@@ -1,4 +1,4 @@
-package com.ty.app.yxapp.dwcenter.utils;
+package com.ty.app.yxapp.dwcenter.network;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -14,6 +14,8 @@ import com.amap.api.services.weather.LocalWeatherLive;
 import com.amap.api.services.weather.LocalWeatherLiveResult;
 import com.amap.api.services.weather.WeatherSearch;
 import com.amap.api.services.weather.WeatherSearchQuery;
+import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
+import com.ty.app.yxapp.dwcenter.utils.GetWeatherListener;
 
 public class MapService extends IntentService implements AMapLocationListener, WeatherSearch.OnWeatherSearchListener {
 

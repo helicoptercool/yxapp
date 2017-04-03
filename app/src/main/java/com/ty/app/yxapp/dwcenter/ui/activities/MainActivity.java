@@ -19,8 +19,7 @@ import com.ty.app.yxapp.dwcenter.ui.activities.fragment.MainFirstPagerActivity;
 import com.ty.app.yxapp.dwcenter.ui.activities.fragment.MainSecondPagerActivity;
 import com.ty.app.yxapp.dwcenter.ui.activities.fragment.MainThirdPagerActivity;
 import com.ty.app.yxapp.dwcenter.ui.widget.TabView;
-import com.ty.app.yxapp.dwcenter.utils.GetWeatherListener;
-import com.ty.app.yxapp.dwcenter.utils.MapService;
+import com.ty.app.yxapp.dwcenter.network.MapService;
 
 import java.util.ArrayList;
 

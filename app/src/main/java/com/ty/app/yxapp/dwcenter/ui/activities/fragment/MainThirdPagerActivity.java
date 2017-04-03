@@ -40,7 +40,7 @@ public class MainThirdPagerActivity extends BaseFragment {
 
         actionBar.setVisibility(View.VISIBLE);
         actionBar.setCenterView(AndroidUtils.getString(R.string.user_center));
-        actionBar.setRightView("", R.mipmap.ic_launcher, new View.OnClickListener() {
+        actionBar.setRightView("", R.mipmap.right_top_set, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(context,"饿呢奥尔够昂偶", Toast.LENGTH_SHORT).show();

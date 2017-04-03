@@ -15,6 +15,8 @@
         android:id="@+id/register_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_centerInParent="true"
         android:background="@drawable/rounded_rectangle_shape"
         android:gravity="center">
@@ -24,6 +26,8 @@
             android:layout_height="60dp"
             android:text="@string/login_title"
             android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
             android:background="@drawable/rounded_top_shape"
             />
 

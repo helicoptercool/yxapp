@@ -17,7 +17,7 @@ import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseFragment;
 import com.ty.app.yxapp.dwcenter.ui.widget.ImageButtonCell;
 import com.ty.app.yxapp.dwcenter.ui.widget.LooperImgCell;
 import com.ty.app.yxapp.dwcenter.utils.GetWeatherListener;
-import com.ty.app.yxapp.dwcenter.utils.MapService;
+import com.ty.app.yxapp.dwcenter.network.MapService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +48,7 @@ public class MainFirstPagerActivity extends BaseFragment implements View.OnClick
 
         actionBar.setVisibility(View.VISIBLE);
         actionBar.setCenterView(AndroidUtils.getString(R.string.first_pager));
-        actionBar.setRightView("", R.mipmap.ic_launcher, new View.OnClickListener() {
+        actionBar.setRightView("", R.mipmap.right_top_set, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(context,"饿呢奥尔够昂偶", Toast.LENGTH_SHORT).show();
