@@ -2,6 +2,7 @@ package com.ty.app.yxapp.dwcenter.ui.widget;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.view.Gravity;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -9,6 +10,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ty.app.yxapp.dwcenter.R;
+
+import java.io.File;
 
 /**
  * Created by kss on 2017/3/27.
@@ -66,6 +69,15 @@ public class AddMoreCell extends SquareRelativeLayout {
         selfView.setLayoutParams(ll);
         selfView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         selfView.setImageBitmap(res);
+    }
+
+    public void setImg(Uri file){
+        LinearLayout.LayoutParams ll = (LinearLayout.LayoutParams) selfView.getLayoutParams();
+        ll.weight = LinearLayout.LayoutParams.MATCH_PARENT;
+        ll.height = LinearLayout.LayoutParams.MATCH_PARENT;
+        selfView.setLayoutParams(ll);
+        selfView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        selfView.setImageURI(file);
     }
 
 }

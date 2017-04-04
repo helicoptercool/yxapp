@@ -2,7 +2,12 @@ package com.ty.app.yxapp.dwcenter.ui.widget;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.media.MediaMetadataRetriever;
+import android.net.Uri;
+import android.os.Environment;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -105,11 +110,18 @@ public class ViewCloud extends ViewGroup {
 
             AddMoreCell addMore = new AddMoreCell(context);
             addMore.setImg(R.drawable.timg);
-            if(list.get(i) instanceof Integer){
+            if (list.get(i) instanceof Integer) {
                 addMore.setImg((Integer) list.get(i));
-            }else if(list.get(i) instanceof String){
+            } else if (list.get(i) instanceof Uri) {
+                String path = AndroidUtils.getPath(context, (Uri) list.get(i));
+                MediaMetadataRetriever media = new MediaMetadataRetriever();
+                media.setDataSource(path);
+                Bitmap bitmap = media.getFrameAtTime();
 
-            }else if(list.get(i) instanceof Bitmap){
+                if (bitmap != null) {
+                    addMore.setImg(bitmap);
+                }
+            } else if (list.get(i) instanceof Bitmap) {
                 addMore.setImg((Bitmap) list.get(i));
             }
             frameLayout.addView(addMore, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
@@ -133,8 +145,8 @@ public class ViewCloud extends ViewGroup {
                 addMoreCell.setOnTouchListener(new OnTouchListener() {
                     @Override
                     public boolean onTouch(View view, MotionEvent motionEvent) {
-                        if(onListener != null){
-                            return onListener.onTouch(ViewCloud.this,motionEvent);
+                        if (onListener != null) {
+                            return onListener.onTouch(ViewCloud.this, motionEvent);
                         }
                         return false;
                     }
@@ -148,8 +160,8 @@ public class ViewCloud extends ViewGroup {
             addMoreCell.setOnTouchListener(new OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
-                    if(onListener != null){
-                        return onListener.onTouch(ViewCloud.this,motionEvent);
+                    if (onListener != null) {
+                        return onListener.onTouch(ViewCloud.this, motionEvent);
                     }
                     return false;
                 }
@@ -173,7 +185,7 @@ public class ViewCloud extends ViewGroup {
 
 
     public interface OnListener {
-        boolean onTouch(View view,MotionEvent motionEvent);
+        boolean onTouch(View view, MotionEvent motionEvent);
 
         void close(int i, View view);
     }
