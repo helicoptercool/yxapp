@@ -8,11 +8,15 @@ import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.ty.app.yxapp.dwcenter.R;
+import com.ty.app.yxapp.dwcenter.ui.widget.ViewCloud;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseFragment;
 import com.ty.app.yxapp.dwcenter.ui.widget.AddMoreCell;
 import com.ty.app.yxapp.dwcenter.ui.widget.EditeItemCell;
 import com.ty.app.yxapp.dwcenter.ui.widget.SectionView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by kss on 2017/3/26.
@@ -24,8 +28,14 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
     private EditeItemCell name;
     private EditeItemCell desc;
     private AddMoreCell video;
-    private AddMoreCell photo;
     private AddMoreCell voice;
+    private ViewCloud viewCloud;
+    private List<Integer> photos = new ArrayList<>();
+    private List<Integer> videos = new ArrayList<>();
+    private List<Integer> voices = new ArrayList<>();
+    private ViewCloud photoCloud;
+    private ViewCloud videoCloud;
+    private ViewCloud voiceCloud;
 
     @Override
     public void onBeforeCreate() {
@@ -65,27 +75,39 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
         container.addView(smDesc);
 
         SectionView photoCon = new SectionView(context,AndroidUtils.getString(R.string.take_photo));
-        photo = new AddMoreCell(context);
-        photo.setOnClickListener(this);
-        LinearLayout.LayoutParams photoll = new LinearLayout.LayoutParams(AndroidUtils.dp(70),AndroidUtils.dp(70));
-        photoll.setMargins(AndroidUtils.dp(10),AndroidUtils.dp(10),AndroidUtils.dp(10),AndroidUtils.dp(10));
-        photoCon.addView(photo,photoll);
+        LinearLayout pcon =new LinearLayout(context);
+        pcon.setOrientation(LinearLayout.HORIZONTAL);
+        pcon.setPadding(AndroidUtils.dp(15),0,AndroidUtils.dp(15),0);
+        photoCon.addView(pcon,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+        photoCloud = new ViewCloud(context);
+        photoCloud.postView(photos,onListener);
+        pcon.addView(photoCloud,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
         container.addView(photoCon);
 
-        SectionView voiceCon = new SectionView(context,AndroidUtils.getString(R.string.voice_push));
-        voice = new AddMoreCell(context);
-        voice.setOnClickListener(this);
-        LinearLayout.LayoutParams voicell = new LinearLayout.LayoutParams(AndroidUtils.dp(70),AndroidUtils.dp(70));
-        voicell.setMargins(AndroidUtils.dp(10),AndroidUtils.dp(10),AndroidUtils.dp(10),AndroidUtils.dp(10));
-        voiceCon.addView(voice,voicell);
+        SectionView voiceCon = new SectionView(context,AndroidUtils.getString(R.string.video_push));
+        LinearLayout vcon =new LinearLayout(context);
+        vcon.setOrientation(LinearLayout.HORIZONTAL);
+        vcon.setPadding(AndroidUtils.dp(15),0,AndroidUtils.dp(15),0);
+        voiceCon.addView(vcon,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+        voiceCloud = new ViewCloud(context);
+        voiceCloud.postView(voices,onListener);
+        vcon.addView(voiceCloud,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
         container.addView(voiceCon);
 
         SectionView videoCon = new SectionView(context,AndroidUtils.getString(R.string.voice_push));
-        video = new AddMoreCell(context);
-        video.setOnClickListener(this);
-        LinearLayout.LayoutParams videoll = new LinearLayout.LayoutParams(AndroidUtils.dp(70),AndroidUtils.dp(70));
-        videoll.setMargins(AndroidUtils.dp(10),AndroidUtils.dp(10),AndroidUtils.dp(10),AndroidUtils.dp(10));
-        videoCon.addView(video,videoll);
+        LinearLayout videoC =new LinearLayout(context);
+        videoC.setOrientation(LinearLayout.HORIZONTAL);
+        videoC.setPadding(AndroidUtils.dp(15),0,AndroidUtils.dp(15),0);
+        videoCon.addView(videoC,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+        videoCloud = new ViewCloud(context);
+        videoCloud.postView(videos,onListener);
+        videoC.addView(videoCloud,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
         container.addView(videoCon);
 
         init();
@@ -99,6 +121,58 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
     }
 
 
+    private ViewCloud.OnListener onListener = new ViewCloud.OnListener() {
+        @Override
+        public void addView(View view) {
+            if(view == photoCloud){
+                if(!photos.isEmpty()){
+                    photos.clear();
+                }
+                for(int i=0;i<15;i++){
+                    photos.add(R.drawable.timg);
+                }
+                photoCloud.postView(photos,onListener);
+            }else if(view == voiceCloud){
+                if(!voices.isEmpty()){
+                    voices.clear();
+                }
+                for(int i=0;i<15;i++){
+                    voices.add(R.drawable.timg);
+                }
+                voiceCloud.postView(voices,onListener);
+            }else if(view == videoCloud){
+                if(!videos.isEmpty()){
+                    videos.clear();
+                }
+                for(int i=0;i<15;i++){
+                    videos.add(R.drawable.timg);
+                }
+                videoCloud.postView(videos,onListener);
+            }
+        }
+
+        @Override
+        public void close(int i,View view) {
+            if(view == photoCloud){
+                if(!photos.isEmpty()){
+                    photos.remove(i);
+                }
+                photoCloud.postView(photos,onListener);
+            }else if(view == voiceCloud){
+                if(!voices.isEmpty()){
+                    voices.remove(i);
+                }
+                voiceCloud.postView(voices,onListener);
+            }else if(view == videoCloud){
+                if(!videos.isEmpty()){
+                    videos.remove(i);
+                }
+                voiceCloud.postView(videos,onListener);
+            }
+        }
+    };
+
+
     @Override
     public void onClick(View view) {
         if(view == loaction){
@@ -109,8 +183,6 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
             Toast.makeText(context,AndroidUtils.getString(R.string.sm_desc),Toast.LENGTH_SHORT).show();
         }else if(view == video){
             Toast.makeText(context,AndroidUtils.getString(R.string.video_push),Toast.LENGTH_SHORT).show();
-        }else if(view == photo){
-            Toast.makeText(context,AndroidUtils.getString(R.string.take_photo),Toast.LENGTH_SHORT).show();
         }else if(view == voice){
             Toast.makeText(context,AndroidUtils.getString(R.string.voice_push),Toast.LENGTH_SHORT).show();
         }

@@ -50,6 +50,11 @@ public class AddMoreCell extends SquareRelativeLayout {
     }
 
     public void setImg(int res){
+        LinearLayout.LayoutParams ll = (LinearLayout.LayoutParams) selfView.getLayoutParams();
+        ll.weight = LinearLayout.LayoutParams.MATCH_PARENT;
+        ll.height = LinearLayout.LayoutParams.MATCH_PARENT;
+        selfView.setLayoutParams(ll);
+        selfView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         selfView.setImageResource(res);
     }
 
