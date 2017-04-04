@@ -57,4 +57,15 @@
     <string name="input">请输入</string>
     <string name="submit">确定</string>
 
+    <!-- 便民服务-->
+    <string name="common_service">常用服务</string>
+    <string name="ems">物流查询</string>
+    <string name="phone_bill">话费充值</string>
+    <string name="illeglal">违章查询</string>
+    <string name="search">搜索</string>
+    <string name="common_software">常用软件</string>
+    <string name="us_group">美团</string>
+    <string name="c_trip">携程</string>
+    <string name="one_city">同城</string>
+    <string name="baidu_yun">百度云</string>
 </resources>
