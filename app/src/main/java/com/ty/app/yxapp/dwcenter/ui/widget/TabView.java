@@ -29,7 +29,7 @@ public class TabView extends LinearLayout {
         setBackgroundColor(0xFF161616);
         setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-        TabItem firstPager = new TabItem(context, R.mipmap.ic_launcher, R.mipmap.ic_launcher, AndroidUtils.getString(R.string.my_work));
+        TabItem firstPager = new TabItem(context, R.mipmap.home, R.mipmap.home1, AndroidUtils.getString(R.string.my_work));
         firstPager.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -41,7 +41,7 @@ public class TabView extends LinearLayout {
         items[0] = firstPager;
         addView(firstPager, frl);
 
-        TabItem secondPager = new TabItem(context, R.mipmap.ic_launcher, R.mipmap.ic_launcher, AndroidUtils.getString(R.string.push_work));
+        TabItem secondPager = new TabItem(context, R.mipmap.sjsb, R.mipmap.sjsb1, AndroidUtils.getString(R.string.push_work));
         secondPager.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,7 +53,7 @@ public class TabView extends LinearLayout {
         items[1] = secondPager;
         addView(secondPager, srl);
 
-        TabItem ThirdPager = new TabItem(context, R.mipmap.ic_launcher, R.mipmap.ic_launcher, AndroidUtils.getString(R.string.user_center));
+        TabItem ThirdPager = new TabItem(context, R.mipmap.shfw, R.mipmap.shfw1, AndroidUtils.getString(R.string.user_center));
         ThirdPager.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,7 +65,7 @@ public class TabView extends LinearLayout {
         items[2] = ThirdPager;
         addView(ThirdPager, trl);
 
-        TabItem FourPager = new TabItem(context, R.mipmap.ic_launcher, R.mipmap.ic_launcher, AndroidUtils.getString(R.string.video_chat));
+        TabItem FourPager = new TabItem(context, R.mipmap.spth, R.mipmap.spth1, AndroidUtils.getString(R.string.video_chat));
         FourPager.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -142,7 +142,7 @@ public class TabView extends LinearLayout {
 
         public void setCurrent(boolean focus) {
             imageView.setBackgroundResource(focus ? pressRes : defaultRes);
-            textView.setTextColor(focus ? 0xFFff237d : 0xFF838288);
+            textView.setTextColor(focus ? 0xFF4169E1 : 0xFF838288);
         }
     }
 }

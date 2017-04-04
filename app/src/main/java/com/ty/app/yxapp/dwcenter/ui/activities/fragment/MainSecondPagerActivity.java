@@ -1,10 +1,26 @@
 package com.ty.app.yxapp.dwcenter.ui.activities.fragment;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ty.app.yxapp.dwcenter.R;
@@ -14,9 +30,16 @@ import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseFragment;
 import com.ty.app.yxapp.dwcenter.ui.widget.AddMoreCell;
 import com.ty.app.yxapp.dwcenter.ui.widget.EditeItemCell;
 import com.ty.app.yxapp.dwcenter.ui.widget.SectionView;
+import com.ty.app.yxapp.dwcenter.utils.AudioRecoderUtils;
+import com.ty.app.yxapp.dwcenter.utils.PopupWindowFactory;
+import com.ty.app.yxapp.dwcenter.utils.TimeUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import java.io.IOError;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by kss on 2017/3/26.
@@ -36,6 +59,29 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
     private ViewCloud photoCloud;
     private ViewCloud videoCloud;
     private ViewCloud voiceCloud;
+
+    private static final int GET_PICTURE = 1;
+    private static final int TAKE_PICTURE = 2;
+    private static final int VOICE_REQUEST_CODE = 66;
+
+
+
+
+
+
+//    private Button mButton;
+    private ImageView mImageView;
+    private TextView mTextView;
+    private AudioRecoderUtils mAudioRecoderUtils;
+    private PopupWindowFactory mPop;
+//    private RelativeLayout rl;
+LinearLayout container;
+
+
+
+
+
+
 
     @Override
     public void onBeforeCreate() {
@@ -114,12 +160,46 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
         return scrollView;
     }
 
-    public void init(){
+    public void init() {
         loaction.setTitleValue("Loaction");
         name.setTitleValue("name");
         desc.setTitleValue("desc");
-    }
 
+
+
+
+        final View view = View.inflate(context, R.layout.layout_microphone, null);
+
+        mPop = new PopupWindowFactory(context,view);
+
+        //PopupWindow布局文件里面的控件
+        mImageView = (ImageView) view.findViewById(R.id.iv_recording_icon);
+        mTextView = (TextView) view.findViewById(R.id.tv_recording_time);
+
+        mAudioRecoderUtils = new AudioRecoderUtils();
+
+        //录音回调
+        mAudioRecoderUtils.setOnAudioStatusUpdateListener(new AudioRecoderUtils.OnAudioStatusUpdateListener() {
+
+            //录音中....db为声音分贝，time为录音时长
+            @Override
+            public void onUpdate(double db, long time) {
+                mImageView.getDrawable().setLevel((int) (3000 + 6000 * db / 100));
+                mTextView.setText(TimeUtils.long2String(time));
+            }
+
+            //录音结束，filePath为保存路径
+            @Override
+            public void onStop(String filePath) {
+                Toast.makeText(context, "录音保存在：" + filePath, Toast.LENGTH_SHORT).show();
+                mTextView.setText(TimeUtils.long2String(0));
+            }
+        });
+
+
+        //6.0以上需要权限申请
+        requestPermissions();
+    }
 
     private ViewCloud.OnListener onListener = new ViewCloud.OnListener() {
         @Override
@@ -172,19 +252,156 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
         }
     };
 
+    private void requestPermissions() {
+        //判断是否开启摄像头权限
+        if ((ContextCompat.checkSelfPermission(context,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) &&
+                (ContextCompat.checkSelfPermission(context,
+                        Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED)
+                ) {
+//            StartListener();
+
+
+
+
+            //判断是否开启语音权限
+        } else {
+            //请求获取摄像头权限
+            ActivityCompat.requestPermissions((Activity) context,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO}, VOICE_REQUEST_CODE);
+        }
+
+    }
+
+
+
+    /**
+     * 请求权限回调
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == VOICE_REQUEST_CODE) {
+            if ((grantResults[0] == PackageManager.PERMISSION_GRANTED) && (grantResults[1] == PackageManager.PERMISSION_GRANTED) ) {
+//                StartListener();
+            } else {
+                Toast.makeText(context, "已拒绝权限！", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+
+    public void StartListener(){
+        //Button的touch监听
+        voice.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                switch (event.getAction()){
+
+                    case MotionEvent.ACTION_DOWN:
+
+                        mPop.showAtLocation(container, Gravity.CENTER, 0, 0);
+
+                        voice.setText("松开保存");
+                        mAudioRecoderUtils.startRecord();
+
+
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+
+                        mAudioRecoderUtils.stopRecord();        //结束录音（保存录音文件）
+//                        mAudioRecoderUtils.cancelRecord();    //取消录音（不保存录音文件）
+                        mPop.dismiss();
+                        voice.setText("按住说话");
+
+                        break;
+                }
+                return true;
+            }
+        });
+    }
+
 
     @Override
     public void onClick(View view) {
-        if(view == loaction){
-            Toast.makeText(context,AndroidUtils.getString(R.string.my_location),Toast.LENGTH_SHORT).show();
-        }else if(view == name){
-            Toast.makeText(context,AndroidUtils.getString(R.string.sm_name),Toast.LENGTH_SHORT).show();
-        }else if(view == desc){
-            Toast.makeText(context,AndroidUtils.getString(R.string.sm_desc),Toast.LENGTH_SHORT).show();
-        }else if(view == video){
-            Toast.makeText(context,AndroidUtils.getString(R.string.video_push),Toast.LENGTH_SHORT).show();
-        }else if(view == voice){
-            Toast.makeText(context,AndroidUtils.getString(R.string.voice_push),Toast.LENGTH_SHORT).show();
+        if (view == loaction) {
+            Toast.makeText(context, AndroidUtils.getString(R.string.my_location), Toast.LENGTH_SHORT).show();
+        } else if (view == name) {
+            Toast.makeText(context, AndroidUtils.getString(R.string.sm_name), Toast.LENGTH_SHORT).show();
+        } else if (view == desc) {
+            Toast.makeText(context, AndroidUtils.getString(R.string.sm_desc), Toast.LENGTH_SHORT).show();
+        } else if (view == video) {
+            Toast.makeText(context, AndroidUtils.getString(R.string.video_push), Toast.LENGTH_SHORT).show();
+        } else if (view == voice) {
+            Toast.makeText(context, AndroidUtils.getString(R.string.voice_push), Toast.LENGTH_SHORT).show();
+            if (view == loaction) {
+                Toast.makeText(context, AndroidUtils.getString(R.string.my_location), Toast.LENGTH_SHORT).show();
+            } else if (view == name) {
+                Toast.makeText(context, AndroidUtils.getString(R.string.sm_name), Toast.LENGTH_SHORT).show();
+            } else if (view == desc) {
+                Toast.makeText(context, AndroidUtils.getString(R.string.sm_desc), Toast.LENGTH_SHORT).show();
+            } else if (view == video) {
+                Toast.makeText(context, AndroidUtils.getString(R.string.video_push), Toast.LENGTH_SHORT).show();
+            }
+//            else if (view == photo) {
+//                takePicture(view.getId());
+//                Toast.makeText(context, AndroidUtils.getString(R.string.take_photo), Toast.LENGTH_SHORT).show();
+//            }
+            else if (view == voice) {
+                Toast.makeText(context, AndroidUtils.getString(R.string.voice_push), Toast.LENGTH_SHORT).show();
+
+            }
         }
+    }
+
+    private void takePicture(int id) {
+        Intent intent = new Intent();
+        switch (id) {
+            case GET_PICTURE:
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(intent, GET_PICTURE);
+                break;
+            case TAKE_PICTURE:
+                intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent, TAKE_PICTURE);
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case GET_PICTURE:
+                if (data != null) {
+                    Uri uri = data.getData();
+                    try {
+                        InputStream inputStream = getContext().getContentResolver().openInputStream(uri);
+                        if (inputStream != null) {
+                            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                            inputStream.close();
+                        }
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
+            case TAKE_PICTURE:
+
+                break;
+            default:
+                break;
+        }
+    }
+
+    //录音
+    private void record(){
+        
     }
 }
