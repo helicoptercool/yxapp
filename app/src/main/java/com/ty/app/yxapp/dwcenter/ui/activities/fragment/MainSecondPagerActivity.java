@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ty.app.yxapp.dwcenter.R;
+import com.ty.app.yxapp.dwcenter.ui.widget.MenuDialog;
 import com.ty.app.yxapp.dwcenter.ui.widget.ViewCloud;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseFragment;
@@ -50,9 +52,9 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
     private AddMoreCell video;
     private AddMoreCell voice;
     private ViewCloud viewCloud;
-    private List<Integer> photos = new ArrayList<>();
+    private List<Bitmap> photos = new ArrayList<>();
     private List<Integer> videos = new ArrayList<>();
-    private List<Integer> voices = new ArrayList<>();
+    private List<String> voices = new ArrayList<>();
     private ViewCloud photoCloud;
     private ViewCloud videoCloud;
     private ViewCloud voiceCloud;
@@ -60,6 +62,8 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
     private static final int GET_PICTURE = 1;
     private static final int TAKE_PICTURE = 2;
     private static final int VOICE_REQUEST_CODE = 66;
+    private static final int TAKE_PHOTO = 67;
+    private static final int SELECT_PHOTO = 68;
 
 
     //    private Button mButton;
@@ -177,25 +181,33 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
             //录音结束，filePath为保存路径
             @Override
             public void onStop(String filePath) {
-                //TODO:获取保存的录音文件
+                voices.add(filePath);
+                voiceCloud.postView(voices, onListener);
                 Toast.makeText(context, "录音保存在：" + filePath, Toast.LENGTH_SHORT).show();
                 mTextView.setText(TimeUtils.long2String(0));
             }
         });
     }
 
+    private MenuDialog dialog;
     private ViewCloud.OnListener onListener = new ViewCloud.OnListener() {
 
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
             if (view == photoCloud) {
-                if (!photos.isEmpty()) {
-                    photos.clear();
+                if (dialog == null) {
+                    dialog = new MenuDialog(getContext());
+                    dialog.addSubItem(2, AndroidUtils.getString(R.string.take_pic), 0);
+                    dialog.addSubItem(1, AndroidUtils.getString(R.string.select_pic), 0);
                 }
-                for (int i = 0; i < 15; i++) {
-                    photos.add(R.drawable.timg);
-                }
-                photoCloud.postView(photos, onListener);
+
+                dialog.setOnItemClickListener(new MenuDialog.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(int id) {
+                        takePicture(id);
+                    }
+                });
+                dialog.show();
             } else if (view == voiceCloud) {
                 switch (motionEvent.getAction()) {
 
@@ -207,7 +219,6 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
                         mAudioRecoderUtils.stopRecord();        //结束录音（保存录音文件）
 //                        mAudioRecoderUtils.cancelRecord();    //取消录音（不保存录音文件）
                         mPop.dismiss();
-                        voices.add(R.drawable.timg);
                         voiceCloud.postView(voices, onListener);
                         voiceCloud.setAddMoreText(AndroidUtils.getString(R.string.start_recoder));
                         return true;
@@ -278,10 +289,25 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
 
         if (requestCode == VOICE_REQUEST_CODE) {
             if ((grantResults[0] == PackageManager.PERMISSION_GRANTED) && (grantResults[1] == PackageManager.PERMISSION_GRANTED)) {
-
                 mPop.showAtLocation(container, Gravity.CENTER, 0, 0);
                 mAudioRecoderUtils.startRecord();
-
+            } else {
+                Toast.makeText(context, "已拒绝权限！", Toast.LENGTH_SHORT).show();
+            }
+        }else if(requestCode == SELECT_PHOTO){
+            if ((grantResults[0] == PackageManager.PERMISSION_GRANTED) && (grantResults[1] == PackageManager.PERMISSION_GRANTED)) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(intent, GET_PICTURE);
+            } else {
+                Toast.makeText(context, "已拒绝权限！", Toast.LENGTH_SHORT).show();
+            }
+        }else if(requestCode == TAKE_PHOTO){
+            if ((grantResults[0] == PackageManager.PERMISSION_GRANTED) && (grantResults[1] == PackageManager.PERMISSION_GRANTED)) {
+                Intent intent = new Intent();
+                intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent, TAKE_PICTURE);
             } else {
                 Toast.makeText(context, "已拒绝权限！", Toast.LENGTH_SHORT).show();
             }
@@ -297,44 +323,37 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
             Toast.makeText(context, AndroidUtils.getString(R.string.sm_name), Toast.LENGTH_SHORT).show();
         } else if (view == desc) {
             Toast.makeText(context, AndroidUtils.getString(R.string.sm_desc), Toast.LENGTH_SHORT).show();
-        } else if (view == video) {
-            Toast.makeText(context, AndroidUtils.getString(R.string.video_push), Toast.LENGTH_SHORT).show();
-        } else if (view == voice) {
-            Toast.makeText(context, AndroidUtils.getString(R.string.voice_push), Toast.LENGTH_SHORT).show();
-            if (view == loaction) {
-                Toast.makeText(context, AndroidUtils.getString(R.string.my_location), Toast.LENGTH_SHORT).show();
-            } else if (view == name) {
-                Toast.makeText(context, AndroidUtils.getString(R.string.sm_name), Toast.LENGTH_SHORT).show();
-            } else if (view == desc) {
-                Toast.makeText(context, AndroidUtils.getString(R.string.sm_desc), Toast.LENGTH_SHORT).show();
-            } else if (view == video) {
-                Toast.makeText(context, AndroidUtils.getString(R.string.video_push), Toast.LENGTH_SHORT).show();
-            }
-//            else if (view == photo) {
-//                takePicture(view.getId());
-//                Toast.makeText(context, AndroidUtils.getString(R.string.take_photo), Toast.LENGTH_SHORT).show();
-//            }
-            else if (view == voice) {
-                Toast.makeText(context, AndroidUtils.getString(R.string.voice_push), Toast.LENGTH_SHORT).show();
-
-            }
         }
     }
 
     private void takePicture(int id) {
         Intent intent = new Intent();
-        switch (id) {
-            case GET_PICTURE:
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(intent, GET_PICTURE);
-                break;
-            case TAKE_PICTURE:
-                intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, TAKE_PICTURE);
-                break;
-            default:
-                break;
+        if ((ContextCompat.checkSelfPermission(context,
+                Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED)) {
+
+            switch (id) {
+                case GET_PICTURE:
+                    intent.setType("image/*");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(intent, GET_PICTURE);
+                    break;
+                case TAKE_PICTURE:
+                    intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, TAKE_PICTURE);
+                    break;
+                default:
+                    break;
+            }
+
+        } else {
+            //请求获取摄像头权限
+            if(id == 1){
+                ActivityCompat.requestPermissions((Activity) context,
+                        new String[]{Manifest.permission.CAMERA}, SELECT_PHOTO);
+            }else if(id == 2){
+                ActivityCompat.requestPermissions((Activity) context,
+                        new String[]{Manifest.permission.CAMERA}, TAKE_PHOTO);
+            }
         }
     }
 
@@ -349,6 +368,8 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
                         if (inputStream != null) {
                             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                             inputStream.close();
+                            photos.add(bitmap);
+                            photoCloud.postView(photos, onListener);
                         }
 
                     } catch (IOException e) {
@@ -357,7 +378,10 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
                 }
                 break;
             case TAKE_PICTURE:
-
+                Bundle bundle = data.getExtras();
+                Bitmap bitmap = (Bitmap) bundle.get("data");
+                photos.add(bitmap);
+                photoCloud.postView(photos, onListener);
                 break;
             default:
                 break;

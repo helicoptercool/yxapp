@@ -1,6 +1,7 @@
 package com.ty.app.yxapp.dwcenter.ui.widget;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.ty.app.yxapp.dwcenter.R;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -88,7 +90,7 @@ public class ViewCloud extends ViewGroup {
     }
 
 
-    public void postView(final List<Integer> list, final OnListener onListener) {
+    public void postView(final List<? extends Object> list, final OnListener onListener) {
         if (list == null) return;
 
         if (getChildCount() > 0) {
@@ -102,7 +104,14 @@ public class ViewCloud extends ViewGroup {
             addView(frameLayout, new LayoutParams(AndroidUtils.dp(70), AndroidUtils.dp(70)));
 
             AddMoreCell addMore = new AddMoreCell(context);
-            addMore.setImg(list.get(i));
+            addMore.setImg(R.drawable.timg);
+            if(list.get(i) instanceof Integer){
+                addMore.setImg((Integer) list.get(i));
+            }else if(list.get(i) instanceof String){
+
+            }else if(list.get(i) instanceof Bitmap){
+                addMore.setImg((Bitmap) list.get(i));
+            }
             frameLayout.addView(addMore, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
             ImageView close = new ImageView(context);
