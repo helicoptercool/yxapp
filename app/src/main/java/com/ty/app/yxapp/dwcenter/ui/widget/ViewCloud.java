@@ -3,6 +3,7 @@ package com.ty.app.yxapp.dwcenter.ui.widget;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -26,6 +27,8 @@ public class ViewCloud extends ViewGroup {
     private int mViewBorder = AndroidUtils.dp(2);
     private int totalHeight;
     private int mTagBorderHor = AndroidUtils.dp(1);
+    private AddMoreCell addMoreCell;
+
 
     public ViewCloud(Context context) {
         super(context);
@@ -86,9 +89,9 @@ public class ViewCloud extends ViewGroup {
 
 
     public void postView(final List<Integer> list, final OnListener onListener) {
-        if(list == null) return;
+        if (list == null) return;
 
-        if(getChildCount() > 0){
+        if (getChildCount() > 0) {
             removeAllViews();
             totalHeight = 0;
             totalWidth = 0;
@@ -96,47 +99,53 @@ public class ViewCloud extends ViewGroup {
         for (int i = 0; i < list.size(); i++) {
             final int j = i;
             FrameLayout frameLayout = new FrameLayout(context);
-            addView(frameLayout,new LayoutParams(AndroidUtils.dp(70),AndroidUtils.dp(70)));
+            addView(frameLayout, new LayoutParams(AndroidUtils.dp(70), AndroidUtils.dp(70)));
 
             AddMoreCell addMore = new AddMoreCell(context);
             addMore.setImg(list.get(i));
-            frameLayout.addView(addMore,new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
+            frameLayout.addView(addMore, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
             ImageView close = new ImageView(context);
             close.setImageResource(R.mipmap.ic_launcher);
-            FrameLayout.LayoutParams closeFl = new FrameLayout.LayoutParams(AndroidUtils.dp(30),AndroidUtils.dp(30));
-            closeFl.gravity = Gravity.RIGHT|Gravity.TOP;
-            frameLayout.addView(close,closeFl);
+            FrameLayout.LayoutParams closeFl = new FrameLayout.LayoutParams(AndroidUtils.dp(30), AndroidUtils.dp(30));
+            closeFl.gravity = Gravity.RIGHT | Gravity.TOP;
+            frameLayout.addView(close, closeFl);
             close.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(onListener != null){
-                        onListener.close(j,ViewCloud.this);
+                    if (onListener != null) {
+                        onListener.close(j, ViewCloud.this);
                     }
                 }
             });
 
-            if(i == list.size()-1){
-                AddMoreCell addMoreCell = new AddMoreCell(context);
-                addMoreCell.setOnClickListener(new OnClickListener() {
+            if (i == list.size() - 1) {
+                addMoreCell = new AddMoreCell(context);
+                addMoreCell.setOnTouchListener(new OnTouchListener() {
                     @Override
-                    public void onClick(View view) {
-                        if(onListener != null) onListener.addView(ViewCloud.this);
+                    public boolean onTouch(View view, MotionEvent motionEvent) {
+                        if(onListener != null){
+                            return onListener.onTouch(ViewCloud.this,motionEvent);
+                        }
+                        return false;
                     }
                 });
-                addView(addMoreCell,new LayoutParams(AndroidUtils.dp(70),AndroidUtils.dp(70)));
+                addView(addMoreCell, new LayoutParams(AndroidUtils.dp(70), AndroidUtils.dp(70)));
             }
         }
 
-        if(list.isEmpty()){
-            AddMoreCell addMoreCell = new AddMoreCell(context);
-            addMoreCell.setOnClickListener(new OnClickListener() {
+        if (list.isEmpty()) {
+            addMoreCell = new AddMoreCell(context);
+            addMoreCell.setOnTouchListener(new OnTouchListener() {
                 @Override
-                public void onClick(View view) {
-                    if(onListener != null) onListener.addView(ViewCloud.this);
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    if(onListener != null){
+                        return onListener.onTouch(ViewCloud.this,motionEvent);
+                    }
+                    return false;
                 }
             });
-            addView(addMoreCell,new LayoutParams(AndroidUtils.dp(70),AndroidUtils.dp(70)));
+            addView(addMoreCell, new LayoutParams(AndroidUtils.dp(70), AndroidUtils.dp(70)));
         }
 
         postInvalidate();
@@ -149,8 +158,14 @@ public class ViewCloud extends ViewGroup {
     }
 
 
-    public interface OnListener{
-        void addView(View view);
-        void close(int i,View view);
+    public void setAddMoreText(String text) {
+        addMoreCell.setText(text);
+    }
+
+
+    public interface OnListener {
+        boolean onTouch(View view,MotionEvent motionEvent);
+
+        void close(int i, View view);
     }
 }
