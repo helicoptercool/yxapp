@@ -26,6 +26,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ty.app.yxapp.dwcenter.R;
+import com.ty.app.yxapp.dwcenter.ui.activities.BasicMapActivity;
+import com.ty.app.yxapp.dwcenter.ui.activities.EditeActivity;
 import com.ty.app.yxapp.dwcenter.ui.widget.MenuDialog;
 import com.ty.app.yxapp.dwcenter.ui.widget.ViewCloud;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
@@ -67,6 +69,7 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
 
     private static final int GET_PICTURE = 1;
     private static final int TAKE_PICTURE = 2;
+    private static final int TAKE_VIDEO_RESULT = 3;
     private static final int VOICE_REQUEST_CODE = 66;
     private static final int TAKE_PHOTO = 67;
     private static final int SELECT_PHOTO = 68;
@@ -91,11 +94,18 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
     public View onCreate() {
         context = getContext();
         actionBar.setVisibility(View.VISIBLE);
+        actionBar.setRightView(AndroidUtils.getString(R.string.submit), 0, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context,"提交...",Toast.LENGTH_SHORT).show();
+            }
+        });
         actionBar.setCenterView(AndroidUtils.getString(R.string.push_work));
 
         ScrollView scrollView = new ScrollView(context);
         scrollView.setId(R.id.second_pager_scroll);
         container = new LinearLayout(context);
+        container.setBackgroundColor(0xFFF5F5F5);
         container.setOrientation(LinearLayout.VERTICAL);
         container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));
@@ -126,7 +136,8 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
         photoCon.addView(pcon, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         photoCloud = new ViewCloud(context);
-        photoCloud.postView(photos, onListener);
+        photoCloud.postView(photos);
+        photoCloud.setOnListener(onListener);
         pcon.addView(photoCloud, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         container.addView(photoCon);
@@ -138,7 +149,8 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
         voiceCon.addView(vcon, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         voiceCloud = new ViewCloud(context);
-        voiceCloud.postView(voices, onListener);
+        voiceCloud.postView(voices);
+        voiceCloud.setOnListener(onListener);
         voiceCloud.setAddMoreText(AndroidUtils.getString(R.string.start_recoder));
         vcon.addView(voiceCloud, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -151,21 +163,21 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
         videoCon.addView(videoC, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         videoCloud = new ViewCloud(context);
-        videoCloud.postView(videos, onListener);
+        videoCloud.postView(videos);
+        videoCloud.setOnListener(onListener);
         videoC.addView(videoCloud, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         container.addView(videoCon);
+
+        View view = new View(context);
+        container.addView(view,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                AndroidUtils.dp(30)));
 
         init();
         return scrollView;
     }
 
     public void init() {
-        loaction.setTitleValue("Loaction");
-        name.setTitleValue("name");
-        desc.setTitleValue("desc");
-
-
         final View view = View.inflate(context, R.layout.layout_microphone, null);
         mPop = new PopupWindowFactory(context, view);
 
@@ -189,7 +201,7 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
             @Override
             public void onStop(String filePath) {
                 voices.add(filePath);
-                voiceCloud.postView(voices, onListener);
+                voiceCloud.postView(voices);
                 Toast.makeText(context, "录音保存在：" + filePath, Toast.LENGTH_SHORT).show();
                 mTextView.setText(TimeUtils.long2String(0));
             }
@@ -202,19 +214,24 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
             if (view == photoCloud) {
-                if (dialog == null) {
-                    dialog = new MenuDialog(getContext());
-                    dialog.addSubItem(2, AndroidUtils.getString(R.string.take_pic), 0);
-                    dialog.addSubItem(1, AndroidUtils.getString(R.string.select_pic), 0);
-                }
 
-                dialog.setOnItemClickListener(new MenuDialog.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(int id) {
-                        takePicture(id);
-                    }
-                });
-                dialog.show();
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_UP:
+                        if (dialog == null) {
+                            dialog = new MenuDialog(getContext());
+                            dialog.addSubItem(2, AndroidUtils.getString(R.string.take_pic), 0);
+                            dialog.addSubItem(1, AndroidUtils.getString(R.string.select_pic), 0);
+                        }
+
+                        dialog.setOnItemClickListener(new MenuDialog.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(int id) {
+                                takePicture(id);
+                            }
+                        });
+                        dialog.show();
+                        return true;
+                }
             } else if (view == voiceCloud) {
                 switch (motionEvent.getAction()) {
 
@@ -226,7 +243,7 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
                         mAudioRecoderUtils.stopRecord();        //结束录音（保存录音文件）
 //                        mAudioRecoderUtils.cancelRecord();    //取消录音（不保存录音文件）
                         mPop.dismiss();
-                        voiceCloud.postView(voices, onListener);
+                        voiceCloud.postView(voices);
                         voiceCloud.setAddMoreText(AndroidUtils.getString(R.string.start_recoder));
                         return true;
                     case MotionEvent.ACTION_OUTSIDE:
@@ -234,14 +251,29 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
                         return true;
                 }
             } else if (view == videoCloud) {
-                Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-                try {
-                    Uri fileUri = Uri.fromFile(createMediaFile());
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-                    intent.addCategory("android.intent.category.DEFAULT");
-                    startActivityForResult(intent, TAKE_VIDEO);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                switch (motionEvent.getAction()) {
+
+                    case MotionEvent.ACTION_UP:
+                        if ((ContextCompat.checkSelfPermission(context,
+                                Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) &&
+                                (ContextCompat.checkSelfPermission(context,
+                                        Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
+
+                            Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+                            try {
+                                Uri fileUri = Uri.fromFile(createMediaFile());
+                                intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+                                intent.addCategory("android.intent.category.DEFAULT");
+                                startActivityForResult(intent, TAKE_VIDEO);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            //请求获取摄像头权限
+                            ActivityCompat.requestPermissions((Activity) context,
+                                    new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE}, TAKE_VIDEO);
+                        }
+                        return true;
                 }
             }
             return true;
@@ -253,31 +285,31 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
                 if (!photos.isEmpty()) {
                     photos.remove(i);
                 }
-                photoCloud.postView(photos, onListener);
+                photoCloud.postView(photos);
             } else if (view == voiceCloud) {
                 if (!voices.isEmpty()) {
-                    if(!TextUtils.isEmpty(voices.get(i))){
+                    if (!TextUtils.isEmpty(voices.get(i))) {
                         File file = new File(voices.get(i));
-                        if(file.exists()){
+                        if (file.exists()) {
                             file.delete();
                         }
                     }
                     voices.remove(i);
                 }
                 voiceCloud.setAddMoreText(AndroidUtils.getString(R.string.start_recoder));
-                voiceCloud.postView(voices, onListener);
+                voiceCloud.postView(voices);
             } else if (view == videoCloud) {
                 if (!videos.isEmpty()) {
-                    if(videos.get(i) != null){
-                        String filePath = AndroidUtils.getPath(context,videos.get(i));
+                    if (videos.get(i) != null) {
+                        String filePath = AndroidUtils.getPath(context, videos.get(i));
                         File file = new File(filePath);
-                        if(file != null && file.exists()){
+                        if (file != null && file.exists()) {
                             file.delete();
                         }
                     }
                     videos.remove(i);
                 }
-                voiceCloud.postView(videos, onListener);
+                videoCloud.postView(videos);
             }
         }
     };
@@ -316,22 +348,36 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
             } else {
                 Toast.makeText(context, AndroidUtils.getString(R.string.per_tip), Toast.LENGTH_SHORT).show();
             }
-        }else if(requestCode == SELECT_PHOTO){
+        } else if (requestCode == SELECT_PHOTO) {
             if ((grantResults[0] == PackageManager.PERMISSION_GRANTED) && (grantResults[1] == PackageManager.PERMISSION_GRANTED)) {
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(intent, GET_PICTURE);
             } else {
-                Toast.makeText(context,  AndroidUtils.getString(R.string.per_tip), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, AndroidUtils.getString(R.string.per_tip), Toast.LENGTH_SHORT).show();
             }
-        }else if(requestCode == TAKE_PHOTO){
+        } else if (requestCode == TAKE_PHOTO) {
             if ((grantResults[0] == PackageManager.PERMISSION_GRANTED) && (grantResults[1] == PackageManager.PERMISSION_GRANTED)) {
                 Intent intent = new Intent();
                 intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(intent, TAKE_PICTURE);
             } else {
-                Toast.makeText(context,  AndroidUtils.getString(R.string.per_tip), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, AndroidUtils.getString(R.string.per_tip), Toast.LENGTH_SHORT).show();
+            }
+        } else if (requestCode == TAKE_VIDEO_RESULT) {
+            if ((grantResults[0] == PackageManager.PERMISSION_GRANTED) && (grantResults[1] == PackageManager.PERMISSION_GRANTED)) {
+                Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+                try {
+                    Uri fileUri = Uri.fromFile(createMediaFile());
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+                    intent.addCategory("android.intent.category.DEFAULT");
+                    startActivityForResult(intent, TAKE_VIDEO);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Toast.makeText(context, AndroidUtils.getString(R.string.per_tip), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -339,12 +385,21 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
 
     @Override
     public void onClick(View view) {
+
         if (view == loaction) {
-            Toast.makeText(context, AndroidUtils.getString(R.string.my_location), Toast.LENGTH_SHORT).show();
+            //TODO:
+            Intent intent = new Intent(context, BasicMapActivity.class);
+            startActivity(intent);
         } else if (view == name) {
-            Toast.makeText(context, AndroidUtils.getString(R.string.sm_name), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(context, EditeActivity.class);
+            intent.putExtra("title",AndroidUtils.getString(R.string.sm_name));
+            intent.putExtra("value",name.getTitle());
+            startActivityForResult(intent,101);
         } else if (view == desc) {
-            Toast.makeText(context, AndroidUtils.getString(R.string.sm_desc), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(context, EditeActivity.class);
+            intent.putExtra("title",AndroidUtils.getString(R.string.sm_desc));
+            intent.putExtra("value",desc.getTitle());
+            startActivityForResult(intent,102);
         }
     }
 
@@ -368,10 +423,10 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
             }
         } else {
             //请求获取摄像头权限
-            if(id == 1){
+            if (id == 1) {
                 ActivityCompat.requestPermissions((Activity) context,
                         new String[]{Manifest.permission.CAMERA}, SELECT_PHOTO);
-            }else if(id == 2){
+            } else if (id == 2) {
                 ActivityCompat.requestPermissions((Activity) context,
                         new String[]{Manifest.permission.CAMERA}, TAKE_PHOTO);
             }
@@ -379,20 +434,20 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
     }
 
     private File createMediaFile() throws IOException {
-            File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
-                    Environment.DIRECTORY_MOVIES), "CameraDemo");
-            if (!mediaStorageDir.exists()) {
-                if (!mediaStorageDir.mkdirs()) {
-                    Log.d(TAG, "failed to create directory");
-                    return null;
-                }
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_MOVIES), "CameraDemo");
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                Log.d(TAG, "failed to create directory");
+                return null;
             }
-            // Create an image file name
-            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-            String imageFileName = "VID_" + timeStamp;
-            String suffix = ".mp4";
-            File mediaFile = new File(mediaStorageDir + File.separator + imageFileName + suffix);
-            return mediaFile;
+        }
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "VID_" + timeStamp;
+        String suffix = ".mp4";
+        File mediaFile = new File(mediaStorageDir + File.separator + imageFileName + suffix);
+        return mediaFile;
     }
 
     @Override
@@ -407,7 +462,7 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
                             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                             inputStream.close();
                             photos.add(bitmap);
-                            photoCloud.postView(photos, onListener);
+                            photoCloud.postView(photos);
                         }
 
                     } catch (IOException e) {
@@ -416,23 +471,32 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
                 }
                 break;
             case TAKE_PICTURE:
-                if(data != null){
+                if (data != null) {
                     Bundle bundle = data.getExtras();
                     Bitmap bitmap = (Bitmap) bundle.get("data");
                     photos.add(bitmap);
-                    photoCloud.postView(photos, onListener);
+                    photoCloud.postView(photos);
                 }
                 break;
             case TAKE_VIDEO:
-                if(data != null){
+                if (data != null) {
                     Bundle b = data.getExtras();
-                    if(b != null){
+                    if (b != null) {
                         Uri uri = (Uri) b.get("data");
                         videos.add(uri);
-                        videoCloud.postView(videos,onListener);
+                        videoCloud.postView(videos);
                     }
                 }
                 break;
+            case 101:
+                String work = data.getStringExtra("reValue");
+                name.setTitle(work);
+                break;
+            case 102:
+                String desc = data.getStringExtra("reValue");
+                this.desc.setTitle(desc);
+                break;
         }
     }
+
 }

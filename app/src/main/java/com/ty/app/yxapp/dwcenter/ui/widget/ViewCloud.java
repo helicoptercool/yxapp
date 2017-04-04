@@ -95,7 +95,8 @@ public class ViewCloud extends ViewGroup {
     }
 
 
-    public void postView(final List<? extends Object> list, final OnListener onListener) {
+    private OnListener onListener;
+    public void postView(final List<? extends Object> list) {
         if (list == null) return;
 
         if (getChildCount() > 0) {
@@ -141,35 +142,33 @@ public class ViewCloud extends ViewGroup {
             });
 
             if (i == list.size() - 1) {
-                addMoreCell = new AddMoreCell(context);
-                addMoreCell.setOnTouchListener(new OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View view, MotionEvent motionEvent) {
-                        if (onListener != null) {
-                            return onListener.onTouch(ViewCloud.this, motionEvent);
-                        }
-                        return false;
-                    }
-                });
-                addView(addMoreCell, new LayoutParams(AndroidUtils.dp(70), AndroidUtils.dp(70)));
+                    addMoreCell = new AddMoreCell(context);
+                    addMoreCell.setOnTouchListener(onTouchListener);
+                    addView(addMoreCell, new LayoutParams(AndroidUtils.dp(70), AndroidUtils.dp(70)));
             }
         }
 
         if (list.isEmpty()) {
-            addMoreCell = new AddMoreCell(context);
-            addMoreCell.setOnTouchListener(new OnTouchListener() {
-                @Override
-                public boolean onTouch(View view, MotionEvent motionEvent) {
-                    if (onListener != null) {
-                        return onListener.onTouch(ViewCloud.this, motionEvent);
-                    }
-                    return false;
-                }
-            });
-            addView(addMoreCell, new LayoutParams(AndroidUtils.dp(70), AndroidUtils.dp(70)));
+                addMoreCell = new AddMoreCell(context);
+                addMoreCell.setOnTouchListener(onTouchListener);
+                addView(addMoreCell, new LayoutParams(AndroidUtils.dp(70), AndroidUtils.dp(70)));
         }
 
         postInvalidate();
+    }
+
+    private OnTouchListener onTouchListener = new OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            if (onListener != null) {
+                return onListener.onTouch(ViewCloud.this, motionEvent);
+            }
+            return false;
+        }
+    };
+
+    public void setOnListener(OnListener onListener){
+        this.onListener = onListener;
     }
 
 

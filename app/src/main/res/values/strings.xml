@@ -54,5 +54,7 @@
     <string name="take_pic">拍照</string>
     <string name="select_pic">从相册选择</string>
     <string name="per_tip">需要权限才能继续</string>
+    <string name="input">请输入</string>
+    <string name="submit">确定</string>
 
 </resources>

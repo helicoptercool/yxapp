@@ -59,6 +59,9 @@
 
         <activity android:name=".ui.activities.BasicMapActivity" />
         <activity android:name=".ui.activities.AllEventActivity"></activity>
+        <activity android:name=".ui.activities.EditeActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            ></activity>
     </application>
 
 </manifest>

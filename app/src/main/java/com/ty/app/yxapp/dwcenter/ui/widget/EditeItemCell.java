@@ -184,6 +184,14 @@ public class EditeItemCell extends RelativeLayout {
         titleValue.setText(text);
     }
 
+    public String getTitle(){
+        return titleView.getText().toString();
+    }
+
+    public void setTitle(String title){
+        titleView.setText(title);
+    }
+
     public void showTitleValue(String text) {
         hideRightImg();
         setTitleValue(text);
