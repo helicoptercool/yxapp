@@ -62,6 +62,7 @@ public class RetrofitHelper {
      * Login
      */
     public  void Login(String name,String psw,OnResultListener onResultListener){
+        Log.e(TAG,"login");
         OnCallBackListener onCallBackListener = new OnCallBackListener("Login",onResultListener);
         Call<String> call = requestServer.getLoginStatus(name, psw);
         if(call != null)  call.enqueue(onCallBackListener);
@@ -92,8 +93,8 @@ public class RetrofitHelper {
 
         @Override
         public void onResponse(Call call, Response response) {
-            if(call.isCanceled())return;
             Log.e(TAG,response.message());
+            if(call.isCanceled())return;
             int code = -1;
             String message = "网络异常";
             String  url = call.request().url().toString();

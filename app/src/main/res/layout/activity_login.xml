@@ -97,22 +97,14 @@
                 android:textColor="@android:color/black"
                 />
 
-            <Button
-                android:id="@+id/bt_pwd_eye"
-                android:layout_width="23dp"
-                android:layout_height="23dp"
-                android:layout_gravity="end|center_vertical"
-                android:layout_marginRight="10dp"
-                android:visibility="gone"
-                android:background="@drawable/eye_off" />
 
             <Button
                 android:id="@+id/bt_pwd_clear"
                 android:layout_width="23dp"
                 android:layout_height="23dp"
                 android:layout_gravity="end|center_vertical"
-                android:layout_marginRight="33dp"
                 android:background="@drawable/close"
+                android:layout_marginRight="10dp"
                 android:visibility="invisible" />
         </FrameLayout>
 
@@ -144,7 +136,7 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/register"
+            android:id="@+id/tx_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/login"

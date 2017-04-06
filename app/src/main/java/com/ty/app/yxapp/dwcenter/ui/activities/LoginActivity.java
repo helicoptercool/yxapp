@@ -54,17 +54,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
         btUsernameClear = (Button) loginView.findViewById(R.id.bt_username_clear);
         btPwdClear = (Button) loginView.findViewById(R.id.bt_pwd_clear);
-//        btPwdEye = (Button) loginView.findViewById(R.id.bt_pwd_eye);
         btUsernameClear.setOnClickListener(this);
         btPwdClear.setOnClickListener(this);
-//        btPwdEye.setOnClickListener(this);
         initWatcher();
         etName.addTextChangedListener(usernameWatcher);
         etPass.addTextChangedListener(passwordWatcher);
 
         Button mLoginButton = (Button) loginView.findViewById(R.id.login);
         TextView mLoginError = (TextView) loginView.findViewById(R.id.forget_password);
-        TextView mRegister = (TextView) loginView.findViewById(R.id.register);
+        TextView mRegister = (TextView) loginView.findViewById(R.id.tx_register);
         mLoginButton.setOnClickListener(this);
         mLoginError.setOnClickListener(this);
         mRegister.setOnClickListener(this);
@@ -116,7 +114,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 Intent pwdIntent = new Intent(this, ForgetPwdActivity.class);
                 startActivity(pwdIntent);
                 break;
-            case R.id.register:
+            case R.id.tx_register:
                 Intent regIntent = new Intent();
                 regIntent.setClass(LoginActivity.this, RegisterActivity.class);
                 startActivity(regIntent);
@@ -129,16 +127,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             case R.id.bt_pwd_clear:
                 etPass.setText("");
                 break;
-//            case R.id.bt_pwd_eye:
-//                if (etPass.getInputType() == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
-//                    btPwdEye.setBackgroundResource(R.drawable.eye_on);
-//                    etPass.setInputType(InputType.TYPE_CLASS_TEXT);
-//                } else {
-//                    btPwdEye.setBackgroundResource(R.drawable.eye_off);
-//                    etPass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-//                }
-//                etPass.setSelection(etPass.getText().toString().length());
-//                break;
         }
     }
 
@@ -148,25 +136,24 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         Log.e(TAG,"name="+phone+",pwd="+password);
         if(TextUtils.isEmpty(phone) || TextUtils.isEmpty(password)){
             AndroidUtils.ShowToast(AndroidUtils.getString(R.string.fill_in_error));
-        }
-
-        RetrofitHelper.getInstance().Login(phone, password, new RetrofitHelper.OnResultListener() {
-            @Override
-            public void onResult(Result result) {
-                Log.e(TAG,result.getMessage()+","+result.getCode());
-                if(result.isOK()){
-                    SPManager manager = new SPManager();
-                    manager.writeSp(Constants.SP_USER_NAME,phone);
-                    manager.writeSp(Constants.SP_PASSWORD,password);
-                    manager.writeSp(Constants.SP_IS_LOGIN,true);
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                }else{
-                    AndroidUtils.ShowToast(result.getMessage());
+        }else{
+            RetrofitHelper.getInstance().Login(phone, password, new RetrofitHelper.OnResultListener() {
+                @Override
+                public void onResult(Result result) {
+                    Log.e(TAG,result.getMessage()+","+result.getCode());
+                    if(result.isOK()){
+                        SPManager manager = new SPManager();
+                        manager.writeSp(Constants.SP_USER_NAME,phone);
+                        manager.writeSp(Constants.SP_PASSWORD,password);
+                        manager.writeSp(Constants.SP_IS_LOGIN,true);
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }else{
+                        AndroidUtils.ShowToast(result.getMessage());
+                    }
                 }
-            }
-        });
-
+            });
+        }
     }
 
 }
