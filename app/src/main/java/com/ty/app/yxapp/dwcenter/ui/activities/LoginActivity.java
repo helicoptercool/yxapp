@@ -16,6 +16,9 @@ import com.ty.app.yxapp.dwcenter.network.Result;
 import com.ty.app.yxapp.dwcenter.network.RetrofitHelper;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseActivity;
 import com.ty.app.yxapp.dwcenter.network.RequestServer;
+import com.ty.app.yxapp.dwcenter.ui.activities.base.Constants;
+import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
+import com.ty.app.yxapp.dwcenter.utils.SPManager;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,12 +33,11 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG = LoginActivity.class.getSimpleName();
     private EditText etName, etPass;
-    boolean isReLogin = false;
 
 
     private Button btUsernameClear;
     private Button btPwdClear;
-    private Button btPwdEye;
+//    private Button btPwdEye;
     private TextWatcher usernameWatcher;
     private TextWatcher passwordWatcher;
 
@@ -52,10 +54,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
         btUsernameClear = (Button) loginView.findViewById(R.id.bt_username_clear);
         btPwdClear = (Button) loginView.findViewById(R.id.bt_pwd_clear);
-        btPwdEye = (Button) loginView.findViewById(R.id.bt_pwd_eye);
+//        btPwdEye = (Button) loginView.findViewById(R.id.bt_pwd_eye);
         btUsernameClear.setOnClickListener(this);
         btPwdClear.setOnClickListener(this);
-        btPwdEye.setOnClickListener(this);
+//        btPwdEye.setOnClickListener(this);
         initWatcher();
         etName.addTextChangedListener(usernameWatcher);
         etPass.addTextChangedListener(passwordWatcher);
@@ -109,8 +111,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         switch (v.getId()) {
             case R.id.login:
                 login();
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
                 break;
             case R.id.forget_password:
                 Intent pwdIntent = new Intent(this, ForgetPwdActivity.class);
@@ -129,32 +129,40 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             case R.id.bt_pwd_clear:
                 etPass.setText("");
                 break;
-            case R.id.bt_pwd_eye:
-                if (etPass.getInputType() == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
-                    btPwdEye.setBackgroundResource(R.drawable.eye_on);
-                    etPass.setInputType(InputType.TYPE_CLASS_TEXT);
-                } else {
-                    btPwdEye.setBackgroundResource(R.drawable.eye_off);
-                    etPass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                }
-                etPass.setSelection(etPass.getText().toString().length());
-                break;
+//            case R.id.bt_pwd_eye:
+//                if (etPass.getInputType() == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
+//                    btPwdEye.setBackgroundResource(R.drawable.eye_on);
+//                    etPass.setInputType(InputType.TYPE_CLASS_TEXT);
+//                } else {
+//                    btPwdEye.setBackgroundResource(R.drawable.eye_off);
+//                    etPass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+//                }
+//                etPass.setSelection(etPass.getText().toString().length());
+//                break;
         }
     }
 
     private void login() {
-        String phone = etName.getText().toString();
-        String password = etPass.getText().toString();
-        Pattern p = Pattern.compile("^[1][3,4,5,7,8][0-9]{9}$");
-        Matcher m = p.matcher(phone);
+        final String phone = etName.getText().toString();
+        final String password = etPass.getText().toString();
+        Log.e(TAG,"name="+phone+",pwd="+password);
+        if(TextUtils.isEmpty(phone) || TextUtils.isEmpty(password)){
+            AndroidUtils.ShowToast(AndroidUtils.getString(R.string.fill_in_error));
+        }
 
-        RetrofitHelper.getInstance().Login("wangjie", "wangjie123456", new RetrofitHelper.OnResultListener() {
+        RetrofitHelper.getInstance().Login(phone, password, new RetrofitHelper.OnResultListener() {
             @Override
             public void onResult(Result result) {
+                Log.e(TAG,result.getMessage()+","+result.getCode());
                 if(result.isOK()){
-                    //TODO:登录成功
+                    SPManager manager = new SPManager();
+                    manager.writeSp(Constants.SP_USER_NAME,phone);
+                    manager.writeSp(Constants.SP_PASSWORD,password);
+                    manager.writeSp(Constants.SP_IS_LOGIN,true);
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
                 }else{
-                    //TODO:登录失败
+                    AndroidUtils.ShowToast(result.getMessage());
                 }
             }
         });

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseActivity;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.MyApplication;
+import com.ty.app.yxapp.dwcenter.utils.SPManager;
 
 /**
  * Created by kss on 2017/3/26.
@@ -17,6 +18,9 @@ import com.ty.app.yxapp.dwcenter.ui.activities.base.MyApplication;
  */
 
 public class GuideActivity extends BaseActivity {
+
+    private boolean isLogin;
+
     @Override
     public void onBeforeCreate() {
         requestWindowFeature(true);
@@ -33,13 +37,22 @@ public class GuideActivity extends BaseActivity {
         imageView.setLayoutParams(fl);
 
         MyApplication.handler.postDelayed(toMainRun,1000);
+        SPManager spManager = new SPManager();
+        if(spManager.isLogin()){
+            isLogin = true;
+        }
         return imageView;
     }
 
     private Runnable toMainRun = new Runnable() {
         @Override
         public void run() {
-            Intent intent = new Intent(GuideActivity.this,LoginActivity.class);
+            Intent intent;
+            if(isLogin){
+                intent = new Intent(GuideActivity.this,MainActivity.class);
+            }else {
+                intent = new Intent(GuideActivity.this,LoginActivity.class);
+            }
             startActivity(intent);
             GuideActivity.this.finish();
         }

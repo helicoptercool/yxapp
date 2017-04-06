@@ -48,7 +48,7 @@
     <string name="loading">数据加载中...</string>
     <string name="no_data">暂无数据</string>
     <string name="no_newwork">网络异常</string>
-    <string name="start_recoder">长安录制</string>
+    <string name="start_recoder">长按录制</string>
     <string name="save_recoder">松开保存</string>
     <string name="save_recoder_tip">录制时间太短</string>
     <string name="take_pic">拍照</string>
@@ -56,6 +56,9 @@
     <string name="per_tip">需要权限才能继续</string>
     <string name="input">请输入</string>
     <string name="submit">确定</string>
+    <string name="login_error">用户名或密码错误</string>
+    <string name="fill_in_error">请输入完整信息</string>
+
 
     <!-- 便民服务-->
     <string name="common_service">常用服务</string>
@@ -72,4 +75,7 @@
     <string name="c_trip">携程</string>
     <string name="one_city">同城</string>
     <string name="baidu_yun">百度云</string>
+
+    <!--system-->
+    <string name="press_again_to_exit">再按一次退出</string>
 </resources>

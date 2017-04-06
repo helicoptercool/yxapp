@@ -93,6 +93,7 @@ public class RetrofitHelper {
         @Override
         public void onResponse(Call call, Response response) {
             if(call.isCanceled())return;
+            Log.e(TAG,response.message());
             int code = -1;
             String message = "网络异常";
             String  url = call.request().url().toString();

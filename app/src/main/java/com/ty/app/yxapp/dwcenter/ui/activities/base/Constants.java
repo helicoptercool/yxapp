@@ -4,6 +4,12 @@ package com.ty.app.yxapp.dwcenter.ui.activities.base;
  * Created by heli on 2017/4/4.
  */
 public class Constants {
+    //sharedpreferences常量
+    public static final String SP_USER_NAME = "userName";
+    public static final String SP_PASSWORD = "password";
+    public static final String SP_IS_LOGIN = "isLogin";
+
+    //便民服务常量
     public static final int EMS_INDEX = 1;
     public static final int PHONE_BILL_INDEX = 2;
     public static final int ILLEGAL_INDEX = 3;

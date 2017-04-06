@@ -45,7 +45,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="@dimen/default_edittext_height"
                 android:layout_marginTop="5dp"
-                android:inputType="number"
                 android:maxLength="15"
                 android:paddingLeft="55dp"
                 android:paddingRight="60dp"/>
@@ -104,6 +103,7 @@
                 android:layout_height="23dp"
                 android:layout_gravity="end|center_vertical"
                 android:layout_marginRight="10dp"
+                android:visibility="gone"
                 android:background="@drawable/eye_off" />
 
             <Button
