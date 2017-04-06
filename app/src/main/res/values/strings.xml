@@ -63,6 +63,10 @@
     <string name="phone_bill">话费充值</string>
     <string name="illeglal">违章查询</string>
     <string name="search">搜索</string>
+    <string name="xinlang">新浪</string>
+    <string name="sohu">搜狐</string>
+    <string name="qq">腾讯</string>
+    <string name="wangyi">网易</string>
     <string name="common_software">常用软件</string>
     <string name="us_group">美团</string>
     <string name="c_trip">携程</string>

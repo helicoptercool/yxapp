@@ -9,10 +9,28 @@ public class Constants {
     public static final int ILLEGAL_INDEX = 3;
     public static final int SEARCH_INDEX = 4;
 
-    public static final int US_GROUP_INDEX = 5;
-    public static final int CTRIP_INDEX = 6;
-    public static final int SAME_CITY_INDEX = 7;
-    public static final int BAIDU_YUN = 8;
+    public static final int SINA_INDEX = 5;
+    public static final int SOHU_INDEX = 6;
+    public static final int TECENT_INDEX = 7;
+    public static final int WANGYI_INDEX = 8;
 
-    public static final String URL_BAIDU = "http://baidu.com";
+    public static final int US_GROUP_INDEX = 21;
+    public static final int CTRIP_INDEX = 22;
+    public static final int SAME_CITY_INDEX = 23;
+    public static final int BAIDU_YUN = 24;
+
+    public static final String URL_EMS = "http://www.kuaidi100.com/";
+    public static final String URL_PHONE_BILL = "http://www.10086.cn/ln/index_240_240.html";
+    public static final String URL_ILLEGAL = "http://www.weizhang8.cn/";
+    public static final String URL_SEARCH = "http://www.baidu.com";
+
+    public static final String URL_SINA = "http://www.sina.com.cn";
+    public static final String URL_SOHU = "http://www.sohu.com";
+    public static final String URL_TECENT = "http://www.qq.com";
+    public static final String URL_WANGYI = "http://www.163.com";
+
+    public static final String URL_US_GROUP = "http://www.meituan.com";
+    public static final String URL_CTRIP = "http://www.ctrip.com/";
+    public static final String URL_SAME_CITY = "http://bj.58.com/";
+    public static final String URL_BAIDU_YUN = "https://pan.baidu.com";
 }

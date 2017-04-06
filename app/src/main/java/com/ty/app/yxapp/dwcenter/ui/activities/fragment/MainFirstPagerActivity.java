@@ -39,6 +39,7 @@ import retrofit2.Retrofit;
 
 public class MainFirstPagerActivity extends BaseFragment implements View.OnClickListener, GetWeatherListener {
     private static final String TAG = MainFirstPagerActivity.class.getSimpleName();
+    private static String weatherInfo = "";
     private Context context;
     private LooperImgCell looperImgCell;
     private ImageButtonCell tlBtn;
@@ -72,7 +73,7 @@ public class MainFirstPagerActivity extends BaseFragment implements View.OnClick
                 AndroidUtils.dp(200)));
 
         weather = new TextView(context);
-        weather.setText("天气预报");
+        weather.setText(weatherInfo);
         weather.setPadding(AndroidUtils.dp(10), AndroidUtils.dp(10), AndroidUtils.dp(10), AndroidUtils.dp(10));
         LinearLayout.LayoutParams weatherLL = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -161,6 +162,7 @@ public class MainFirstPagerActivity extends BaseFragment implements View.OnClick
     @Override
     public void onGetWeather(String weatherStr) {
         Log.e("MainFirstPagerActivity", weatherStr);
-        weather.setText(weatherStr);
+        weatherInfo = weatherStr;
+        weather.setText(weatherInfo);
     }
 }

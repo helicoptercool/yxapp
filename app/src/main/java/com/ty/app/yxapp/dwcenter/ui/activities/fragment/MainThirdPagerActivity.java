@@ -3,26 +3,18 @@ package com.ty.app.yxapp.dwcenter.ui.activities.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.widget.Space;
-import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ActionMenuView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.Toast;
 
 import com.ty.app.yxapp.dwcenter.R;
 import com.ty.app.yxapp.dwcenter.ui.activities.WebviewActivity;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.Constants;
-import com.ty.app.yxapp.dwcenter.ui.widget.EditeItemCell;
 import com.ty.app.yxapp.dwcenter.ui.widget.ImageButtonCell;
 import com.ty.app.yxapp.dwcenter.ui.widget.SectionView;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseFragment;
-import com.ty.app.yxapp.dwcenter.ui.widget.LooperImgCell;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by kss on 2017/3/26.
@@ -30,11 +22,18 @@ import java.util.List;
 
 public class MainThirdPagerActivity extends BaseFragment implements View.OnClickListener {
     private Context context;
-    private LooperImgCell looperImgCell;
     private ImageButtonCell ems;
     private ImageButtonCell phoneBill;
     private ImageButtonCell illegal;
     private ImageButtonCell search;
+    private ImageButtonCell xinlang;
+    private ImageButtonCell sohu;
+    private ImageButtonCell tencent;
+    private ImageButtonCell wangyi;
+    private ImageButtonCell usGroup;
+    private ImageButtonCell ctrip;
+    private ImageButtonCell sameCity;
+    private ImageButtonCell baiduyun;
 
     @Override
     public void onBeforeCreate() {
@@ -55,8 +54,7 @@ public class MainThirdPagerActivity extends BaseFragment implements View.OnClick
         actionBar.setCenterView(AndroidUtils.getString(R.string.user_center));
 
         SectionView commonServ = new SectionView(context, AndroidUtils.getString(R.string.common_service));
-        EditeItemCell loaction = new EditeItemCell(context, AndroidUtils.getString(R.string.common_service));
-//        myLocation.addView(loaction);
+//        EditeItemCell commonServ = new EditeItemCell(context, AndroidUtils.getString(R.string.common_service));
         cont.addView(commonServ);
 
 
@@ -73,7 +71,6 @@ public class MainThirdPagerActivity extends BaseFragment implements View.OnClick
         LinearLayout.LayoutParams emsll = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
         emsll.weight = 1;
         ems.setPicture(R.mipmap.yiwancheng, 40, 40);
-//        blBtn0.setPicture(R.mipmap.yiwancheng);
         commonServiceCon.addView(ems, emsll);
 
         phoneBill = new ImageButtonCell(context, AndroidUtils.getString(R.string.phone_bill));
@@ -114,42 +111,42 @@ public class MainThirdPagerActivity extends BaseFragment implements View.OnClick
         bcLL.setMargins(0, AndroidUtils.dp(25), 0, 0);
         cont.addView(commonServiceCon1, bcLL1);
 
-        ImageButtonCell ems1 = new ImageButtonCell(context, AndroidUtils.getString(R.string.ems));
-        ems1.setTextType();
+        xinlang = new ImageButtonCell(context, AndroidUtils.getString(R.string.xinlang));
+        xinlang.setTextType();
 //        blBtn.setOnClickListener(this);
-        LinearLayout.LayoutParams emsll1 = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
-        emsll1.weight = 1;
-        ems1.setPicture(R.mipmap.yiwancheng, 40, 40);
+        LinearLayout.LayoutParams xinlangll = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
+        xinlangll.weight = 1;
+        xinlang.setPicture(R.mipmap.yiwancheng, 40, 40);
 //        blBtn0.setPicture(R.mipmap.yiwancheng);
-        commonServiceCon1.addView(ems1, emsll1);
+        commonServiceCon1.addView(xinlang, xinlangll);
 
-        ImageButtonCell phoneBill1 = new ImageButtonCell(context, AndroidUtils.getString(R.string.phone_bill));
-        phoneBill1.setTextType();
+        sohu = new ImageButtonCell(context, AndroidUtils.getString(R.string.sohu));
+        sohu.setTextType();
 //        brBtn.setOnClickListener(this);
-        LinearLayout.LayoutParams phoneBiLL1 = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
-        phoneBiLL1.weight = 1;
-        phoneBill1.setPicture(R.mipmap.yiwancheng, 40, 40);
-        commonServiceCon1.addView(phoneBill1, phoneBiLL1);
+        LinearLayout.LayoutParams sohull = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
+        sohull.weight = 1;
+        sohu.setPicture(R.mipmap.yiwancheng, 40, 40);
+        commonServiceCon1.addView(sohu, sohull);
 
-        ImageButtonCell illegal1 = new ImageButtonCell(context, AndroidUtils.getString(R.string.illeglal));
-        illegal1.setTextType();
+        tencent = new ImageButtonCell(context, AndroidUtils.getString(R.string.qq));
+        tencent.setTextType();
 //        brBtn.setOnClickListener(this);
-        LinearLayout.LayoutParams illegalLL1 = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
-        illegalLL1.weight = 1;
-        illegal1.setPicture(R.mipmap.yiwancheng, 40, 40);
-        commonServiceCon1.addView(illegal1, illegalLL1);
+        LinearLayout.LayoutParams tencentll = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
+        tencentll.weight = 1;
+        tencent.setPicture(R.mipmap.yiwancheng, 40, 40);
+        commonServiceCon1.addView(tencent, tencentll);
 
-        ImageButtonCell search1 = new ImageButtonCell(context, AndroidUtils.getString(R.string.search));
-        search1.setTextType();
+        wangyi = new ImageButtonCell(context, AndroidUtils.getString(R.string.wangyi));
+        wangyi.setTextType();
 //        brBtn.setOnClickListener(this);
-        LinearLayout.LayoutParams searchLL1 = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
-        searchLL1.weight = 1;
-        search1.setPicture(R.mipmap.yiwancheng, 40, 40);
-        commonServiceCon1.addView(search1, searchLL1);
+        LinearLayout.LayoutParams wangyill = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
+        wangyill.weight = 1;
+        wangyi.setPicture(R.mipmap.yiwancheng, 40, 40);
+        commonServiceCon1.addView(wangyi, wangyill);
 
         Space space1 = new Space(context);
         LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 30);
-        space.setLayoutParams(params1);
+        space1.setLayoutParams(params1);
         cont.addView(space1);
 
 
@@ -164,7 +161,7 @@ public class MainThirdPagerActivity extends BaseFragment implements View.OnClick
         comSfLL.setMargins(0, AndroidUtils.dp(25), 0, 0);
         cont.addView(commonSfCon, comSfLL);
 
-        ImageButtonCell usGroup = new ImageButtonCell(context, AndroidUtils.getString(R.string.us_group));
+        usGroup = new ImageButtonCell(context, AndroidUtils.getString(R.string.us_group));
         usGroup.setTextType();
 //        blBtn.setOnClickListener(this);
         LinearLayout.LayoutParams usGroupll = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -173,7 +170,7 @@ public class MainThirdPagerActivity extends BaseFragment implements View.OnClick
 //        blBtn0.setPicture(R.mipmap.yiwancheng);
         commonSfCon.addView(usGroup, usGroupll);
 
-        ImageButtonCell ctrip = new ImageButtonCell(context, AndroidUtils.getString(R.string.c_trip));
+        ctrip = new ImageButtonCell(context, AndroidUtils.getString(R.string.c_trip));
         ctrip.setTextType();
 //        brBtn.setOnClickListener(this);
         LinearLayout.LayoutParams cTripLL = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -181,15 +178,15 @@ public class MainThirdPagerActivity extends BaseFragment implements View.OnClick
         ctrip.setPicture(R.mipmap.yiwancheng, 40, 40);
         commonSfCon.addView(ctrip, cTripLL);
 
-        ImageButtonCell city = new ImageButtonCell(context, AndroidUtils.getString(R.string.one_city));
-        city.setTextType();
+        sameCity = new ImageButtonCell(context, AndroidUtils.getString(R.string.one_city));
+        sameCity.setTextType();
 //        brBtn.setOnClickListener(this);
         LinearLayout.LayoutParams cityLL = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
         cityLL.weight = 1;
-        city.setPicture(R.mipmap.yiwancheng, 40, 40);
-        commonSfCon.addView(city, cityLL);
+        sameCity.setPicture(R.mipmap.yiwancheng, 40, 40);
+        commonSfCon.addView(sameCity, cityLL);
 
-        ImageButtonCell baiduyun = new ImageButtonCell(context, AndroidUtils.getString(R.string.baidu_yun));
+        baiduyun = new ImageButtonCell(context, AndroidUtils.getString(R.string.baidu_yun));
         baiduyun.setTextType();
 //        brBtn.setOnClickListener(this);
         LinearLayout.LayoutParams baiduyunLL = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -216,6 +213,22 @@ public class MainThirdPagerActivity extends BaseFragment implements View.OnClick
             intent.putExtra("url", Constants.ILLEGAL_INDEX);
         } else if (v == search) {
             intent.putExtra("url", Constants.SEARCH_INDEX);
+        } else if (v == xinlang) {
+            intent.putExtra("url",Constants.SINA_INDEX);
+        } else if (v == sohu) {
+            intent.putExtra("url",Constants.SOHU_INDEX);
+        } else if (v == tencent) {
+            intent.putExtra("url",Constants.TECENT_INDEX);
+        } else if (v == wangyi) {
+            intent.putExtra("url",Constants.WANGYI_INDEX);
+        } else if (v == usGroup) {
+            intent.putExtra("url",Constants.US_GROUP_INDEX);
+        } else if (v == ctrip) {
+            intent.putExtra("url",Constants.CTRIP_INDEX);
+        } else if (v == sameCity) {
+            intent.putExtra("url",Constants.SAME_CITY_INDEX);
+        } else if (v == baiduyun) {
+            intent.putExtra("url",Constants.BAIDU_YUN);
         }
         startActivity(intent);
     }
