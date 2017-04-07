@@ -38,6 +38,14 @@ public class AllEventActivity extends BaseActivity implements AdapterView.OnItem
 
     @Override
     public View onCreate() {
+        actionBar.setVisibility(View.VISIBLE);
+        actionBar.setCenterView(AndroidUtils.getString(R.string.all_event));
+        actionBar.setLeftView("", R.mipmap.back, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         context = getBaseContext();
         view = (RelativeLayout) getLayoutInflater().inflate(R.layout.activity_all_event, null);
         eventLv = (ListView) view.findViewById(R.id.listview_event);

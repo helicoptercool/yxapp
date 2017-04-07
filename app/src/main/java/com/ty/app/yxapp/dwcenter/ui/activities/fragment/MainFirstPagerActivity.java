@@ -11,10 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ty.app.yxapp.dwcenter.R;
-import com.ty.app.yxapp.dwcenter.bean.Event;
 import com.ty.app.yxapp.dwcenter.network.RequestServer;
-import com.ty.app.yxapp.dwcenter.network.Result;
-import com.ty.app.yxapp.dwcenter.network.RetrofitHelper;
 import com.ty.app.yxapp.dwcenter.ui.activities.AllEventActivity;
 import com.ty.app.yxapp.dwcenter.ui.activities.BasicMapActivity;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
@@ -25,13 +22,7 @@ import com.ty.app.yxapp.dwcenter.utils.GetWeatherListener;
 import com.ty.app.yxapp.dwcenter.network.MapService;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 /**
  * Created by kss on 2017/3/26.
@@ -113,7 +104,7 @@ public class MainFirstPagerActivity extends BaseFragment implements View.OnClick
         bcLL.setMargins(0, AndroidUtils.dp(25), 0, 0);
         selectCon.addView(bottomCon, bcLL);
 
-        blBtn = new ImageButtonCell(context, AndroidUtils.getString(R.string.all_st));
+        blBtn = new ImageButtonCell(context, AndroidUtils.getString(R.string.all_event));
         blBtn.setOnClickListener(this);
         LinearLayout.LayoutParams blbLL = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
         blbLL.weight = 1;
