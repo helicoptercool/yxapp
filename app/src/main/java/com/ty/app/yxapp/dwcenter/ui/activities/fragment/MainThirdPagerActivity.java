@@ -108,12 +108,12 @@ public class MainThirdPagerActivity extends BaseFragment implements View.OnClick
         commonServiceCon1.setOrientation(LinearLayout.HORIZONTAL);
         LinearLayout.LayoutParams bcLL1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        bcLL.setMargins(0, AndroidUtils.dp(25), 0, 0);
+        bcLL1.setMargins(0, AndroidUtils.dp(25), 0, 0);
         cont.addView(commonServiceCon1, bcLL1);
 
         xinlang = new ImageButtonCell(context, AndroidUtils.getString(R.string.xinlang));
         xinlang.setTextType();
-//        blBtn.setOnClickListener(this);
+        xinlang.setOnClickListener(this);
         LinearLayout.LayoutParams xinlangll = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
         xinlangll.weight = 1;
         xinlang.setPicture(R.mipmap.yiwancheng, 40, 40);
@@ -122,7 +122,7 @@ public class MainThirdPagerActivity extends BaseFragment implements View.OnClick
 
         sohu = new ImageButtonCell(context, AndroidUtils.getString(R.string.sohu));
         sohu.setTextType();
-//        brBtn.setOnClickListener(this);
+        sohu.setOnClickListener(this);
         LinearLayout.LayoutParams sohull = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
         sohull.weight = 1;
         sohu.setPicture(R.mipmap.yiwancheng, 40, 40);
@@ -130,7 +130,7 @@ public class MainThirdPagerActivity extends BaseFragment implements View.OnClick
 
         tencent = new ImageButtonCell(context, AndroidUtils.getString(R.string.qq));
         tencent.setTextType();
-//        brBtn.setOnClickListener(this);
+        tencent.setOnClickListener(this);
         LinearLayout.LayoutParams tencentll = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
         tencentll.weight = 1;
         tencent.setPicture(R.mipmap.yiwancheng, 40, 40);
@@ -138,7 +138,7 @@ public class MainThirdPagerActivity extends BaseFragment implements View.OnClick
 
         wangyi = new ImageButtonCell(context, AndroidUtils.getString(R.string.wangyi));
         wangyi.setTextType();
-//        brBtn.setOnClickListener(this);
+        wangyi.setOnClickListener(this);
         LinearLayout.LayoutParams wangyill = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
         wangyill.weight = 1;
         wangyi.setPicture(R.mipmap.yiwancheng, 40, 40);
@@ -163,7 +163,7 @@ public class MainThirdPagerActivity extends BaseFragment implements View.OnClick
 
         usGroup = new ImageButtonCell(context, AndroidUtils.getString(R.string.us_group));
         usGroup.setTextType();
-//        blBtn.setOnClickListener(this);
+        usGroup.setOnClickListener(this);
         LinearLayout.LayoutParams usGroupll = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
         usGroupll.weight = 1;
         usGroup.setPicture(R.mipmap.yiwancheng, 40, 40);
@@ -172,7 +172,7 @@ public class MainThirdPagerActivity extends BaseFragment implements View.OnClick
 
         ctrip = new ImageButtonCell(context, AndroidUtils.getString(R.string.c_trip));
         ctrip.setTextType();
-//        brBtn.setOnClickListener(this);
+        ctrip.setOnClickListener(this);
         LinearLayout.LayoutParams cTripLL = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
         cTripLL.weight = 1;
         ctrip.setPicture(R.mipmap.yiwancheng, 40, 40);
@@ -180,7 +180,7 @@ public class MainThirdPagerActivity extends BaseFragment implements View.OnClick
 
         sameCity = new ImageButtonCell(context, AndroidUtils.getString(R.string.one_city));
         sameCity.setTextType();
-//        brBtn.setOnClickListener(this);
+        sameCity.setOnClickListener(this);
         LinearLayout.LayoutParams cityLL = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
         cityLL.weight = 1;
         sameCity.setPicture(R.mipmap.yiwancheng, 40, 40);
@@ -188,7 +188,7 @@ public class MainThirdPagerActivity extends BaseFragment implements View.OnClick
 
         baiduyun = new ImageButtonCell(context, AndroidUtils.getString(R.string.baidu_yun));
         baiduyun.setTextType();
-//        brBtn.setOnClickListener(this);
+        baiduyun.setOnClickListener(this);
         LinearLayout.LayoutParams baiduyunLL = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
         baiduyunLL.weight = 1;
         baiduyun.setPicture(R.mipmap.yiwancheng, 40, 40);

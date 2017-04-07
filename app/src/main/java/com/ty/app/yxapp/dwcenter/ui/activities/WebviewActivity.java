@@ -1,5 +1,6 @@
 package com.ty.app.yxapp.dwcenter.ui.activities;
 
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -11,7 +12,7 @@ import com.ty.app.yxapp.dwcenter.ui.activities.base.Constants;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
 
 public class WebviewActivity extends BaseActivity {
-
+    private static final String TAG = WebviewActivity.class.getSimpleName();
     private WebView webView;
 
     @Override
@@ -36,8 +37,8 @@ public class WebviewActivity extends BaseActivity {
         settings.setLoadWithOverviewMode(true);
         settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
 
-        int urlAdd = getIntent().getIntExtra("url",4);
-        switch (urlAdd){
+        int urlAddr = getIntent().getIntExtra("url",4);
+        switch (urlAddr){
             case Constants.EMS_INDEX:
                 webView.loadUrl(Constants.URL_EMS);
                 break;
@@ -51,6 +52,7 @@ public class WebviewActivity extends BaseActivity {
                 webView.loadUrl(Constants.URL_SEARCH);
                 break;
             case Constants.SINA_INDEX:
+                Log.e(TAG,"url = "+Constants.URL_SINA);
                 webView.loadUrl(Constants.URL_SINA);
                 break;
             case Constants.SOHU_INDEX:
