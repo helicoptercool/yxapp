@@ -95,7 +95,7 @@ public class MainFirstPagerActivity extends BaseFragment implements View.OnClick
         tlBtn.setOnClickListener(this);
         LinearLayout.LayoutParams tlbLL = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
         tlbLL.weight = 1;
-        tlBtn.setPicture(R.mipmap.yiwancheng);
+        tlBtn.setPicture(R.mipmap.todo);
         topCon.addView(tlBtn, tlbLL);
 
         trBtn = new ImageButtonCell(context, AndroidUtils.getString(R.string.handered_st));
@@ -117,14 +117,14 @@ public class MainFirstPagerActivity extends BaseFragment implements View.OnClick
         blBtn.setOnClickListener(this);
         LinearLayout.LayoutParams blbLL = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
         blbLL.weight = 1;
-        blBtn.setPicture(R.mipmap.yiwancheng);
+        blBtn.setPicture(R.mipmap.all_event);
         bottomCon.addView(blBtn, blbLL);
 
         brBtn = new ImageButtonCell(context, AndroidUtils.getString(R.string.time_location));
         brBtn.setOnClickListener(this);
         LinearLayout.LayoutParams brbLL = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
         brbLL.weight = 1;
-        brBtn.setPicture(R.mipmap.yiwancheng);
+        brBtn.setPicture(R.mipmap.map);
         bottomCon.addView(brBtn, brbLL);
 
         init();
