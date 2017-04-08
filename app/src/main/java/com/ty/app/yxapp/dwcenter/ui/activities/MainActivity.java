@@ -29,6 +29,7 @@ public class MainActivity extends BaseActivity{
     private FragmentAdapter fragmentAdapter;
     private TabView tabView;
     private ViewPager viewPager;
+    private long exitTime = 0;
 
     @Override
     public void onBeforeCreate() {
@@ -118,6 +119,17 @@ public class MainActivity extends BaseActivity{
 
         }
     };
+
+    @Override
+    public void onBackPressed() {
+        if(System.currentTimeMillis() - exitTime > 2000){
+            AndroidUtils.ShowToast(AndroidUtils.getString(R.string.press_again_to_exit));
+            exitTime = System.currentTimeMillis();
+        }else {
+            finish();
+            System.exit(0);
+        }
+    }
 
     private class FragmentAdapter extends FragmentPagerAdapter{
 

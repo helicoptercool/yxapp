@@ -1,9 +1,7 @@
 package com.ty.app.yxapp.dwcenter.ui.activities;
 
-import android.app.Activity;
-import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -14,7 +12,7 @@ import com.ty.app.yxapp.dwcenter.ui.activities.base.Constants;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
 
 public class WebviewActivity extends BaseActivity {
-
+    private static final String TAG = WebviewActivity.class.getSimpleName();
     private WebView webView;
 
     @Override
@@ -38,6 +36,49 @@ public class WebviewActivity extends BaseActivity {
         settings.setUseWideViewPort(true);
         settings.setLoadWithOverviewMode(true);
         settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+
+        int urlAddr = getIntent().getIntExtra("url",4);
+        switch (urlAddr){
+            case Constants.EMS_INDEX:
+                webView.loadUrl(Constants.URL_EMS);
+                break;
+            case Constants.PHONE_BILL_INDEX:
+                webView.loadUrl(Constants.URL_PHONE_BILL);
+                break;
+            case Constants.ILLEGAL_INDEX:
+                webView.loadUrl(Constants.URL_ILLEGAL);
+                break;
+            case Constants.SEARCH_INDEX:
+                webView.loadUrl(Constants.URL_SEARCH);
+                break;
+            case Constants.SINA_INDEX:
+                Log.e(TAG,"url = "+Constants.URL_SINA);
+                webView.loadUrl(Constants.URL_SINA);
+                break;
+            case Constants.SOHU_INDEX:
+                webView.loadUrl(Constants.URL_SOHU);
+                break;
+            case Constants.TECENT_INDEX:
+                webView.loadUrl(Constants.URL_TECENT);
+                break;
+            case Constants.WANGYI_INDEX:
+                webView.loadUrl(Constants.URL_WANGYI);
+                break;
+            case Constants.US_GROUP_INDEX:
+                webView.loadUrl(Constants.URL_US_GROUP);
+                break;
+            case Constants.CTRIP_INDEX:
+                webView.loadUrl(Constants.URL_CTRIP);
+                break;
+            case Constants.SAME_CITY_INDEX:
+                webView.loadUrl(Constants.URL_SAME_CITY);
+                break;
+            case Constants.BAIDU_YUN:
+                webView.loadUrl(Constants.URL_BAIDU_YUN);
+                break;
+            default:
+                break;
+        }
         webView.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -45,35 +86,6 @@ public class WebviewActivity extends BaseActivity {
                 return true;
             }
         });
-        int urlAdd = getIntent().getIntExtra("url",4);
-        switch (urlAdd){
-            case Constants.EMS_INDEX:
-
-                break;
-            case Constants.PHONE_BILL_INDEX:
-
-                break;
-            case Constants.ILLEGAL_INDEX:
-
-                break;
-            case Constants.SEARCH_INDEX:
-                webView.loadUrl(Constants.URL_BAIDU);
-                break;
-            case Constants.US_GROUP_INDEX:
-
-                break;
-            case Constants.CTRIP_INDEX:
-
-                break;
-            case Constants.SAME_CITY_INDEX:
-
-                break;
-            case Constants.BAIDU_YUN:
-
-                break;
-            default:
-                break;
-        }
         return view;
     }
 }

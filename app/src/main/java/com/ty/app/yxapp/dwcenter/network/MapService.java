@@ -1,8 +1,13 @@
 package com.ty.app.yxapp.dwcenter.network;
 
+import android.app.Activity;
 import android.app.IntentService;
+import android.app.Service;
 import android.content.Intent;
 import android.content.Context;
+import android.os.Handler;
+import android.os.IBinder;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.amap.api.location.AMapLocation;
@@ -17,20 +22,30 @@ import com.amap.api.services.weather.WeatherSearchQuery;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
 import com.ty.app.yxapp.dwcenter.utils.GetWeatherListener;
 
-public class MapService extends IntentService implements AMapLocationListener, WeatherSearch.OnWeatherSearchListener {
+public class MapService extends Service implements AMapLocationListener, WeatherSearch.OnWeatherSearchListener {
 
     private static final String TAG = "MapService";
     private static GetWeatherListener mWeatherListener;
     private String city = "";
+    private Handler mHandler;
 
-    public MapService() {
-        super("MapService");
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
     }
 
     @Override
-    protected void onHandleIntent(Intent intent) {
-        setUpLocation();
-        setUpWeather();
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        mHandler = new Handler(getMainLooper());
+        new Thread() {
+            @Override
+            public void run() {
+                setUpLocation();
+                setUpWeather();
+            }
+        }.start();
+        return super.onStartCommand(intent, flags, startId);
     }
 
     public static void setGetWeatherListener(GetWeatherListener weatherListener) {
@@ -51,7 +66,7 @@ public class MapService extends IntentService implements AMapLocationListener, W
         WeatherSearchQuery mquery = null;
         if (city.equals("")) {
             mquery = new WeatherSearchQuery("北京", WeatherSearchQuery.WEATHER_TYPE_LIVE);
-        }else {
+        } else {
             mquery = new WeatherSearchQuery(city, WeatherSearchQuery.WEATHER_TYPE_LIVE);
         }
         WeatherSearch mweathersearch = new WeatherSearch(this);
@@ -61,10 +76,15 @@ public class MapService extends IntentService implements AMapLocationListener, W
     }
 
     @Override
-    public void onLocationChanged(AMapLocation aMapLocation) {
+    public void onLocationChanged(final AMapLocation aMapLocation) {
         city = aMapLocation.getCity();
-        Log.e(TAG, "locationChanged-->>" + aMapLocation.getLongitude() + ",," + aMapLocation.getLatitude());
-        AndroidUtils.ShowToast("location:" + aMapLocation.getLatitude() + "," + aMapLocation.getLongitude());
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                Log.e(TAG, "locationChanged-->>" + aMapLocation.getLongitude() + ",," + aMapLocation.getLatitude());
+                AndroidUtils.ShowToast("location:" + aMapLocation.getLatitude() + "," + aMapLocation.getLongitude());
+            }
+        });
     }
 
     @Override
@@ -74,11 +94,18 @@ public class MapService extends IntentService implements AMapLocationListener, W
             if (localWeatherLiveResult != null && localWeatherLiveResult.getLiveResult() != null) {
                 LocalWeatherLive weatherlive = localWeatherLiveResult.getLiveResult();
 
-                String weatherStr = weatherlive.getReportTime() + "发布  " + weatherlive.getWeather() + weatherlive.getTemperature() + "°"
+                final String weatherStr = weatherlive.getReportTime() + "发布  " + weatherlive.getWeather() + weatherlive.getTemperature() + "°"
                         + weatherlive.getWindDirection() + "风" + weatherlive.getWindPower() + "级"
                         + "  湿度" + weatherlive.getHumidity() + "%";
                 Log.e(TAG, "weather" + weatherStr);
-                mWeatherListener.onGetWeather(weatherStr);
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mWeatherListener != null) {
+                            mWeatherListener.onGetWeather(weatherStr);
+                        }
+                    }
+                });
             } else {
                 Log.e(TAG, "weather no result");
             }

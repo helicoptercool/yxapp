@@ -7,11 +7,16 @@ import com.google.gson.reflect.TypeToken;
 import com.ty.app.yxapp.dwcenter.BuildConfig;
 import com.ty.app.yxapp.dwcenter.bean.Event;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.Interceptor;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -62,6 +67,7 @@ public class RetrofitHelper {
      * Login
      */
     public  void Login(String name,String psw,OnResultListener onResultListener){
+        Log.e(TAG,"login");
         OnCallBackListener onCallBackListener = new OnCallBackListener("Login",onResultListener);
         Call<String> call = requestServer.getLoginStatus(name, psw);
         if(call != null)  call.enqueue(onCallBackListener);
@@ -74,6 +80,33 @@ public class RetrofitHelper {
         OnCallBackListener onCallBackListener = new OnCallBackListener("getEvents",onResultListener);
         Call<List<Event>> call = requestServer.getEvents(account);
         if(call != null) call.enqueue(onCallBackListener);
+    }
+
+
+    public void uploadFile(){
+        File file = new File("/sdcard/Pictures/myPicture/index.jpg");
+        File file1 = new File("/sdcard/Picuures/myPicture/me.txt");
+
+        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        RequestBody requestBody1 = RequestBody.create(MediaType.parse("multipart/form-data"), file1);
+        Map<String, RequestBody> params = new HashMap<>();
+
+        params.put("file\"; filename=\""+ file.getName(), requestBody);
+        params.put("file\"; filename=\""+ file1.getName(), requestBody1);
+
+        Call<String> model = requestServer.uploadFile(params);
+        model.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                Log.i("MainActivity",response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.i("错误信息：",t.getMessage());
+            }
+        });
+
     }
 
 
@@ -92,6 +125,7 @@ public class RetrofitHelper {
 
         @Override
         public void onResponse(Call call, Response response) {
+            Log.e(TAG,response.message());
             if(call.isCanceled())return;
             int code = -1;
             String message = "网络异常";
