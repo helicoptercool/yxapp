@@ -4,6 +4,7 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.database.Cursor;
+import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
@@ -12,17 +13,23 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.util.Log;
+import android.view.Display;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.ty.app.yxapp.dwcenter.ui.activities.base.MyApplication;
+
+import java.lang.reflect.Method;
 
 /**
  * Created by kss on 2017/3/26.
  */
 
 public class AndroidUtils {
-
+    private static final String TAG = "AndroidUtils";
     private static float density = 1;
+    private static Point screenSize;
 
     static {
         density = MyApplication.context.getResources().getDisplayMetrics().density;
@@ -158,6 +165,33 @@ public class AndroidUtils {
 
     public static boolean isDownloadsDocument(Uri uri) {
         return "com.android.providers.downloads.documents".equals(uri.getAuthority());
+    }
+
+
+    public static Point getRealScreenSize() {
+        if (screenSize != null) {
+            return screenSize;
+        }
+        Point size = new Point();
+        try {
+            WindowManager windowManager = (WindowManager) MyApplication.context.getSystemService(Context.WINDOW_SERVICE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                windowManager.getDefaultDisplay().getRealSize(size);
+            } else {
+                try {
+                    Method mGetRawW = Display.class.getMethod("getRawWidth");
+                    Method mGetRawH = Display.class.getMethod("getRawHeight");
+                    size.set((Integer) mGetRawW.invoke(windowManager.getDefaultDisplay()), (Integer) mGetRawH.invoke(windowManager.getDefaultDisplay()));
+                } catch (Exception e) {
+                    size.set(windowManager.getDefaultDisplay().getWidth(), windowManager.getDefaultDisplay().getHeight());
+                    Log.e(TAG,"getRealScreenSize", new Throwable(e));
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG,"getRealScreenSize", new Throwable(e));
+        }
+        screenSize = size;
+        return screenSize;
     }
 
 

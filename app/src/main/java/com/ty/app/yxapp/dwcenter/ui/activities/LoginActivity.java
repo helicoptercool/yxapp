@@ -16,7 +16,9 @@ import com.ty.app.yxapp.dwcenter.network.Result;
 import com.ty.app.yxapp.dwcenter.network.RetrofitHelper;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseActivity;
 import com.ty.app.yxapp.dwcenter.network.RequestServer;
+import com.ty.app.yxapp.dwcenter.ui.im.ChatController;
 
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -152,7 +154,21 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             @Override
             public void onResult(Result result) {
                 if(result.isOK()){
-                    //TODO:登录成功
+                    ChatController.getIntance().login("wangjie123456", "wangjie123456", new ChatController.Callback() {
+                        @Override
+                        public void success() {
+                            Log.d(TAG,"huanxin login success");
+                        }
+
+                        @Override
+                        public void failure(int code, String message) {
+                            if(code == 202){//判断当前用户没有注册环信账号
+//                                ChatController.getIntance().createAccount("","");
+                                Log.d(TAG,"create account");
+                            }
+                            Log.d(TAG,"huanxin login error:"+code+" ,message:"+message);
+                        }
+                    });
                 }else{
                     //TODO:登录失败
                 }

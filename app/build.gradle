@@ -6,6 +6,13 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
+    useLibrary 'org.apache.http.legacy'
+
+    sourceSets {//使用so文件
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
 
     defaultConfig {
         applicationId "com.ty.app.yxapp.dwcenter"
@@ -23,11 +30,17 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
-    compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'//Retrofit2����Ҫ�İ�
-    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'//ConverterFactory��Gson������
-    compile 'com.squareup.retrofit2:converter-scalars:2.0.0-beta4'//ConverterFactory��String������
+    compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
+    //Retrofit2����Ҫ�İ�
+    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
+    //ConverterFactory��Gson������
+    compile 'com.squareup.retrofit2:converter-scalars:2.0.0-beta4'
+    //ConverterFactory��String������
+    //Optional compile for GCM (Google Cloud Messaging).
+
+    compile files('libs/hyphenatechat_3.3.1.jar')
 }
