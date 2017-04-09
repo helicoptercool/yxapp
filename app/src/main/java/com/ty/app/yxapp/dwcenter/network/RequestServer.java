@@ -8,9 +8,14 @@ import com.ty.app.yxapp.dwcenter.bean.StringResult;
 import com.ty.app.yxapp.dwcenter.bean.UserInfo;
 
 import java.io.File;
+import java.util.Map;
 
 import retrofit2.Call;
+import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**
@@ -69,6 +74,13 @@ public interface RequestServer {
                                      @Query("device_id") String device_id
                                      );
 
+    @FormUrlEncoded
+    @POST("v2/sms/single_send.json")
+    Call<String> postSMS(@FieldMap Map<String,String> params);
+
+    @FormUrlEncoded
+    @POST("v2/sms/single_send.json")
+    Call<String> postSMS(@Field("apikey")String apikey, @Field("text")String text,@Field("mobile")String mobile);
 /*    @Multipart
     @POST("uploadServlet")
     Call<FileUpload> uploadFile(@PartMap Map<String, RequestBody> params);*/
