@@ -41,6 +41,12 @@ public class EditeActivity extends BaseActivity {
         String value = intent.getStringExtra("value");
 
         actionBar.setVisibility(View.VISIBLE);
+        actionBar.setLeftView("", R.mipmap.back, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         actionBar.setCenterView(TextUtils.isEmpty(title) ? AndroidUtils.getString(R.string.choice):title);
 
         LinearLayout container = new LinearLayout(context);
