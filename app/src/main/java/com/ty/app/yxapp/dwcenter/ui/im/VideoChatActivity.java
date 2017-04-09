@@ -385,7 +385,7 @@ public class VideoChatActivity extends BaseActivity implements View.OnClickListe
                         if (fError == CallError.ERROR_NO_DATA) { //没有数据
                             setCallTip(AndroidUtils.getString(R.string.no_data));
                         } else { //网络不稳定
-                            setCallTip(getString(R.string.no_newwork));
+                            setCallTip(getString(R.string.no_network));
                         }
                         break;
                     case NETWORK_NORMAL:

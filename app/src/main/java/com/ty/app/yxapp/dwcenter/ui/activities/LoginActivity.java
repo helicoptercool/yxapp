@@ -102,7 +102,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         switch (v.getId()) {
             case R.id.login:
 
-                ChatController.getIntance().login("wangjie123456", "wangjie123456", new ChatController.Callback() {
+                ChatController.getIntance().login("wangqing", "123456", new ChatController.Callback() {
                     @Override
                     public void success() {
                         Log.d(TAG,"huanxin login success");
@@ -151,24 +151,40 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         if(TextUtils.isEmpty(phone) || TextUtils.isEmpty(password)){
             AndroidUtils.ShowToast(AndroidUtils.getString(R.string.fill_in_error));
         }else{
-            RetrofitHelper.getInstance().Login(phone, password, new RetrofitHelper.OnResultListener() {
+            RetrofitHelper.getInstance().login(phone, password, new RetrofitHelper.OnResultListener() {
                 @Override
                 public void onResult(Result result) {
                     Log.e(TAG, result.getMessage() + "," + result.getCode() + "," + result.getData());
-                    if(result.getData() == null){
+                    if (result.getData() == null) {
                         AndroidUtils.ShowToast(result.getMessage());
                         return;
                     }
-                    if(Result.LOGIN_SUCCESS.equals(result.getData().toString().trim())){
-                        manager.writeSp(Constants.SP_USER_NAME,phone);
-                        manager.writeSp(Constants.SP_PASSWORD,password);
-                        manager.writeSp(Constants.SP_IS_LOGIN,true);
+                    if (Result.LOGIN_SUCCESS.equals(result.getData().toString().trim())) {
+                        manager.writeSp(Constants.SP_USER_NAME, phone);
+                        manager.writeSp(Constants.SP_PASSWORD, password);
+                        manager.writeSp(Constants.SP_IS_LOGIN, true);
                         globalUserName = phone;
 
+                        ChatController.getIntance().login(phone, password, new ChatController.Callback() {
+                            @Override
+                            public void success() {
+                                Log.d(TAG, "huanxin login success");
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void failure(int code, String message) {
+                                Log.d(TAG, "huanxin login failure:" + code + " ,message:" + message);
+                                if (code == 202) {//当前用户没有环信账号，注册环信账号
+                                    ChatController.getIntance().createAccount(phone, password);
+                                    Log.d(TAG, "huanxin createAccount success");
+                                }
+                            }
+                        });
 
 
-
-                    }else{
+                    } else {
                         AndroidUtils.ShowToast(result.getMessage());
                     }
                 }

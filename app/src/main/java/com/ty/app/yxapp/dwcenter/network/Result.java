@@ -1,11 +1,15 @@
 package com.ty.app.yxapp.dwcenter.network;
 
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.ty.app.yxapp.dwcenter.R;
 import com.ty.app.yxapp.dwcenter.bean.Event;
+import com.ty.app.yxapp.dwcenter.bean.EventUpload;
 import com.ty.app.yxapp.dwcenter.bean.FileUpload;
+import com.ty.app.yxapp.dwcenter.bean.OnlyStrResult;
+import com.ty.app.yxapp.dwcenter.bean.OrgDataInfo;
+import com.ty.app.yxapp.dwcenter.bean.StringResult;
+import com.ty.app.yxapp.dwcenter.bean.UserInfo;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
 
 import java.io.Serializable;
@@ -22,7 +26,7 @@ public class Result implements Serializable {
     private String message;
     private Object data;
     public static final String LOGIN_SUCCESS = "1";
-    private static final String LOGIN_FAIL = "-98";
+    public static final int CODE_SUCCESS = 0;
 
 
     public Result() {
@@ -55,7 +59,7 @@ public class Result implements Serializable {
     }
 
     public boolean isOK() {
-        Log.e(TAG,""+code);
+        Log.e(TAG, "" + code);
         if (code == 0) return true;
         return false;
     }
@@ -64,38 +68,104 @@ public class Result implements Serializable {
         this.data = data;
     }
 
-    public Result LoginResult(Response response) {
-        if (response.body() == null) new Result();
-        setData(response.body().toString());
-        if(!TextUtils.isEmpty(response.body().toString())){
-            switch (response.body().toString()){
-                case LOGIN_SUCCESS:
-                    setCode(1);
-                    break;
-                case LOGIN_FAIL:
-                    setCode(-98);
-                    setMessage(AndroidUtils.getString(R.string.login_error));
-                    break;
-                default:
-//                    setCode(-1);
-                    break;
-            }
+    public Result register(Response response) {
+        StringResult result = (StringResult) response.body();
+        if (result != null) {
+            setCode(result.getCode());
+            setMessage(result.getMsg());
+            setData(response.body().toString());
+        }
+        return this;
+    }
+
+    public Result loginResult(Response response) {
+/*        StringResult result = (StringResult) response.body();
+        if (result != null) {
+            setCode(result.getCode());
+            setMessage(result.getMsg());
+            setData(response.body().toString());
+        }
+        return this;*/
+
+        OnlyStrResult result = (OnlyStrResult) response.body();
+        if (LOGIN_SUCCESS.equals(result.getBody())) {
+            setCode(CODE_SUCCESS);
+            setMessage(AndroidUtils.getString(R.string.success));
+        } else {
+            setCode(-1);
+            setMessage(AndroidUtils.getString(R.string.failure));
+        }
+        return this;
+    }
+
+    public Result setPassword(Response response) {
+        StringResult result = (StringResult) response.body();
+        if (result != null) {
+            setCode(result.getCode());
+            setMessage(result.getMsg());
+            setData(result.getBody());
         }
         return this;
     }
 
     public Result getEvents(Response response) {
-        if (response.body() == null) new Result();
-        setCode(0);
-        setData(((Event)response.body()).getBody());
+        if (response.body() != null) {
+            setCode(((Event) response.body()).getCode());
+            setMessage(((Event) response.body()).getMsg());
+            setData(((Event) response.body()).getBody());
+        }
         return this;
     }
 
-    public Result uploadFile(Response response){
-        if(response.body() != null){
-            setCode(0);
-            setData(((FileUpload)response.body()).getData());
-            return this;
+    public Result reportEvent(Response response) {
+        EventUpload result = (EventUpload) response.body();
+        if (result != null) {
+            setCode(result.getCode());
+            setMessage(result.getMsg());
+            setData(result.getBody());
+        }
+        return this;
+    }
+
+    public Result getUserInfo(Response response) {
+        UserInfo result = (UserInfo) response.body();
+        if (result != null) {
+            setCode(result.getCode());
+            setMessage(result.getMsg());
+            setData(result.getBody());
+        }
+        return this;
+    }
+
+    public Result getOrgData(Response response) {
+        OrgDataInfo result = (OrgDataInfo) response.body();
+        if (result != null) {
+            setCode(result.getCode());
+            setMessage(result.getMsg());
+            setData(result.getBody());
+        }
+        return this;
+    }
+
+
+    public Result uploadFile(Response response) {
+        FileUpload result = (FileUpload) response.body();
+        if (result != null) {
+            if (result.isResult()) {
+                setCode(CODE_SUCCESS);
+                setMessage(result.getMsg());
+                setData(result.getData());
+            }
+        }
+        return this;
+    }
+
+    public Result setCoordinate(Response response){
+        StringResult result = (StringResult) response.body();
+        if(result != null){
+            setCode(result.getCode());
+            setMessage(result.getMsg());
+            setData(result.getBody());
         }
         return this;
     }
