@@ -73,13 +73,15 @@ public class ChatController {
         EMClient.getInstance().addConnectionListener(connectionListener);
     }
 
-    public void createAccount(final String username,final String pwd){
+    public void createAccount(final String username, final String pwd, final Callback callback){
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     EMClient.getInstance().createAccount(username, pwd);//同步方法
+                    if(callback != null) callback.success();
                 } catch (HyphenateException e) {
+                    if(callback != null) callback.failure(0,"");
                     Log.e(TAG,"createAccount :",new Throwable(e));
                     e.printStackTrace();
                 }

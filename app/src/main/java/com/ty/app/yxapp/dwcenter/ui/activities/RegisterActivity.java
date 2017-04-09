@@ -143,7 +143,16 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     private void register() {
         //环信注册
-        ChatController.getIntance().createAccount(etPhone.getText().toString(),etPwd.getText().toString());
-        Log.d(TAG,"huanxin createAccount success");
+        ChatController.getIntance().createAccount(etPhone.getText().toString(), etPwd.getText().toString(), new ChatController.Callback() {
+            @Override
+            public void success() {
+                Log.d(TAG,"huanxin register success");
+            }
+
+            @Override
+            public void failure(int code, String message) {
+                Log.d(TAG,"huanxin register failure");
+            }
+        });
     }
 }
