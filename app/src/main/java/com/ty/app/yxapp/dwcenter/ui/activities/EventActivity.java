@@ -101,7 +101,7 @@ public class EventActivity extends BaseActivity implements AdapterView.OnItemCli
                         public void run() {
                             eventLv.setVisibility(View.GONE);
                             emptyView.setVisibility(View.VISIBLE);
-                            emptyView.setLoadingText(AndroidUtils.getString(R.string.no_newwork));
+                            emptyView.setLoadingText(AndroidUtils.getString(R.string.no_network));
                             Toast.makeText(context,result.getMessage(),Toast.LENGTH_SHORT).show();
                         }
                     });

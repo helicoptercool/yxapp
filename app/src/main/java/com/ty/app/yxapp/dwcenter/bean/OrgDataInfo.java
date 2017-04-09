@@ -39,7 +39,7 @@ public class OrgDataInfo {
         private String name;
         private String type;
         private String pid;
-        private List users;
+        private List<User> users;
 
         public String getName() {
             return name;
@@ -73,11 +73,11 @@ public class OrgDataInfo {
             this.pid = pid;
         }
 
-        public List getUsers() {
+        public List<User> getUsers() {
             return users;
         }
 
-        public void setUsers(List users) {
+        public void setUsers(List<User> users) {
             this.users = users;
         }
     }
