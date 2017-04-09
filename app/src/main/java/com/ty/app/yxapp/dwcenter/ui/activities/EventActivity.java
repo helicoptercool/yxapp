@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.ty.app.yxapp.dwcenter.R;
-import com.ty.app.yxapp.dwcenter.bean.EventBody;
+import com.ty.app.yxapp.dwcenter.bean.Event;
 import com.ty.app.yxapp.dwcenter.network.Result;
 import com.ty.app.yxapp.dwcenter.network.RetrofitHelper;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseActivity;
@@ -27,7 +27,7 @@ public class EventActivity extends BaseActivity implements AdapterView.OnItemCli
     private Context context;
     private ListView eventLv;
     private EventAdapter mAdapter;
-    public static List<EventBody> allEvents;
+    public static List<Event.EventBody> allEvents;
     private RelativeLayout view;
     private EmptyView emptyView;
 
@@ -75,7 +75,7 @@ public class EventActivity extends BaseActivity implements AdapterView.OnItemCli
             public void onResult(final Result result) {
                 Log.e(TAG,result.getCode()+","+result.getMessage()+","+result.getData());
                 if(result.isOK()){
-                    allEvents = (List<EventBody>) result.getData();
+                    allEvents = (List<Event.EventBody>) result.getData();
                     if(allEvents != null && !allEvents.isEmpty()){
                         EventActivity.this.runOnUiThread(new Runnable() {
                             @Override

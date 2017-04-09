@@ -35,7 +35,7 @@ public class Event {
         this.body = body;
     }
 
-    private class EventBody {
+    public class EventBody {
         private String event_id;
         private String event_title;
         private String event_mc;

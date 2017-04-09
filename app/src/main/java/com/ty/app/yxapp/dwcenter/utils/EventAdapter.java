@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.ty.app.yxapp.dwcenter.R;
-import com.ty.app.yxapp.dwcenter.bean.EventBody;
+import com.ty.app.yxapp.dwcenter.bean.Event;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.List;
 public class EventAdapter extends BaseAdapter {
     private static final String TAG = EventAdapter.class.getSimpleName();
     private Context mContext;
-    private List<EventBody> mList;
+    private List<Event.EventBody> mList;
     private LayoutInflater mInflater;
     public EventAdapter(Context context){
         mContext = context;
@@ -27,7 +27,7 @@ public class EventAdapter extends BaseAdapter {
         mInflater = LayoutInflater.from(mContext);
     }
 
-    public void setList( List<EventBody> list){
+    public void setList( List<Event.EventBody> list){
         if(mList != null && !mList.isEmpty()) mList.clear();
         if(list != null && !list.isEmpty()){
             mList = list;
@@ -64,9 +64,9 @@ public class EventAdapter extends BaseAdapter {
         }
         viewHolder = (ViewHolder) convertView.getTag();
 //        viewHolder.titleTv.setText(mList.get(position).getF396());
-        viewHolder.timeTv.setText(mList.get(position).getEventEndTime());
-        viewHolder.reporterTv.setText(mList.get(position).getAccount());
-        viewHolder.effectiveTv.setText(mList.get(position).getDistrictCode());
+        viewHolder.timeTv.setText(mList.get(position).getEvent_creattime());
+        viewHolder.reporterTv.setText(mList.get(position).getEvent_account());
+        viewHolder.effectiveTv.setText(mList.get(position).getEvent_district_code());
 //        viewHolder.contentTv.setText(mList.get(position).getF397());
         return convertView;
     }
