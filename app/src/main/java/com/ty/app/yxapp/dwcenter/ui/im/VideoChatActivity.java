@@ -223,7 +223,6 @@ public class VideoChatActivity extends BaseActivity implements View.OnClickListe
         btnCon.setOrientation(LinearLayout.VERTICAL);
         RelativeLayout.LayoutParams conRl = LayoutHelper.createRelative(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT);
         conRl.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-//        conRl.setMargins(0, 0, 0, AndroidUtilities.dp(20));
         content.addView(btnCon, conRl);
 
         time = new TextView(context);
@@ -272,7 +271,7 @@ public class VideoChatActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void init() {
-
+        name.setText(userName);
         callHelper = CallManager.getInstance().getVideoCallHelper();
         CallController.getInstance().setIsSendPushIfOffline(false);
 
@@ -598,15 +597,7 @@ public class VideoChatActivity extends BaseActivity implements View.OnClickListe
 
 
     private void BuideCallMessage(String user, String message, int dir) {
-//        CallMessage callMessage = new CallMessage();
-//        callMessage.settUser(user);
-//        callMessage.setMessage(message);
-//        callMessage.setCallDirection(CallMessage.CallDirection.parse(dir));
-//        callMessage.setChatType(ChatType.Chat);
-//        callMessage.setCallType(CallMessage.CallType.VIDEO);
-//        ChatMessage videoMsg = ChatMessage.createCallMesssage(callMessage);
-//        ChatController.getInstance().saveMessage(videoMsg);
-//        NotificationController.getInstance().postNotification(NotificationController.messageChage);
+        Toast.makeText(context,message,Toast.LENGTH_SHORT).show();
     }
 
     private void addSendView() {
