@@ -111,6 +111,10 @@
         <activity android:name=".ui.activities.SetActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             />
+
+        <activity android:name=".ui.im.VideoChatActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            />
     </application>
 
 </manifest>

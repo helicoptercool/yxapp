@@ -110,11 +110,11 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
                     Intent intent = new Intent();
                     if(i == 1){
                         intent.putExtra("userName","wangjie123456");
-                    }else if(i == 2){
+                    }else if(i == 3){
                         intent.putExtra("userName","wangqing");
                     }
-                    intent.putExtra("flag", VideoChatActivity.FLAG_IN);
-                    intent.setClass(context,VideoChatActivity.class);
+                    intent.putExtra("flag", VideoChatActivity.FLAG_OUT);
+                    intent.setClass(getActivity(),VideoChatActivity.class);
                     startActivity(intent);
                 }
             });

@@ -13,7 +13,7 @@ import com.hyphenate.util.EasyUtils;
 public class CallReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (!EasyUtils.isAppRunningForeground(context)){
+//        if (!EasyUtils.isAppRunningForeground(context)){
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
@@ -25,7 +25,7 @@ public class CallReceiver extends BroadcastReceiver {
                 intent.setClass(context,VideoChatActivity.class);
                 context.startActivity(intent);
             }
-        }
+//        }
 
     }
 }

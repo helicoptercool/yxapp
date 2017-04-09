@@ -101,6 +101,25 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login:
+
+                ChatController.getIntance().login("wangjie123456", "wangjie123456", new ChatController.Callback() {
+                    @Override
+                    public void success() {
+                        Log.d(TAG,"huanxin login success");
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void failure(int code, String message) {
+                        Log.d(TAG,"huanxin login failure:"+code+" ,message:"+message);
+                        if(code == 202){//当前用户没有环信账号，注册环信账号
+//                            ChatController.getIntance().createAccount(phone,password);
+                            Log.d(TAG,"huanxin createAccount success");
+                        }
+                    }
+                });
+
 //                login();
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
@@ -145,26 +164,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         manager.writeSp(Constants.SP_PASSWORD,password);
                         manager.writeSp(Constants.SP_IS_LOGIN,true);
                         globalUserName = phone;
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
 
-                        ChatController.getIntance().login(phone, password, new ChatController.Callback() {
-                            @Override
-                            public void success() {
-                                Log.d(TAG,"huanxin login success");
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                startActivity(intent);
-                            }
 
-                            @Override
-                            public void failure(int code, String message) {
-                                Log.d(TAG,"huanxin login failure:"+code+" ,message:"+message);
-                                if(code == 202){//当前用户没有环信账号，注册环信账号
-                                    ChatController.getIntance().createAccount(phone,password);
-                                    Log.d(TAG,"huanxin createAccount success");
-                                }
-                            }
-                        });
 
 
                     }else{

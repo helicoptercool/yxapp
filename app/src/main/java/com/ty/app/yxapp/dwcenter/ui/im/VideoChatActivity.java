@@ -140,6 +140,7 @@ public class VideoChatActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public View onCreate() {
+        actionBar.setVisibility(View.GONE);
         userName = getIntent().getStringExtra("userName");
         flag = getIntent().getIntExtra("flag",0);
 
