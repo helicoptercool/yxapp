@@ -10,6 +10,7 @@ import android.widget.EditText;
 
 import com.ty.app.yxapp.dwcenter.R;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseActivity;
+import com.ty.app.yxapp.dwcenter.ui.im.ChatController;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
 
 public class RegisterActivity extends BaseActivity implements View.OnClickListener{
@@ -112,8 +113,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_register:
-                if(TextUtils.isEmpty(etPhone.getText()) || TextUtils.isEmpty(etPwd.getText()) || TextUtils.isEmpty(etRePwd.getText())){
+                if(TextUtils.isEmpty(etPhone.getText().toString()) ||
+                        TextUtils.isEmpty(etPwd.getText().toString()) ||
+                        TextUtils.isEmpty(etRePwd.getText().toString())){
+
                     AndroidUtils.ShowToast(AndroidUtils.getString(R.string.fill_in_error));
+
                 }else {
                     register();
                 }
@@ -137,6 +142,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void register() {
-
+        //环信注册
+        ChatController.getIntance().createAccount(etPhone.getText().toString(),etPwd.getText().toString());
+        Log.d(TAG,"huanxin createAccount success");
     }
 }

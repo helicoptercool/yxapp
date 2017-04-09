@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.ty.app.yxapp.dwcenter.R;
 import com.ty.app.yxapp.dwcenter.ui.activities.SelectAreaActivity;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseFragment;
+import com.ty.app.yxapp.dwcenter.ui.im.VideoChatActivity;
 import com.ty.app.yxapp.dwcenter.ui.widget.DividerSmallCell;
 import com.ty.app.yxapp.dwcenter.ui.widget.EditeItemCell;
 import com.ty.app.yxapp.dwcenter.ui.widget.SectionView;
@@ -112,7 +113,15 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
             peopleCon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(context,peopleList.get(i),Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent();
+                    if(i == 1){
+                        intent.putExtra("userName","wangjie123456");
+                    }else if(i == 2){
+                        intent.putExtra("userName","wangqing");
+                    }
+                    intent.putExtra("flag", VideoChatActivity.FLAG_IN);
+                    intent.setClass(context,VideoChatActivity.class);
+                    startActivity(intent);
                 }
             });
             peopleCon.setOrientation(LinearLayout.VERTICAL);
@@ -137,6 +146,11 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
     private void initData(){
         if(peopleList.size() > 0) peopleList.clear();
         for(int i=0;i<20;i++){
+            if(i == 1){
+                peopleList.add("kangshengsheng");
+            }else if(i == 2){
+                peopleList.add("wangqing");
+            }
             peopleList.add("people "+i);
         }
         myAdapter.notifyDataSetChanged();

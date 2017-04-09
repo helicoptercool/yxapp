@@ -1,6 +1,7 @@
 package com.ty.app.yxapp.dwcenter.ui.im;
 
 import android.content.Context;
+import android.content.IntentFilter;
 import android.util.Log;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.EMConnectionListener;
@@ -41,9 +42,9 @@ public class ChatController {
 
         registerListener();
 
-//        IntentFilter callFilter = new IntentFilter(EMClient.getInstance().callManager().getIncomingCallBroadcastAction());
-//        CallReceiver callReceiver = new CallReceiver();
-//        context.registerReceiver(callReceiver, callFilter);
+        IntentFilter callFilter = new IntentFilter(EMClient.getInstance().callManager().getIncomingCallBroadcastAction());
+        CallReceiver callReceiver = new CallReceiver();
+        context.registerReceiver(callReceiver, callFilter);
 
     }
 

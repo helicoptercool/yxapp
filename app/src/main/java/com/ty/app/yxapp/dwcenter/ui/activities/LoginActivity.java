@@ -144,12 +144,31 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 public void onResult(Result result) {
                     Log.e(TAG,result.getMessage()+","+result.getCode());
                     if(result.isOK()){
+                        Log.d(TAG,"account login success");
                         SPManager manager = new SPManager();
                         manager.writeSp(Constants.SP_USER_NAME,phone);
                         manager.writeSp(Constants.SP_PASSWORD,password);
                         manager.writeSp(Constants.SP_IS_LOGIN,true);
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
+
+                        ChatController.getIntance().login(phone, password, new ChatController.Callback() {
+                            @Override
+                            public void success() {
+                                Log.d(TAG,"huanxin login success");
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void failure(int code, String message) {
+                                Log.d(TAG,"huanxin login failure:"+code+" ,message:"+message);
+                                if(code == 202){//当前用户没有环信账号，注册环信账号
+                                    ChatController.getIntance().createAccount(phone,password);
+                                    Log.d(TAG,"huanxin createAccount success");
+                                }
+                            }
+                        });
+
+
                     }else{
                         AndroidUtils.ShowToast(result.getMessage());
                     }
