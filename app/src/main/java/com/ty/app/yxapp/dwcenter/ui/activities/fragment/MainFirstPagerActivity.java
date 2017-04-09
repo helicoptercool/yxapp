@@ -12,8 +12,10 @@ import android.widget.Toast;
 
 import com.ty.app.yxapp.dwcenter.R;
 import com.ty.app.yxapp.dwcenter.network.RequestServer;
-import com.ty.app.yxapp.dwcenter.ui.activities.AllEventActivity;
+import com.ty.app.yxapp.dwcenter.ui.activities.EventActivity;
 import com.ty.app.yxapp.dwcenter.ui.activities.BasicMapActivity;
+import com.ty.app.yxapp.dwcenter.ui.activities.SetActivity;
+import com.ty.app.yxapp.dwcenter.ui.activities.base.Constants;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseFragment;
 import com.ty.app.yxapp.dwcenter.ui.widget.ImageButtonCell;
@@ -40,6 +42,8 @@ public class MainFirstPagerActivity extends BaseFragment implements View.OnClick
     private TextView weather;
     private RequestServer mReqServer;
 
+
+
     @Override
     public View onCreate() {
         context = getContext();
@@ -55,7 +59,8 @@ public class MainFirstPagerActivity extends BaseFragment implements View.OnClick
         actionBar.setRightView("", R.mipmap.right_top_set, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "饿呢奥尔够昂偶", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, SetActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -137,13 +142,16 @@ public class MainFirstPagerActivity extends BaseFragment implements View.OnClick
 
     @Override
     public void onClick(View view) {
+        Intent eventIntent = new Intent(context,EventActivity.class);
         if (view == tlBtn) {
-            Toast.makeText(context, "agrargarg", Toast.LENGTH_SHORT).show();
+            eventIntent.putExtra("eventType", Constants.EVENT_TO_DO_INDEX);
+            startActivity(eventIntent);
         } else if (view == trBtn) {
-            Toast.makeText(context, "agrargarg", Toast.LENGTH_SHORT).show();
+            eventIntent.putExtra("eventType", Constants.EVENT_HAS_DONE_INDEX);
+            startActivity(eventIntent);
         } else if (view == blBtn) {
-            Intent intent = new Intent(context, AllEventActivity.class);
-            startActivity(intent);
+            eventIntent.putExtra("eventType", Constants.EVENT_ALL_INDEX);
+            startActivity(eventIntent);
         } else if (view == brBtn) {
             Intent intent = new Intent(context, BasicMapActivity.class);
             startActivity(intent);

@@ -18,6 +18,7 @@ import com.ty.app.yxapp.dwcenter.ui.widget.ActionBar;
 
 public abstract class BaseActivity extends AppCompatActivity {
     protected ActionBar actionBar;
+    protected String globalUserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

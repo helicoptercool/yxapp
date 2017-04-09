@@ -7,734 +7,268 @@ import java.util.List;
  */
 public class Event {
 
-    private String remark;
-    private String account;
-    private String districtCode;
-    private String villageCode;
-    private String townCode;
-    private String sAddress;
-    private int createat;
-    private String eventSource;
-    private String f397;
-    private String eventType;
-    private String eventBigType;
-    private String reporterName;
-    private String reporterPhone;
-    private String bcUserName;
-    private String bcUserMobilephone;
-    private String fImg398;
-    private String Source;
-    private String voice;
-    private int updateTime;
-    private String gridManagerRelationId;
-    private String gridId;
-    private String systemEventRecordId;
-    private int userid;
-    private String prevHandler;
-    private String prevHandlerId;
-    private String prevHanglerTime;
-    private String processInstanceHistoryId;
-    private String processInstanceId;
-    private String projectStage;
-    private String checkStage;
-    private String modifier;
-    private String modifyTime;
-    private int executeTime;
-    private String executeTime_;
-    private String checkStageName;
-    private String projectStageName;
-    private String lowerHandlerRole;
-    private String command;
-    private int lowerUserId;
-    private String lowerVillageCode;
-    private String lowerTownCode;
-    private String lowerHandleCode;
-    private String eventSourceName;
-    private String reporterNum;
-    private String eventSourceTerminal;
-    private String eventSourceTerminalName;
-    private String eventReward;
-    private String eventRewardName;
-    private String rewardStatus;
-    private String rewardTime;
-    private String rewardHandler;
-    private String rewardDetail;
-    private String bcUserCardnum;
-    private String endTimeLength;
-    private String warningTimeLength;
-    private String submitDistrictTime;
-    private String eventTimeStatus;
-    private String eventTimeStatusName;
-    private String eventBj;
-    private String f396;
-    private String f400;
-    private List<String> images;
-    private List<String> voices;
-    private List<String> video;
-    private String title;
-    private String f394;
-    private String f395;
-    private String mapImgScreen;
-    private String eventTimeStatusClass;
-    private String eventEndTime;
-    private String eventWarningTime;
-    private String applyDelayStatus;
-    private String applyDelayStatusName;
-    private String delayHandleRole;
-    private String delayHandleCode;
-    private String pcVoice;
-    private String workid;
-    private String trackid;
-    private String y;
-    private String x;
-    private int id;
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
-    }
-
-    public String getAccount() {
-        return account;
-    }
-
-    public void setDistrictCode(String districtCode) {
-        this.districtCode = districtCode;
-    }
-
-    public String getDistrictCode() {
-        return districtCode;
-    }
-
-    public void setVillageCode(String villageCode) {
-        this.villageCode = villageCode;
-    }
-
-    public String getVillageCode() {
-        return villageCode;
-    }
-
-    public void setTownCode(String townCode) {
-        this.townCode = townCode;
-    }
-
-    public String getTownCode() {
-        return townCode;
-    }
-
-    public void setSAddress(String sAddress) {
-        this.sAddress = sAddress;
-    }
-
-    public String getSAddress() {
-        return sAddress;
-    }
-
-    public void setCreateat(int createat) {
-        this.createat = createat;
-    }
-
-    public int getCreateat() {
-        return createat;
-    }
-
-    public void setEventSource(String eventSource) {
-        this.eventSource = eventSource;
-    }
-
-    public String getEventSource() {
-        return eventSource;
-    }
-
-    public void setF397(String f397) {
-        this.f397 = f397;
-    }
-
-    public String getF397() {
-        return f397;
-    }
-
-    public void setEventType(String eventType) {
-        this.eventType = eventType;
-    }
-
-    public String getEventType() {
-        return eventType;
-    }
-
-    public void setEventBigType(String eventBigType) {
-        this.eventBigType = eventBigType;
-    }
-
-    public String getEventBigType() {
-        return eventBigType;
-    }
-
-    public void setReporterName(String reporterName) {
-        this.reporterName = reporterName;
-    }
-
-    public String getReporterName() {
-        return reporterName;
-    }
-
-    public void setReporterPhone(String reporterPhone) {
-        this.reporterPhone = reporterPhone;
-    }
-
-    public String getReporterPhone() {
-        return reporterPhone;
-    }
-
-    public void setBcUserName(String bcUserName) {
-        this.bcUserName = bcUserName;
-    }
-
-    public String getBcUserName() {
-        return bcUserName;
-    }
-
-    public void setBcUserMobilephone(String bcUserMobilephone) {
-        this.bcUserMobilephone = bcUserMobilephone;
-    }
-
-    public String getBcUserMobilephone() {
-        return bcUserMobilephone;
-    }
-
-    public void setFImg398(String fImg398) {
-        this.fImg398 = fImg398;
-    }
-
-    public String getFImg398() {
-        return fImg398;
-    }
-
-    public void setSource(String Source) {
-        this.Source = Source;
-    }
-
-    public String getSource() {
-        return Source;
-    }
-
-    public void setVoice(String voice) {
-        this.voice = voice;
-    }
-
-    public String getVoice() {
-        return voice;
-    }
-
-    public void setUpdateTime(int updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public int getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setGridManagerRelationId(String gridManagerRelationId) {
-        this.gridManagerRelationId = gridManagerRelationId;
-    }
-
-    public String getGridManagerRelationId() {
-        return gridManagerRelationId;
-    }
-
-    public void setGridId(String gridId) {
-        this.gridId = gridId;
-    }
-
-    public String getGridId() {
-        return gridId;
-    }
-
-    public void setSystemEventRecordId(String systemEventRecordId) {
-        this.systemEventRecordId = systemEventRecordId;
-    }
-
-    public String getSystemEventRecordId() {
-        return systemEventRecordId;
-    }
-
-    public void setUserid(int userid) {
-        this.userid = userid;
-    }
-
-    public int getUserid() {
-        return userid;
-    }
-
-    public void setPrevHandler(String prevHandler) {
-        this.prevHandler = prevHandler;
-    }
-
-    public String getPrevHandler() {
-        return prevHandler;
-    }
-
-    public void setPrevHandlerId(String prevHandlerId) {
-        this.prevHandlerId = prevHandlerId;
-    }
-
-    public String getPrevHandlerId() {
-        return prevHandlerId;
-    }
-
-    public void setPrevHanglerTime(String prevHanglerTime) {
-        this.prevHanglerTime = prevHanglerTime;
-    }
-
-    public String getPrevHanglerTime() {
-        return prevHanglerTime;
-    }
-
-    public void setProcessInstanceHistoryId(String processInstanceHistoryId) {
-        this.processInstanceHistoryId = processInstanceHistoryId;
-    }
-
-    public String getProcessInstanceHistoryId() {
-        return processInstanceHistoryId;
-    }
-
-    public void setProcessInstanceId(String processInstanceId) {
-        this.processInstanceId = processInstanceId;
-    }
-
-    public String getProcessInstanceId() {
-        return processInstanceId;
-    }
-
-    public void setProjectStage(String projectStage) {
-        this.projectStage = projectStage;
-    }
-
-    public String getProjectStage() {
-        return projectStage;
-    }
-
-    public void setCheckStage(String checkStage) {
-        this.checkStage = checkStage;
-    }
-
-    public String getCheckStage() {
-        return checkStage;
-    }
-
-    public void setModifier(String modifier) {
-        this.modifier = modifier;
-    }
-
-    public String getModifier() {
-        return modifier;
-    }
-
-    public void setModifyTime(String modifyTime) {
-        this.modifyTime = modifyTime;
-    }
-
-    public String getModifyTime() {
-        return modifyTime;
-    }
-
-    public void setExecuteTime(int executeTime) {
-        this.executeTime = executeTime;
-    }
-
-    public int getExecuteTime() {
-        return executeTime;
-    }
-
-    public void setExecuteTime_(String executeTime_) {
-        this.executeTime_ = executeTime_;
-    }
-
-    public String getExecuteTime_() {
-        return executeTime_;
-    }
-
-    public void setCheckStageName(String checkStageName) {
-        this.checkStageName = checkStageName;
-    }
-
-    public String getCheckStageName() {
-        return checkStageName;
-    }
-
-    public void setProjectStageName(String projectStageName) {
-        this.projectStageName = projectStageName;
-    }
-
-    public String getProjectStageName() {
-        return projectStageName;
-    }
-
-    public void setLowerHandlerRole(String lowerHandlerRole) {
-        this.lowerHandlerRole = lowerHandlerRole;
-    }
-
-    public String getLowerHandlerRole() {
-        return lowerHandlerRole;
-    }
-
-    public void setCommand(String command) {
-        this.command = command;
-    }
+    private int code;
+    private String msg;
+    private EventBody body;
+    
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public EventBody getBody() {
+        return body;
+    }
+
+    public void setBody(EventBody body) {
+        this.body = body;
+    }
+
+    private class EventBody {
+        private String event_id;
+        private String event_title;
+        private String event_mc;
+        private String event_sjzt;
+        private String event_sjjd;
+        private String event_sjly;
+        private String event_zdly;
+        private String event_x;
+        private String event_y;
+        private String event_dz;
+        private String event_account;
+        private String event_xm;
+        private String event_lxfs;
+        private String event_district_code;
+        private String event_town_code;
+        private String event_village_code;
+        private String event_creattime;
+        private String event_tplj;
+        private String event_yylj;
+        private String event_splj;
+        private String event_dlmc;
+        private String event_xlmc;
+        private String event_lower_role;
+        private String event_lower_code;
+        private String event_lower_no;
+        private List event_record;
+
+        public String getEvent_id() {
+            return event_id;
+        }
+
+        public void setEvent_id(String event_id) {
+            this.event_id = event_id;
+        }
+
+        public String getEvent_title() {
+            return event_title;
+        }
+
+        public void setEvent_title(String event_title) {
+            this.event_title = event_title;
+        }
+
+        public String getEvent_mc() {
+            return event_mc;
+        }
+
+        public void setEvent_mc(String event_mc) {
+            this.event_mc = event_mc;
+        }
+
+        public String getEvent_sjzt() {
+            return event_sjzt;
+        }
+
+        public void setEvent_sjzt(String event_sjzt) {
+            this.event_sjzt = event_sjzt;
+        }
+
+        public String getEvent_sjjd() {
+            return event_sjjd;
+        }
+
+        public void setEvent_sjjd(String event_sjjd) {
+            this.event_sjjd = event_sjjd;
+        }
+
+        public String getEvent_sjly() {
+            return event_sjly;
+        }
+
+        public void setEvent_sjly(String event_sjly) {
+            this.event_sjly = event_sjly;
+        }
+
+        public String getEvent_zdly() {
+            return event_zdly;
+        }
+
+        public void setEvent_zdly(String event_zdly) {
+            this.event_zdly = event_zdly;
+        }
+
+        public String getEvent_x() {
+            return event_x;
+        }
+
+        public void setEvent_x(String event_x) {
+            this.event_x = event_x;
+        }
+
+        public String getEvent_y() {
+            return event_y;
+        }
+
+        public void setEvent_y(String event_y) {
+            this.event_y = event_y;
+        }
+
+        public String getEvent_dz() {
+            return event_dz;
+        }
+
+        public void setEvent_dz(String event_dz) {
+            this.event_dz = event_dz;
+        }
+
+        public String getEvent_account() {
+            return event_account;
+        }
+
+        public void setEvent_account(String event_account) {
+            this.event_account = event_account;
+        }
+
+        public String getEvent_xm() {
+            return event_xm;
+        }
+
+        public void setEvent_xm(String event_xm) {
+            this.event_xm = event_xm;
+        }
+
+        public String getEvent_lxfs() {
+            return event_lxfs;
+        }
+
+        public void setEvent_lxfs(String event_lxfs) {
+            this.event_lxfs = event_lxfs;
+        }
+
+        public String getEvent_district_code() {
+            return event_district_code;
+        }
+
+        public void setEvent_district_code(String event_district_code) {
+            this.event_district_code = event_district_code;
+        }
 
-    public String getCommand() {
-        return command;
-    }
-
-    public void setLowerUserId(int lowerUserId) {
-        this.lowerUserId = lowerUserId;
-    }
-
-    public int getLowerUserId() {
-        return lowerUserId;
-    }
-
-    public void setLowerVillageCode(String lowerVillageCode) {
-        this.lowerVillageCode = lowerVillageCode;
-    }
-
-    public String getLowerVillageCode() {
-        return lowerVillageCode;
-    }
-
-    public void setLowerTownCode(String lowerTownCode) {
-        this.lowerTownCode = lowerTownCode;
-    }
-
-    public String getLowerTownCode() {
-        return lowerTownCode;
-    }
-
-    public void setLowerHandleCode(String lowerHandleCode) {
-        this.lowerHandleCode = lowerHandleCode;
-    }
-
-    public String getLowerHandleCode() {
-        return lowerHandleCode;
-    }
-
-    public void setEventSourceName(String eventSourceName) {
-        this.eventSourceName = eventSourceName;
-    }
-
-    public String getEventSourceName() {
-        return eventSourceName;
-    }
-
-    public void setReporterNum(String reporterNum) {
-        this.reporterNum = reporterNum;
-    }
-
-    public String getReporterNum() {
-        return reporterNum;
-    }
-
-    public void setEventSourceTerminal(String eventSourceTerminal) {
-        this.eventSourceTerminal = eventSourceTerminal;
-    }
-
-    public String getEventSourceTerminal() {
-        return eventSourceTerminal;
-    }
-
-    public void setEventSourceTerminalName(String eventSourceTerminalName) {
-        this.eventSourceTerminalName = eventSourceTerminalName;
-    }
-
-    public String getEventSourceTerminalName() {
-        return eventSourceTerminalName;
-    }
-
-    public void setEventReward(String eventReward) {
-        this.eventReward = eventReward;
-    }
-
-    public String getEventReward() {
-        return eventReward;
-    }
-
-    public void setEventRewardName(String eventRewardName) {
-        this.eventRewardName = eventRewardName;
-    }
-
-    public String getEventRewardName() {
-        return eventRewardName;
-    }
-
-    public void setRewardStatus(String rewardStatus) {
-        this.rewardStatus = rewardStatus;
-    }
-
-    public String getRewardStatus() {
-        return rewardStatus;
-    }
-
-    public void setRewardTime(String rewardTime) {
-        this.rewardTime = rewardTime;
-    }
-
-    public String getRewardTime() {
-        return rewardTime;
-    }
-
-    public void setRewardHandler(String rewardHandler) {
-        this.rewardHandler = rewardHandler;
-    }
-
-    public String getRewardHandler() {
-        return rewardHandler;
-    }
-
-    public void setRewardDetail(String rewardDetail) {
-        this.rewardDetail = rewardDetail;
-    }
-
-    public String getRewardDetail() {
-        return rewardDetail;
-    }
-
-    public void setBcUserCardnum(String bcUserCardnum) {
-        this.bcUserCardnum = bcUserCardnum;
-    }
-
-    public String getBcUserCardnum() {
-        return bcUserCardnum;
-    }
-
-    public void setEndTimeLength(String endTimeLength) {
-        this.endTimeLength = endTimeLength;
-    }
-
-    public String getEndTimeLength() {
-        return endTimeLength;
-    }
-
-    public void setWarningTimeLength(String warningTimeLength) {
-        this.warningTimeLength = warningTimeLength;
-    }
-
-    public String getWarningTimeLength() {
-        return warningTimeLength;
-    }
-
-    public void setSubmitDistrictTime(String submitDistrictTime) {
-        this.submitDistrictTime = submitDistrictTime;
-    }
-
-    public String getSubmitDistrictTime() {
-        return submitDistrictTime;
-    }
-
-    public void setEventTimeStatus(String eventTimeStatus) {
-        this.eventTimeStatus = eventTimeStatus;
-    }
+        public String getEvent_town_code() {
+            return event_town_code;
+        }
 
-    public String getEventTimeStatus() {
-        return eventTimeStatus;
-    }
-
-    public void setEventTimeStatusName(String eventTimeStatusName) {
-        this.eventTimeStatusName = eventTimeStatusName;
-    }
-
-    public String getEventTimeStatusName() {
-        return eventTimeStatusName;
-    }
-
-    public void setEventBj(String eventBj) {
-        this.eventBj = eventBj;
-    }
-
-    public String getEventBj() {
-        return eventBj;
-    }
-
-    public void setF396(String f396) {
-        this.f396 = f396;
-    }
-
-    public String getF396() {
-        return f396;
-    }
-
-    public void setF400(String f400) {
-        this.f400 = f400;
-    }
-
-    public String getF400() {
-        return f400;
-    }
-
-    public void setImages(List<String> images) {
-        this.images = images;
-    }
-
-    public List<String> getImages() {
-        return images;
-    }
-
-    public void setVoices(List<String> voices) {
-        this.voices = voices;
-    }
-
-    public List<String> getVoices() {
-        return voices;
-    }
-
-    public void setVideo(List<String> video) {
-        this.video = video;
-    }
-
-    public List<String> getVideo() {
-        return video;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setF394(String f394) {
-        this.f394 = f394;
-    }
-
-    public String getF394() {
-        return f394;
-    }
+        public void setEvent_town_code(String event_town_code) {
+            this.event_town_code = event_town_code;
+        }
 
-    public void setF395(String f395) {
-        this.f395 = f395;
-    }
-
-    public String getF395() {
-        return f395;
-    }
-
-    public void setMapImgScreen(String mapImgScreen) {
-        this.mapImgScreen = mapImgScreen;
-    }
-
-    public String getMapImgScreen() {
-        return mapImgScreen;
-    }
-
-    public void setEventTimeStatusClass(String eventTimeStatusClass) {
-        this.eventTimeStatusClass = eventTimeStatusClass;
-    }
+        public String getEvent_village_code() {
+            return event_village_code;
+        }
 
-    public String getEventTimeStatusClass() {
-        return eventTimeStatusClass;
-    }
-
-    public void setEventEndTime(String eventEndTime) {
-        this.eventEndTime = eventEndTime;
-    }
-
-    public String getEventEndTime() {
-        return eventEndTime;
-    }
+        public void setEvent_village_code(String event_village_code) {
+            this.event_village_code = event_village_code;
+        }
 
-    public void setEventWarningTime(String eventWarningTime) {
-        this.eventWarningTime = eventWarningTime;
-    }
-
-    public String getEventWarningTime() {
-        return eventWarningTime;
-    }
-
-    public void setApplyDelayStatus(String applyDelayStatus) {
-        this.applyDelayStatus = applyDelayStatus;
-    }
+        public String getEvent_creattime() {
+            return event_creattime;
+        }
 
-    public String getApplyDelayStatus() {
-        return applyDelayStatus;
-    }
+        public void setEvent_creattime(String event_creattime) {
+            this.event_creattime = event_creattime;
+        }
 
-    public void setApplyDelayStatusName(String applyDelayStatusName) {
-        this.applyDelayStatusName = applyDelayStatusName;
-    }
+        public String getEvent_tplj() {
+            return event_tplj;
+        }
 
-    public String getApplyDelayStatusName() {
-        return applyDelayStatusName;
-    }
+        public void setEvent_tplj(String event_tplj) {
+            this.event_tplj = event_tplj;
+        }
 
-    public void setDelayHandleRole(String delayHandleRole) {
-        this.delayHandleRole = delayHandleRole;
-    }
+        public String getEvent_yylj() {
+            return event_yylj;
+        }
 
-    public String getDelayHandleRole() {
-        return delayHandleRole;
-    }
+        public void setEvent_yylj(String event_yylj) {
+            this.event_yylj = event_yylj;
+        }
 
-    public void setDelayHandleCode(String delayHandleCode) {
-        this.delayHandleCode = delayHandleCode;
-    }
+        public String getEvent_splj() {
+            return event_splj;
+        }
 
-    public String getDelayHandleCode() {
-        return delayHandleCode;
-    }
+        public void setEvent_splj(String event_splj) {
+            this.event_splj = event_splj;
+        }
 
-    public void setPcVoice(String pcVoice) {
-        this.pcVoice = pcVoice;
-    }
+        public String getEvent_dlmc() {
+            return event_dlmc;
+        }
 
-    public String getPcVoice() {
-        return pcVoice;
-    }
+        public void setEvent_dlmc(String event_dlmc) {
+            this.event_dlmc = event_dlmc;
+        }
 
-    public void setWorkid(String workid) {
-        this.workid = workid;
-    }
+        public String getEvent_xlmc() {
+            return event_xlmc;
+        }
 
-    public String getWorkid() {
-        return workid;
-    }
+        public void setEvent_xlmc(String event_xlmc) {
+            this.event_xlmc = event_xlmc;
+        }
 
-    public void setTrackid(String trackid) {
-        this.trackid = trackid;
-    }
+        public String getEvent_lower_role() {
+            return event_lower_role;
+        }
 
-    public String getTrackid() {
-        return trackid;
-    }
+        public void setEvent_lower_role(String event_lower_role) {
+            this.event_lower_role = event_lower_role;
+        }
 
-    public void setY(String y) {
-        this.y = y;
-    }
+        public String getEvent_lower_code() {
+            return event_lower_code;
+        }
 
-    public String getY() {
-        return y;
-    }
+        public void setEvent_lower_code(String event_lower_code) {
+            this.event_lower_code = event_lower_code;
+        }
 
-    public void setX(String x) {
-        this.x = x;
-    }
+        public String getEvent_lower_no() {
+            return event_lower_no;
+        }
 
-    public String getX() {
-        return x;
-    }
+        public void setEvent_lower_no(String event_lower_no) {
+            this.event_lower_no = event_lower_no;
+        }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+        public List getEvent_record() {
+            return event_record;
+        }
 
-    public int getId() {
-        return id;
+        public void setEvent_record(List event_record) {
+            this.event_record = event_record;
+        }
     }
-
 }

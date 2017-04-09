@@ -8,9 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.ty.app.yxapp.dwcenter.R;
-import com.ty.app.yxapp.dwcenter.bean.Event;
-
-import org.w3c.dom.Text;
+import com.ty.app.yxapp.dwcenter.bean.EventBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +19,7 @@ import java.util.List;
 public class EventAdapter extends BaseAdapter {
     private static final String TAG = EventAdapter.class.getSimpleName();
     private Context mContext;
-    private List<Event> mList;
+    private List<EventBody> mList;
     private LayoutInflater mInflater;
     public EventAdapter(Context context){
         mContext = context;
@@ -29,7 +27,7 @@ public class EventAdapter extends BaseAdapter {
         mInflater = LayoutInflater.from(mContext);
     }
 
-    public void setList( List<Event> list){
+    public void setList( List<EventBody> list){
         if(mList != null && !mList.isEmpty()) mList.clear();
         if(list != null && !list.isEmpty()){
             mList = list;
