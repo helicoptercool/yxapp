@@ -70,7 +70,7 @@ public class MainThirdPagerActivity extends BaseFragment implements View.OnClick
         ems.setOnClickListener(this);
         LinearLayout.LayoutParams emsll = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
         emsll.weight = 1;
-        ems.setPicture(R.mipmap.yiwancheng, 40, 40);
+        ems.setPicture(R.mipmap.elm_logo, 40, 40);
         commonServiceCon.addView(ems, emsll);
 
         phoneBill = new ImageButtonCell(context, AndroidUtils.getString(R.string.phone_bill));
@@ -94,7 +94,7 @@ public class MainThirdPagerActivity extends BaseFragment implements View.OnClick
         search.setOnClickListener(this);
         LinearLayout.LayoutParams searchLL = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
         searchLL.weight = 1;
-        search.setPicture(R.mipmap.yiwancheng, 40, 40);
+        search.setPicture(R.mipmap.baidu_logo, 40, 40);
         commonServiceCon.addView(search, searchLL);
 
 
@@ -133,7 +133,7 @@ public class MainThirdPagerActivity extends BaseFragment implements View.OnClick
         tencent.setOnClickListener(this);
         LinearLayout.LayoutParams tencentll = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
         tencentll.weight = 1;
-        tencent.setPicture(R.mipmap.yiwancheng, 40, 40);
+        tencent.setPicture(R.mipmap.qq, 40, 40);
         commonServiceCon1.addView(tencent, tencentll);
 
         wangyi = new ImageButtonCell(context, AndroidUtils.getString(R.string.wangyi));
@@ -166,7 +166,7 @@ public class MainThirdPagerActivity extends BaseFragment implements View.OnClick
         usGroup.setOnClickListener(this);
         LinearLayout.LayoutParams usGroupll = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
         usGroupll.weight = 1;
-        usGroup.setPicture(R.mipmap.yiwancheng, 40, 40);
+        usGroup.setPicture(R.mipmap.mt_logo, 40, 40);
 //        blBtn0.setPicture(R.mipmap.yiwancheng);
         commonSfCon.addView(usGroup, usGroupll);
 
@@ -175,7 +175,7 @@ public class MainThirdPagerActivity extends BaseFragment implements View.OnClick
         ctrip.setOnClickListener(this);
         LinearLayout.LayoutParams cTripLL = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
         cTripLL.weight = 1;
-        ctrip.setPicture(R.mipmap.yiwancheng, 40, 40);
+        ctrip.setPicture(R.mipmap.xc_logo, 40, 40);
         commonSfCon.addView(ctrip, cTripLL);
 
         sameCity = new ImageButtonCell(context, AndroidUtils.getString(R.string.one_city));
@@ -183,7 +183,7 @@ public class MainThirdPagerActivity extends BaseFragment implements View.OnClick
         sameCity.setOnClickListener(this);
         LinearLayout.LayoutParams cityLL = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
         cityLL.weight = 1;
-        sameCity.setPicture(R.mipmap.yiwancheng, 40, 40);
+        sameCity.setPicture(R.mipmap.samecity_logo, 40, 40);
         commonSfCon.addView(sameCity, cityLL);
 
         baiduyun = new ImageButtonCell(context, AndroidUtils.getString(R.string.baidu_yun));

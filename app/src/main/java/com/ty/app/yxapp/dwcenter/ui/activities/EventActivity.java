@@ -1,6 +1,7 @@
 package com.ty.app.yxapp.dwcenter.ui.activities;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -20,13 +21,13 @@ import com.ty.app.yxapp.dwcenter.utils.EventAdapter;
 
 import java.util.List;
 
-public class AllEventActivity extends BaseActivity implements AdapterView.OnItemClickListener{
-    private static final String TAG = AllEventActivity.class.getSimpleName();
+public class EventActivity extends BaseActivity implements AdapterView.OnItemClickListener{
+    private static final String TAG = EventActivity.class.getSimpleName();
 
     private Context context;
     private ListView eventLv;
     private EventAdapter mAdapter;
-    public static List<Event> allEvents;
+    public static List<Event.EventBody> allEvents;
     private RelativeLayout view;
     private EmptyView emptyView;
 
@@ -57,8 +58,8 @@ public class AllEventActivity extends BaseActivity implements AdapterView.OnItem
         emptyView = new EmptyView(context);
         view.addView(emptyView,new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));
-
-        getData();
+        int eventType = getIntent().getIntExtra("eventType",0);
+        getData(eventType);
         return view;
     }
 
@@ -67,14 +68,16 @@ public class AllEventActivity extends BaseActivity implements AdapterView.OnItem
 
     }
 
-    public void getData(){
-        RetrofitHelper.getInstance().getEvents("wangjie", new RetrofitHelper.OnResultListener() {
+    public void getData(int eventType){
+        //globalUserName
+        RetrofitHelper.getInstance().getEvents("wangjie",""+eventType,new RetrofitHelper.OnResultListener() {
             @Override
             public void onResult(final Result result) {
+                Log.e(TAG,result.getCode()+","+result.getMessage()+","+result.getData());
                 if(result.isOK()){
-                    allEvents = (List<Event>) result.getData();
+                    allEvents = (List<Event.EventBody>) result.getData();
                     if(allEvents != null && !allEvents.isEmpty()){
-                        AllEventActivity.this.runOnUiThread(new Runnable() {
+                        EventActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 eventLv.setVisibility(View.VISIBLE);
@@ -83,7 +86,7 @@ public class AllEventActivity extends BaseActivity implements AdapterView.OnItem
                             }
                         });
                     }else{
-                        AllEventActivity.this.runOnUiThread(new Runnable() {
+                        EventActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 eventLv.setVisibility(View.GONE);
@@ -93,7 +96,7 @@ public class AllEventActivity extends BaseActivity implements AdapterView.OnItem
                         });
                     }
                 }else{
-                    AllEventActivity.this.runOnUiThread(new Runnable() {
+                    EventActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             eventLv.setVisibility(View.GONE);
@@ -107,4 +110,22 @@ public class AllEventActivity extends BaseActivity implements AdapterView.OnItem
             }
         });
     }
+
+   /* private void getData(int eventType){
+        Retrofit retrofit = RetrofitHelper.getInstance().getRetrofit();
+        RequestServer server =  retrofit.create(RequestServer.class);
+        Call<Event> call = server.getEvents("wangjie",""+eventType);
+        call.enqueue(new Callback<Event>() {
+            @Override
+            public void onResponse(Call<Event> call, Response<Event> response) {
+                Log.e(TAG,call.toString()+"--"+response.code()+",,"+response.message()+",,"+response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Event> call, Throwable t) {
+                Log.e(TAG,t.toString());
+            }
+        });
+
+    }*/
 }

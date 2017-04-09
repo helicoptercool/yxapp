@@ -2,21 +2,13 @@ package com.ty.app.yxapp.dwcenter.network;
 
 import android.util.Log;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.ty.app.yxapp.dwcenter.BuildConfig;
 import com.ty.app.yxapp.dwcenter.bean.Event;
+import com.ty.app.yxapp.dwcenter.bean.FileUpload;
+import com.ty.app.yxapp.dwcenter.bean.StringResult;
+import com.ty.app.yxapp.dwcenter.ui.activities.base.Constants;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import okhttp3.Interceptor;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,13 +21,22 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
  */
 public class RetrofitHelper {
     private static final String TAG = "RetrofitHelper";
+    private static final String LOGIN = "login";
+    private static final String GET_EVENTS = "getEvents";
+    private static final String REPORT_EVENT = "reportEvent";
+    private static final String GET_USER_INFO = "getUserInfo";
+    private static final String GET_ORG_DATA_INFO = "getOrgDataInfo";
+    private static final String SET_PASSWORD = "setPassword";
+    private static final String UPLOAD_VIDEO = "uploadVideo";
+    private static final String UPLOAD_AUDIO = "uploadAudio";
+
     private static RetrofitHelper mRetrofitHelper;
     private static Retrofit mRetrofit;
     private RequestServer requestServer;
 
-    private RetrofitHelper(){
+    private RetrofitHelper() {
         mRetrofit = new Retrofit.Builder()
-                .baseUrl("https://cp.dawawg.com/")
+                .baseUrl(Constants.TEST_SEVICE_ADDRESS)
                         //增加返回值为String的支持
                 .addConverterFactory(ScalarsConverterFactory.create())
                         //增加返回值为Gson的支持(以实体类返回)
@@ -45,10 +46,10 @@ public class RetrofitHelper {
         RequestServer();
     }
 
-    public static RetrofitHelper getInstance(){
-        if(mRetrofitHelper == null){
-            synchronized (RetrofitHelper.class){
-                if(mRetrofitHelper == null){
+    public static RetrofitHelper getInstance() {
+        if (mRetrofitHelper == null) {
+            synchronized (RetrofitHelper.class) {
+                if (mRetrofitHelper == null) {
                     mRetrofitHelper = new RetrofitHelper();
                 }
             }
@@ -56,104 +57,108 @@ public class RetrofitHelper {
         return mRetrofitHelper;
     }
 
-    private void RequestServer(){
-        if(mRetrofit != null){
+    private void RequestServer() {
+        if (mRetrofit != null) {
             requestServer = mRetrofit.create(RequestServer.class);
         }
     }
 
+    public Retrofit getRetrofit() {
+        return mRetrofit;
+    }
 
     /**
      * Login
      */
-    public  void Login(String name,String psw,OnResultListener onResultListener){
-        Log.e(TAG,"login");
-        OnCallBackListener onCallBackListener = new OnCallBackListener("Login",onResultListener);
-        Call<String> call = requestServer.getLoginStatus(name, psw);
-        if(call != null)  call.enqueue(onCallBackListener);
-    }
-
-    /**
-     * 获取事件
-     */
-    public void getEvents(String account,OnResultListener onResultListener){
-        OnCallBackListener onCallBackListener = new OnCallBackListener("getEvents",onResultListener);
-        Call<List<Event>> call = requestServer.getEvents(account);
-        if(call != null) call.enqueue(onCallBackListener);
+    public void Login(String name, String psw, OnResultListener onResultListener) {
+        Log.e(TAG, "login");
+        OnCallBackListener onCallBackListener = new OnCallBackListener(LOGIN, onResultListener);
+        Call<StringResult> call = requestServer.getLoginStatus(name, psw);
+        if (call != null) call.enqueue(onCallBackListener);
     }
 
 
-    public void uploadFile(){
-        File file = new File("/sdcard/Pictures/myPicture/index.jpg");
-        File file1 = new File("/sdcard/Picuures/myPicture/me.txt");
-
-        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        RequestBody requestBody1 = RequestBody.create(MediaType.parse("multipart/form-data"), file1);
-        Map<String, RequestBody> params = new HashMap<>();
-
-        params.put("file\"; filename=\""+ file.getName(), requestBody);
-        params.put("file\"; filename=\""+ file1.getName(), requestBody1);
-
-        Call<String> model = requestServer.uploadFile(params);
-        model.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                Log.i("MainActivity",response.body().toString());
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                Log.i("错误信息：",t.getMessage());
-            }
-        });
-
+    public void getEvents(String account, String eventType, OnResultListener onResultListener) {
+        OnCallBackListener onCallBackListener = new OnCallBackListener(GET_EVENTS, onResultListener);
+        Call<Event> call = requestServer.getEvents(account, eventType);
+        if (call != null) {
+            call.enqueue(onCallBackListener);
+        }
     }
 
 
-    public interface OnResultListener{
+    public void uploadVideo(File file, String fileName, OnResultListener onResultListener) {
+        OnCallBackListener onCallBackListener = new OnCallBackListener(UPLOAD_VIDEO, onResultListener);
+        Call<FileUpload> call = requestServer.uploadVideo(file, fileName);
+        if (call != null) {
+            call.enqueue(onCallBackListener);
+        }
+
+    }
+
+    public void setUploadAudio(File file, String fileName, OnResultListener onResultListener){
+        OnCallBackListener onCallBackListener = new OnCallBackListener(UPLOAD_AUDIO,onResultListener);
+        Call<FileUpload> call = requestServer.uploadAudio(file, fileName);
+        if(call != null){
+            call.enqueue(onCallBackListener);
+        }
+    }
+
+    public interface OnResultListener {
         void onResult(Result result);
     }
 
-    public class OnCallBackListener implements Callback{
+    public class OnCallBackListener implements Callback {
         private OnResultListener onResultListener;
         private String flag;
 
-        public OnCallBackListener(String flag,OnResultListener onResultListener){
+        public OnCallBackListener(String flag, OnResultListener onResultListener) {
             this.flag = flag;
             this.onResultListener = onResultListener;
         }
 
         @Override
         public void onResponse(Call call, Response response) {
-            Log.e(TAG,response.message());
-            if(call.isCanceled())return;
+            Log.e(TAG, response.message() + "," + response.code() + "," + response.body() + "," + response.errorBody());
+            if (call.isCanceled()) return;
             int code = -1;
             String message = "网络异常";
-            String  url = call.request().url().toString();
+            String url = call.request().url().toString();
 
-            if(response == null || !response.isSuccess()){
-                code = response.code();
-                message = response.message();
-                if(onResultListener != null){
-                    onResultListener.onResult(new Result(code,message));
+            if (!response.isSuccess()) {
+                code = ((Event) response.body()).getCode();
+                message = ((Event) response.body()).getMsg();
+                if (onResultListener != null) {
+                    onResultListener.onResult(new Result(code, message));
                 }
-            }else{
-                code = response.code();
+            } else {
+                code = ((Event) response.body()).getCode();
                 try {
-                    Result result = new Result(code,message);
-                    if(response != null){
-                        if("Login".equals(flag)){
+                    Result result = new Result();
+                    switch (flag){
+                        case LOGIN:
                             result = result.LoginResult(response);
-                        }else if("getEvents".equals(flag)){
+                            break;
+                        case GET_EVENTS:
                             result = result.getEvents(response);
-                        }
+                            break;
+                        case UPLOAD_VIDEO:
+                            result  = result.uploadFile(response);
+                            break;
+                        case UPLOAD_AUDIO:
+                            result = result.uploadFile(response);
+                            break;
+                        default:
+                            break;
                     }
-                    if(onResultListener != null) onResultListener.onResult(result);
-                    Log.d(TAG,"url :"+url +" result: "+response.body());
-                }catch (Exception e){
-                    Log.e(TAG,"url :"+url + " ,"+ new Throwable(e).toString());
-                    if(onResultListener != null){
-                        onResultListener.onResult(new Result(code,message));
+                    if (onResultListener != null) {
+                        onResultListener.onResult(result);
+                    }
+                    Log.d(TAG, "url :" + url + " result: " + response.body());
+                } catch (Exception e) {
+                    Log.e(TAG, "url :" + url + " ," + new Throwable(e).toString());
+                    if (onResultListener != null) {
+                        onResultListener.onResult(new Result(code, message));
                     }
                     return;
                 }
@@ -162,10 +167,10 @@ public class RetrofitHelper {
 
         @Override
         public void onFailure(Call call, Throwable t) {
-            if(call.isCanceled()) return;
-
-            Result result = new Result(-1,"网络异常");
-            if(onResultListener != null) onResultListener.onResult(result);
+            Log.e(TAG, t.toString());
+            if (call.isCanceled()) return;
+            Result result = new Result(-1, "网络异常");
+            if (onResultListener != null) onResultListener.onResult(result);
         }
     }
 }

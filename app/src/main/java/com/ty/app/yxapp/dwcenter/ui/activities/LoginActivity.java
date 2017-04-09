@@ -2,7 +2,6 @@ package com.ty.app.yxapp.dwcenter.ui.activities;
 
 import android.content.Intent;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -15,21 +14,10 @@ import com.ty.app.yxapp.dwcenter.R;
 import com.ty.app.yxapp.dwcenter.network.Result;
 import com.ty.app.yxapp.dwcenter.network.RetrofitHelper;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseActivity;
-import com.ty.app.yxapp.dwcenter.network.RequestServer;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.Constants;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
 import com.ty.app.yxapp.dwcenter.utils.SPManager;
 import com.ty.app.yxapp.dwcenter.ui.im.ChatController;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG = LoginActivity.class.getSimpleName();
@@ -42,6 +30,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 //    private Button btPwdEye;
     private TextWatcher usernameWatcher;
     private TextWatcher passwordWatcher;
+    private SPManager manager;
 
     @Override
     public void onBeforeCreate() {
@@ -53,6 +42,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         View loginView = this.getLayoutInflater().inflate(R.layout.activity_login, null);
         etName = (EditText) loginView.findViewById(R.id.username);
         etPass = (EditText) loginView.findViewById(R.id.password);
+        manager = new SPManager();
+        etName.setText(manager.readSp(Constants.SP_USER_NAME));
 
         btUsernameClear = (Button) loginView.findViewById(R.id.bt_username_clear);
         btPwdClear = (Button) loginView.findViewById(R.id.bt_pwd_clear);
@@ -110,7 +101,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login:
-                login();
+//                login();
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
                 break;
             case R.id.forget_password:
                 Intent pwdIntent = new Intent(this, ForgetPwdActivity.class);
@@ -142,13 +135,18 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             RetrofitHelper.getInstance().Login(phone, password, new RetrofitHelper.OnResultListener() {
                 @Override
                 public void onResult(Result result) {
-                    Log.e(TAG,result.getMessage()+","+result.getCode());
-                    if(result.isOK()){
-                        Log.d(TAG,"account login success");
-                        SPManager manager = new SPManager();
+                    Log.e(TAG, result.getMessage() + "," + result.getCode() + "," + result.getData());
+                    if(result.getData() == null){
+                        AndroidUtils.ShowToast(result.getMessage());
+                        return;
+                    }
+                    if(Result.LOGIN_SUCCESS.equals(result.getData().toString().trim())){
                         manager.writeSp(Constants.SP_USER_NAME,phone);
                         manager.writeSp(Constants.SP_PASSWORD,password);
                         manager.writeSp(Constants.SP_IS_LOGIN,true);
+                        globalUserName = phone;
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
 
                         ChatController.getIntance().login(phone, password, new ChatController.Callback() {
                             @Override

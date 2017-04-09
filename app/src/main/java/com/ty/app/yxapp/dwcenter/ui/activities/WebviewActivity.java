@@ -35,6 +35,7 @@ public class WebviewActivity extends BaseActivity {
         WebSettings settings = webView.getSettings();
         settings.setUseWideViewPort(true);
         settings.setLoadWithOverviewMode(true);
+        settings.setJavaScriptEnabled(true);
         settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
 
         int urlAddr = getIntent().getIntExtra("url",4);

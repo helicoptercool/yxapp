@@ -1,8 +1,13 @@
 package com.ty.app.yxapp.dwcenter.network;
 
 import com.ty.app.yxapp.dwcenter.bean.Event;
+import com.ty.app.yxapp.dwcenter.bean.EventReport;
+import com.ty.app.yxapp.dwcenter.bean.FileUpload;
+import com.ty.app.yxapp.dwcenter.bean.OrgDataInfo;
+import com.ty.app.yxapp.dwcenter.bean.StringResult;
+import com.ty.app.yxapp.dwcenter.bean.UserInfo;
 
-import java.util.List;
+import java.io.File;
 import java.util.Map;
 
 import okhttp3.RequestBody;
@@ -18,12 +23,45 @@ import retrofit2.http.Query;
  */
 public interface RequestServer {
     @GET("caseplatform/mobile/login-app!login.action")
-    Call<String> getLoginStatus(@Query("name")String username, @Query("password")String password);
+    Call<StringResult> getLoginStatus(@Query("name") String username, @Query("password") String password);
 
-    @GET("caseplatform/mobile/system-eventapp!allThings.action")
-    Call<List<Event>> getEvents(@Query("account")String account);
+    @GET("caseplatform/mobile/system-eventapp!setUserPassword.action")
+    Call<StringResult> getResetPwdStatus(@Query("name") String username, @Query("newPassword") String newPwd, @Query("oldPassword") String oldPwd);
 
-    @Multipart
+    @GET("caseplatform/mobile/system-eventapp!getEventInfo.action")
+    Call<Event> getEvents(@Query("account") String account, @Query("eventType") String eventType);
+
+    @GET("caseplatform/mobile/system-eventapp!reportEventInfo.action ")
+    Call<EventReport> reportEvent(
+            @Query("account") String account,
+            @Query("eventType") String eventType,
+            @Query("address") String address,
+            @Query("eventX") String eventX,
+            @Query("eventY") String eventY,
+            @Query("eventMs") String eventMs,
+            @Query("eventMc") String eventMc,
+            @Query("eventId") String eventId,
+            @Query("eventClyj") String eventClyj);
+
+    @GET("caseplatform/mobile/system-eventapp!getUserInfo.action")
+    Call<UserInfo> getUserInfo(@Query("orgNo") String orgNo, @Query("account") String account);
+
+    @GET("caseplatform/mobile/system-eventapp!getOrgDataInfo.action")
+    Call<OrgDataInfo> getOrgData(@Query("orgNo") String orgNo, @Query("account") String account);
+
+    @GET("caseplatform/mobile/system-eventapp!setUserPassword.action")
+    Call<StringResult> setPassword(@Query("account") String account,
+                                   @Query("newPassword") String newPassword,
+                                   @Query("oldPassword") String oldPassword);
+
+    @GET("caseplatform/mobile/video-upload!uplodVideo.action")
+    Call<FileUpload> uploadVideo(@Query("video")File video, @Query("videoFileName")String videoFileName);
+
+    @GET("caseplatform/mobile/video -upload!uplodAudio.action")
+    Call<FileUpload> uploadAudio(@Query("audio")File audio, @Query("audioFileName")String audioFileName);
+
+
+/*    @Multipart
     @POST("uploadServlet")
-    Call<String> uploadFile(@PartMap Map<String, RequestBody> params);
+    Call<FileUpload> uploadFile(@PartMap Map<String, RequestBody> params);*/
 }

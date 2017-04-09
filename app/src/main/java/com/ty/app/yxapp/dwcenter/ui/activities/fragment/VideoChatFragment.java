@@ -53,12 +53,6 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
         context = getContext();
         actionBar.setVisibility(View.VISIBLE);
         actionBar.setCenterView(getString(R.string.video_chat));
-        actionBar.setLeftView("", R.mipmap.right_arrow, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
         LinearLayout container = new LinearLayout(context);
         container.setOrientation(LinearLayout.VERTICAL);

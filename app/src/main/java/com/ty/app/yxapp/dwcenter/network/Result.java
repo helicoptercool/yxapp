@@ -1,8 +1,11 @@
 package com.ty.app.yxapp.dwcenter.network;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.ty.app.yxapp.dwcenter.R;
+import com.ty.app.yxapp.dwcenter.bean.Event;
+import com.ty.app.yxapp.dwcenter.bean.FileUpload;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
 
 import java.io.Serializable;
@@ -14,11 +17,13 @@ import retrofit2.Response;
  */
 
 public class Result implements Serializable {
+    private static final String TAG = Result.class.getSimpleName();
     private int code = -1;
     private String message;
     private Object data;
-    private static final String LOGIN_SUCCESS = "1";
-    private static final String LOGIN_FAIL = "0";
+    public static final String LOGIN_SUCCESS = "1";
+    private static final String LOGIN_FAIL = "-98";
+
 
     public Result() {
         code = -1;
@@ -50,7 +55,8 @@ public class Result implements Serializable {
     }
 
     public boolean isOK() {
-        if (code == 1) return true;
+        Log.e(TAG,""+code);
+        if (code == 0) return true;
         return false;
     }
 
@@ -67,11 +73,11 @@ public class Result implements Serializable {
                     setCode(1);
                     break;
                 case LOGIN_FAIL:
-                    setCode(0);
+                    setCode(-98);
                     setMessage(AndroidUtils.getString(R.string.login_error));
                     break;
                 default:
-                    setCode(-1);
+//                    setCode(-1);
                     break;
             }
         }
@@ -80,8 +86,17 @@ public class Result implements Serializable {
 
     public Result getEvents(Response response) {
         if (response.body() == null) new Result();
-        setCode(1);
-        setData(response.body());
+        setCode(0);
+        setData(((Event)response.body()).getBody());
+        return this;
+    }
+
+    public Result uploadFile(Response response){
+        if(response.body() != null){
+            setCode(0);
+            setData(((FileUpload)response.body()).getData());
+            return this;
+        }
         return this;
     }
 

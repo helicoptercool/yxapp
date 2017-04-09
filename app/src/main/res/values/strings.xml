@@ -37,7 +37,9 @@
 
     <!--login-->
     <string name="phone">电话</string>
+    <string name="user_name">用户名</string>
     <string name="password">密码</string>
+    <string name="new_password">新密码</string>
     <string name="login">登录</string>
     <string name="register">注册</string>
     <string name="login_title">请登录</string>
@@ -48,7 +50,7 @@
     <string name="loading">数据加载中...</string>
     <string name="no_data">暂无数据</string>
     <string name="no_newwork">网络异常</string>
-    <string name="start_recoder">长安录制</string>
+    <string name="start_recoder">长按录制</string>
     <string name="save_recoder">松开保存</string>
     <string name="save_recoder_tip">录制时间太短</string>
     <string name="take_pic">拍照</string>
@@ -58,6 +60,8 @@
     <string name="submit">确定</string>
     <string name="login_error">用户名或密码错误</string>
     <string name="fill_in_error">请输入完整信息</string>
+    <string name="reset_password">修改密码</string>
+    <string name="logout">退出登录</string>
 
 
     <!-- 便民服务-->
@@ -78,6 +82,7 @@
 
     <!--system-->
     <string name="press_again_to_exit">再按一次退出</string>
+    <string name="set">设置</string>
 
     <string name="call_other_refuse">对方拒绝接听</string>
     <string name="call_error">连接失败</string>

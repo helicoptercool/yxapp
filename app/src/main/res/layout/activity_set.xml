@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.ty.app.yxapp.dwcenter.ui.activities.SetActivity">
+
+    <FrameLayout
+        android:id="@+id/username_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/set_username"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/default_edittext_height"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            android:maxLength="15"
+            android:paddingLeft="55dp"
+            android:paddingRight="60dp"/>
+
+
+        <TextView
+            android:id="@+id/contry_sn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:text="@string/user_name"
+            android:textColor="@android:color/black"/>
+
+<!--        <Button
+            android:id="@+id/bt_set_username_clear"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/close"
+            android:visibility="invisible" />-->
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/user_pwd_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/username_layout"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center">
+
+        <EditText
+            android:id="@+id/original_password"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/default_edittext_height"
+            android:inputType="textPassword"
+            android:maxLength="20"
+            android:paddingLeft="55dp"
+            android:paddingRight="60dp"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/password"
+            android:layout_gravity="center_vertical"
+            android:textColor="@android:color/black"
+            />
+
+
+        <Button
+            android:id="@+id/bt_original_pwd_clear"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:layout_gravity="end|center_vertical"
+            android:background="@drawable/close"
+            android:layout_marginRight="10dp"
+            android:visibility="invisible" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/new_user_pwd_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/user_pwd_layout"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center">
+
+        <EditText
+            android:id="@+id/new_password"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/default_edittext_height"
+            android:inputType="textPassword"
+            android:maxLength="20"
+            android:paddingLeft="55dp"
+            android:paddingRight="60dp"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/new_password"
+            android:layout_gravity="center_vertical"
+            android:textColor="@android:color/black"
+            />
+
+
+        <Button
+            android:id="@+id/bt_new_pwd_clear"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:layout_gravity="end|center_vertical"
+            android:background="@drawable/close"
+            android:layout_marginRight="10dp"
+            android:visibility="invisible" />
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/reset_pwd"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/new_user_pwd_layout"
+        android:layout_marginTop="30dp"
+        android:background="#ff336699"
+        android:gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="@string/reset_password"
+        android:textSize="18sp"
+        android:textColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_alignParentBottom="true"
+        android:background="#ffE54646"
+        android:gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="@string/logout"
+        android:textSize="18sp"
+        android:textColor="@android:color/white" />
+
+</RelativeLayout>
