@@ -30,7 +30,6 @@ public class MapService extends Service implements AMapLocationListener, Weather
     private static GetWeatherListener mWeatherListener;
     private String city = "";
     private Handler mHandler;
-    private AMapLocationClient mLocationClient;
 
     @Nullable
     @Override
@@ -56,7 +55,7 @@ public class MapService extends Service implements AMapLocationListener, Weather
     }
 
     private void setUpLocation() {
-        mLocationClient = new AMapLocationClient(this.getApplicationContext());
+        AMapLocationClient mLocationClient = new AMapLocationClient(this.getApplicationContext());
         AMapLocationClientOption mLocationOption = new AMapLocationClientOption();
         mLocationOption.setOnceLocation(false);
         mLocationOption.setInterval(10 * 1000);
