@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.ty.app.yxapp.dwcenter.R;
 import com.ty.app.yxapp.dwcenter.network.Result;
 import com.ty.app.yxapp.dwcenter.network.RetrofitHelper;
@@ -101,9 +102,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login:
-//                login();
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
+                login();
+//                Intent intent = new Intent(this, MainActivity.class);
+//                startActivity(intent);
                 break;
             case R.id.forget_password:
                 Intent pwdIntent = new Intent(this, ForgetPwdActivity.class);
@@ -132,21 +133,22 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         if(TextUtils.isEmpty(phone) || TextUtils.isEmpty(password)){
             AndroidUtils.ShowToast(AndroidUtils.getString(R.string.fill_in_error));
         }else{
+            final SVProgressHUD loading = new SVProgressHUD(this);
+            loading.showWithStatus(AndroidUtils.getString(R.string.requesting));
             RetrofitHelper.getInstance().login(phone, password, new RetrofitHelper.OnResultListener() {
                 @Override
                 public void onResult(Result result) {
                     Log.e(TAG, result.getMessage() + "," + result.getCode() + "," + result.getData());
-                    if (result.getData() == null) {
-                        AndroidUtils.ShowToast(result.getMessage());
-                        return;
-                    }
-                    if (Result.LOGIN_SUCCESS.equals(result.getData().toString().trim())) {
+                    if (result.isOK()) {
+                        loading.dismiss();
                         manager.writeSp(Constants.SP_USER_NAME, phone);
                         manager.writeSp(Constants.SP_PASSWORD, password);
                         manager.writeSp(Constants.SP_IS_LOGIN, true);
-                        globalUserName = phone;
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
 
-                        ChatController.getIntance().login(phone, password, new ChatController.Callback() {
+/*                        ChatController.getIntance().login(phone, password, new ChatController.Callback() {
                             @Override
                             public void success() {
                                 Log.d(TAG, "huanxin login success");
@@ -172,7 +174,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                     Log.d(TAG, "huanxin createAccount success");
                                 }
                             }
-                        });
+                        });*/
 
                     } else {
                         AndroidUtils.ShowToast(result.getMessage());

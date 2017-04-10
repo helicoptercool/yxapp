@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.ty.app.yxapp.dwcenter.ui.widget.ActionBar;
+import com.ty.app.yxapp.dwcenter.utils.SPManager;
 
 /**
  * Created by kss on 2017/3/26.
@@ -18,8 +19,6 @@ import com.ty.app.yxapp.dwcenter.ui.widget.ActionBar;
 
 public abstract class BaseActivity extends AppCompatActivity {
     protected ActionBar actionBar;
-    protected String globalUserName;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

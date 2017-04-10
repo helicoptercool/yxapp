@@ -87,13 +87,13 @@ public class Result implements Serializable {
         }
         return this;*/
 
-        OnlyStrResult result = (OnlyStrResult) response.body();
-        if (LOGIN_SUCCESS.equals(result.getBody())) {
+        String loginResult =  response.body().toString().trim();
+        if (LOGIN_SUCCESS.equals(loginResult)) {
             setCode(CODE_SUCCESS);
             setMessage(AndroidUtils.getString(R.string.success));
         } else {
             setCode(-1);
-            setMessage(AndroidUtils.getString(R.string.failure));
+            setMessage(AndroidUtils.getString(R.string.login_error));
         }
         return this;
     }

@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ty.app.yxapp.dwcenter.R;
 import com.ty.app.yxapp.dwcenter.network.RequestServer;
@@ -87,14 +86,14 @@ public class MainFirstPagerActivity extends BaseFragment implements View.OnClick
         selectCon.addView(topCon, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        tlBtn = new ImageButtonCell(context, AndroidUtils.getString(R.string.hander_st));
+        tlBtn = new ImageButtonCell(context, AndroidUtils.getString(R.string.to_do_event));
         tlBtn.setOnClickListener(this);
         LinearLayout.LayoutParams tlbLL = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
         tlbLL.weight = 1;
         tlBtn.setPicture(R.mipmap.todo);
         topCon.addView(tlBtn, tlbLL);
 
-        trBtn = new ImageButtonCell(context, AndroidUtils.getString(R.string.handered_st));
+        trBtn = new ImageButtonCell(context, AndroidUtils.getString(R.string.already_completed_event));
         trBtn.setOnClickListener(this);
         LinearLayout.LayoutParams trbLL = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
         trbLL.weight = 1;
@@ -147,7 +146,7 @@ public class MainFirstPagerActivity extends BaseFragment implements View.OnClick
             eventIntent.putExtra("eventType", Constants.EVENT_TO_DO_INDEX);
             startActivity(eventIntent);
         } else if (view == trBtn) {
-            eventIntent.putExtra("eventType", Constants.EVENT_HAS_DONE_INDEX);
+            eventIntent.putExtra("eventType", Constants.EVENT_ALREADY_COMPLETED);
             startActivity(eventIntent);
         } else if (view == blBtn) {
             eventIntent.putExtra("eventType", Constants.EVENT_ALL_INDEX);

@@ -15,9 +15,11 @@ import com.ty.app.yxapp.dwcenter.bean.Event;
 import com.ty.app.yxapp.dwcenter.network.Result;
 import com.ty.app.yxapp.dwcenter.network.RetrofitHelper;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseActivity;
+import com.ty.app.yxapp.dwcenter.ui.activities.base.Constants;
 import com.ty.app.yxapp.dwcenter.ui.widget.EmptyView;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
 import com.ty.app.yxapp.dwcenter.utils.EventAdapter;
+import com.ty.app.yxapp.dwcenter.utils.SPManager;
 
 import java.util.List;
 
@@ -39,8 +41,19 @@ public class EventActivity extends BaseActivity implements AdapterView.OnItemCli
 
     @Override
     public View onCreate() {
+        int eventType = getIntent().getIntExtra("eventType",0);
         actionBar.setVisibility(View.VISIBLE);
-        actionBar.setCenterView(AndroidUtils.getString(R.string.all_event));
+        switch (eventType){
+            case Constants.EVENT_TO_DO_INDEX:
+                actionBar.setCenterView(AndroidUtils.getString(R.string.to_do_event));
+                break;
+            case Constants.EVENT_ALREADY_COMPLETED:
+                actionBar.setCenterView(AndroidUtils.getString(R.string.already_completed_event));
+                break;
+            case Constants.EVENT_ALL_INDEX:
+                actionBar.setCenterView(AndroidUtils.getString(R.string.all_event));
+                break;
+        }
         actionBar.setLeftView("", R.mipmap.back, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,7 +71,7 @@ public class EventActivity extends BaseActivity implements AdapterView.OnItemCli
         emptyView = new EmptyView(context);
         view.addView(emptyView,new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));
-        int eventType = getIntent().getIntExtra("eventType",0);
+
         getData(eventType);
         return view;
     }
@@ -69,8 +82,10 @@ public class EventActivity extends BaseActivity implements AdapterView.OnItemCli
     }
 
     public void getData(int eventType){
-        //globalUserName
-        RetrofitHelper.getInstance().getEvents("wangjie",""+eventType,new RetrofitHelper.OnResultListener() {
+        SPManager spManager = new SPManager();
+        String userName = spManager.readSp(Constants.SP_USER_NAME);
+
+        RetrofitHelper.getInstance().getEvents(userName,""+eventType,new RetrofitHelper.OnResultListener() {
             @Override
             public void onResult(final Result result) {
                 Log.e(TAG,result.getCode()+","+result.getMessage()+","+result.getData());

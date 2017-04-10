@@ -23,13 +23,14 @@ import com.ty.app.yxapp.dwcenter.network.MapService;
 
 import java.util.ArrayList;
 
-public class MainActivity extends BaseActivity{
+public class MainActivity extends BaseActivity {
     private Context context;
     private ArrayList<Fragment> fragments = new ArrayList<>();
     private FragmentAdapter fragmentAdapter;
     private TabView tabView;
     private ViewPager viewPager;
     private long exitTime = 0;
+    private Intent mapServiceIntent;
 
     @Override
     public void onBeforeCreate() {
@@ -45,22 +46,22 @@ public class MainActivity extends BaseActivity{
         viewPager = new MyViewPager(context);
         viewPager.setId(R.id.main_pager);
         viewPager.setOnPageChangeListener(onPagerChangerListener);
-        LinearLayout.LayoutParams pagerLl = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,0);
+        LinearLayout.LayoutParams pagerLl = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
         pagerLl.weight = 1;
-        container.addView(viewPager,pagerLl);
+        container.addView(viewPager, pagerLl);
 
         fragmentAdapter = new FragmentAdapter(getSupportFragmentManager());
         viewPager.setAdapter(fragmentAdapter);
 
         tabView = new TabView(context);
         tabView.setOnSelectorListener(onSelectorListener);
-        container.addView(tabView,new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,AndroidUtils.dp(50)));
+        container.addView(tabView, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, AndroidUtils.dp(50)));
 
         init();
         return container;
     }
 
-    private class MyViewPager extends ViewPager{
+    private class MyViewPager extends ViewPager {
 
         public MyViewPager(Context context) {
             super(context);
@@ -77,7 +78,7 @@ public class MainActivity extends BaseActivity{
         }
     }
 
-    private void init(){
+    private void init() {
         MainFirstPagerActivity firstPager = new MainFirstPagerActivity();
         fragments.add(firstPager);
 
@@ -92,8 +93,8 @@ public class MainActivity extends BaseActivity{
 
         tabView.setCurrent(0);
         fragmentAdapter.notifyDataSetChanged();
-
-        getApplicationContext().startService(new Intent(this, MapService.class));
+        mapServiceIntent = new Intent(this, MapService.class);
+        getApplicationContext().startService(mapServiceIntent);
     }
 
     private TabView.OnSelectorListener onSelectorListener = new TabView.OnSelectorListener() {
@@ -103,7 +104,7 @@ public class MainActivity extends BaseActivity{
         }
     };
 
-    private ViewPager.OnPageChangeListener onPagerChangerListener  = new ViewPager.OnPageChangeListener() {
+    private ViewPager.OnPageChangeListener onPagerChangerListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -122,16 +123,17 @@ public class MainActivity extends BaseActivity{
 
     @Override
     public void onBackPressed() {
-        if(System.currentTimeMillis() - exitTime > 2000){
+        if (System.currentTimeMillis() - exitTime > 2000) {
             AndroidUtils.ShowToast(AndroidUtils.getString(R.string.press_again_to_exit));
             exitTime = System.currentTimeMillis();
-        }else {
+        } else {
+            getApplicationContext().stopService(mapServiceIntent);
             finish();
             System.exit(0);
         }
     }
 
-    private class FragmentAdapter extends FragmentPagerAdapter{
+    private class FragmentAdapter extends FragmentPagerAdapter {
 
         public FragmentAdapter(FragmentManager fm) {
             super(fm);
@@ -147,5 +149,6 @@ public class MainActivity extends BaseActivity{
             return fragments.size();
         }
     }
+
 
 }

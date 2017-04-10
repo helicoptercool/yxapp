@@ -28,7 +28,7 @@ public interface RequestServer {
                                 @Query("mobilephone") String mobilephone, @Query("identityNum") String identityNum);
 
     @GET("caseplatform/mobile/login-app!login.action")
-    Call<StringResult> login(@Query("name") String username, @Query("password") String password);
+    Call<String> login(@Query("name") String username, @Query("password") String password);
 
     @GET("caseplatform/mobile/system-eventapp!setUserPassword.action")
     Call<StringResult> setPassword(@Query("account") String account,

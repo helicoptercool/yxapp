@@ -10,12 +10,11 @@ public class Constants {
     public static final String SP_IS_LOGIN = "isLogin";
 
     public static final String BASE_SEVICE_ADDRESS = "https://cp.dawawg.com/";
-    //https://test.ssdser.com/
     public static final String TEST_SEVICE_ADDRESS = "https://test.ssdser.com/";
 
-    public static final int EVENT_ALL_INDEX = 1;
-    public static final int EVENT_HAS_DONE_INDEX = 2;
-    public static final int EVENT_TO_DO_INDEX = 3;
+    public static final int EVENT_TO_DO_INDEX = 1;
+    public static final int EVENT_ALREADY_COMPLETED = 2;
+    public static final int EVENT_ALL_INDEX = 3;
 
     //便民服务常量
     public static final int EMS_INDEX = 1;

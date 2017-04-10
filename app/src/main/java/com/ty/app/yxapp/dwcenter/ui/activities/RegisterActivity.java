@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.ty.app.yxapp.dwcenter.R;
+import com.ty.app.yxapp.dwcenter.network.RequestServer;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseActivity;
 import com.ty.app.yxapp.dwcenter.ui.im.ChatController;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
@@ -27,6 +28,13 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class RegisterActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG = RegisterActivity.class.getSimpleName();

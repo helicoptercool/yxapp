@@ -141,10 +141,12 @@ public class SetActivity extends BaseActivity implements View.OnClickListener{
                 break;
             case R.id.reset_pwd:
 
+                finish();
                 break;
             case R.id.logout:
                 Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
+                finish();
                 break;
             default:
                 break;

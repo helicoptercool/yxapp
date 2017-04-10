@@ -45,7 +45,7 @@ public class RetrofitHelper {
 
     private RetrofitHelper() {
         mRetrofit = new Retrofit.Builder()
-                .baseUrl(Constants.TEST_SEVICE_ADDRESS)
+                .baseUrl(Constants.BASE_SEVICE_ADDRESS)
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -85,7 +85,7 @@ public class RetrofitHelper {
     public void login(String name, String psw, OnResultListener onResultListener) {
         Log.e(TAG, "login");
         OnCallBackListener onCallBackListener = new OnCallBackListener(LOGIN, onResultListener);
-        Call<StringResult> call = requestServer.login(name, psw);
+        Call<String> call = requestServer.login(name, psw);
         if (call != null) {
             call.enqueue(onCallBackListener);
         }

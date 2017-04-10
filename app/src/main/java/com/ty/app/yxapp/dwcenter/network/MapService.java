@@ -14,11 +14,13 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.amap.api.maps2d.AMap;
 import com.amap.api.services.weather.LocalWeatherForecastResult;
 import com.amap.api.services.weather.LocalWeatherLive;
 import com.amap.api.services.weather.LocalWeatherLiveResult;
 import com.amap.api.services.weather.WeatherSearch;
 import com.amap.api.services.weather.WeatherSearchQuery;
+import com.ty.app.yxapp.dwcenter.ui.activities.MainActivity;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
 import com.ty.app.yxapp.dwcenter.utils.GetWeatherListener;
 
@@ -28,6 +30,7 @@ public class MapService extends Service implements AMapLocationListener, Weather
     private static GetWeatherListener mWeatherListener;
     private String city = "";
     private Handler mHandler;
+    private AMapLocationClient mLocationClient;
 
     @Nullable
     @Override
@@ -53,13 +56,25 @@ public class MapService extends Service implements AMapLocationListener, Weather
     }
 
     private void setUpLocation() {
-        AMapLocationClient mLocationClient = new AMapLocationClient(this.getApplicationContext());
+        mLocationClient = new AMapLocationClient(this.getApplicationContext());
         AMapLocationClientOption mLocationOption = new AMapLocationClientOption();
         mLocationOption.setOnceLocation(false);
         mLocationOption.setInterval(10 * 1000);
         mLocationClient.setLocationOption(mLocationOption);
         mLocationClient.setLocationListener(this);
         mLocationClient.startLocation();
+
+
+//        AMapLocationClient mlocationClient;
+//        AMapLocationClientOption mLocationOption = null;
+//        mlocationClient = new AMapLocationClient(this);
+//        mLocationOption = new AMapLocationClientOption();
+//        mlocationClient.setLocationListener(this);
+//        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+//        mLocationOption.setInterval(5000);
+//        mlocationClient.setLocationOption(mLocationOption);
+//        mlocationClient.startLocation();
+
     }
 
     private void setUpWeather() {
@@ -78,6 +93,8 @@ public class MapService extends Service implements AMapLocationListener, Weather
     @Override
     public void onLocationChanged(final AMapLocation aMapLocation) {
         city = aMapLocation.getCity();
+        Log.e(TAG, aMapLocation.getErrorCode() + "," + aMapLocation.getErrorInfo());
+
         mHandler.post(new Runnable() {
             @Override
             public void run() {
