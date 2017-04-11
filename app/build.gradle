@@ -6,7 +6,7 @@ android {
         release {
             keyAlias 'dawa'
             keyPassword '99999999'
-//            storeFile file('C:/MY_ALL_PROGECT/DW/yxapp/yxapp.jks')
+            storeFile file('yxapp.jks')
             storePassword '999999999'
         }
     }

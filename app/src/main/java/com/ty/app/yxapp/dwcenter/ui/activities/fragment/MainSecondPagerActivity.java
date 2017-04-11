@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
@@ -19,6 +20,7 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -64,8 +66,8 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
     private LinearLayout container;
     private Context context;
     private EditeItemCell loaction;
-    private EditeItemCell name;
-    private EditeItemCell desc;
+    private EditText name;
+    private EditText desc;
     private AddMoreCell video;
     private AddMoreCell voice;
     private ViewCloud viewCloud;
@@ -82,6 +84,7 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
     private PopupWindowFactory mPop;
     private MenuDialog dialog;
     private ViewCloud.OnListener onListener = new ViewCloud.OnListener() {
+        Long time = 0L;
 
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -109,16 +112,27 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
 
                     case MotionEvent.ACTION_DOWN:
                         //6.0以上需要权限申请
+                        time = System.currentTimeMillis();
                         requestPermissions();
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        mAudioRecoderUtils.stopRecord();        //结束录音（保存录音文件）
-//                        mAudioRecoderUtils.cancelRecord();    //取消录音（不保存录音文件）
-                        mPop.dismiss();
-                        voiceCloud.postView(voices);
-                        voiceCloud.setAddMoreText(AndroidUtils.getString(R.string.start_recoder));
                         return true;
+                    case MotionEvent.ACTION_UP:
+                        Log.d(TAG,"record voice time:"+(System.currentTimeMillis() - time));
+                        if(System.currentTimeMillis() - time < 2000){
+                            mAudioRecoderUtils.cancelRecord();    //取消录音（不保存录音文件）
+                            mPop.dismiss();
+                            Toast.makeText(context,"录制时间太短",Toast.LENGTH_SHORT).show();
+                            return true;
+                        }else{
+                            mAudioRecoderUtils.stopRecord();        //结束录音（保存录音文件）
+//                        mAudioRecoderUtils.cancelRecord();    //取消录音（不保存录音文件）
+                            mPop.dismiss();
+                            voiceCloud.postView(voices);
+                            voiceCloud.setAddMoreText(AndroidUtils.getString(R.string.start_recoder));
+                            return true;
+                        }
                     case MotionEvent.ACTION_OUTSIDE:
+                        mAudioRecoderUtils.cancelRecord();    //取消录音（不保存录音文件）
+                        mPop.dismiss();
                         voiceCloud.setAddMoreText(AndroidUtils.getString(R.string.save_recoder));
                         return true;
                 }
@@ -168,8 +182,8 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
                     }
                     voices.remove(i);
                 }
-                voiceCloud.setAddMoreText(AndroidUtils.getString(R.string.start_recoder));
                 voiceCloud.postView(voices);
+                voiceCloud.setAddMoreText(AndroidUtils.getString(R.string.start_recoder));
             } else if (view == videoCloud) {
                 if (!videos.isEmpty()) {
                     if (videos.get(i) != null) {
@@ -220,14 +234,30 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
         container.addView(myLocation);
 
         SectionView smName = new SectionView(context, AndroidUtils.getString(R.string.sm_name));
-        name = new EditeItemCell(context, AndroidUtils.getString(R.string.my_work));
-        name.setOnClickListener(this);
+        name = new EditText(context);
+        name.setBackgroundColor(0xFFFFFFFF);
+        name.setTextSize(16);
+        name.setPadding(AndroidUtils.dp(13), AndroidUtils.dp(15), AndroidUtils.dp(10), AndroidUtils.dp(15));
+        name.setTextColor(0xFF2D2D34);
+        name.setGravity(Gravity.TOP);
+        name.setLineSpacing(2, 1.2f);
+        name.setHint(AndroidUtils.getString(R.string.input));
+        name.setHintTextColor(0xFFb8b3b4);
+        name.setLines(4);
         smName.addView(name);
         container.addView(smName);
 
         SectionView smDesc = new SectionView(context, AndroidUtils.getString(R.string.sm_desc));
-        desc = new EditeItemCell(context, AndroidUtils.getString(R.string.sm_desc));
-        desc.setOnClickListener(this);
+        desc = new EditText(context);
+        desc.setBackgroundColor(0xFFFFFFFF);
+        desc.setTextSize(16);
+        desc.setPadding(AndroidUtils.dp(13), AndroidUtils.dp(15), AndroidUtils.dp(10), AndroidUtils.dp(15));
+        desc.setTextColor(0xFF2D2D34);
+        desc.setGravity(Gravity.TOP);
+        desc.setLineSpacing(2, 1.2f);
+        desc.setHint(AndroidUtils.getString(R.string.input));
+        desc.setHintTextColor(0xFFb8b3b4);
+        desc.setLines(4);
         smDesc.addView(desc);
         container.addView(smDesc);
 
@@ -389,16 +419,6 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
             //TODO:
             Intent intent = new Intent(context, BasicMapActivity.class);
             startActivity(intent);
-        } else if (view == name) {
-            Intent intent = new Intent(context, EditeActivity.class);
-            intent.putExtra("title", AndroidUtils.getString(R.string.sm_name));
-            intent.putExtra("value", name.getTitle());
-            startActivityForResult(intent, 101);
-        } else if (view == desc) {
-            Intent intent = new Intent(context, EditeActivity.class);
-            intent.putExtra("title", AndroidUtils.getString(R.string.sm_desc));
-            intent.putExtra("value", desc.getTitle());
-            startActivityForResult(intent, 102);
         }
     }
 
@@ -434,7 +454,7 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
 
     private File createMediaFile() throws IOException {
         File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_MOVIES), "CameraDemo");
+                Environment.DIRECTORY_MOVIES), "Camera");
         if (!mediaStorageDir.exists()) {
             if (!mediaStorageDir.mkdirs()) {
                 Log.d(TAG, "failed to create directory");
@@ -486,19 +506,6 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
                         videoCloud.postView(videos);
                     }
                 }
-                break;
-            case 101:
-                if (data != null) {
-                    String work = data.getStringExtra("reValue");
-                    name.setTitle(work);
-                }
-                break;
-            case 102:
-                if (data != null) {
-                    String desc = data.getStringExtra("reValue");
-                    this.desc.setTitle(desc);
-                }
-
                 break;
         }
     }
