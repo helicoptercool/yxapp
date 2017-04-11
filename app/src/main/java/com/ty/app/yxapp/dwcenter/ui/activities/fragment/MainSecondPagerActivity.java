@@ -61,7 +61,7 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
     private static final int SELECT_PHOTO = 68;
     private static final int TAKE_VIDEO = 69;
     //    private RelativeLayout rl;
-    LinearLayout container;
+    private LinearLayout container;
     private Context context;
     private EditeItemCell loaction;
     private EditeItemCell name;

@@ -147,7 +147,7 @@ public class VideoChatFragment extends BaseFragment {
         String username = spManager.readSp(Constants.SP_USER_NAME);
         final SVProgressHUD loading = new SVProgressHUD(context);
         loading.showWithStatus(AndroidUtils.getString(R.string.requesting));
-        RetrofitHelper.getInstance().getOrgData("0001", "wangjie", new RetrofitHelper.OnResultListener() {
+        RetrofitHelper.getInstance().getOrgData("0001", username, new RetrofitHelper.OnResultListener() {
             @Override
             public void onResult(Result result) {
                 loading.dismiss();

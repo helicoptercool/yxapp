@@ -98,7 +98,7 @@ public class MapService extends Service implements AMapLocationListener, Weather
             @Override
             public void run() {
                 Log.e(TAG, "locationChanged-->>" + aMapLocation.getLongitude() + ",," + aMapLocation.getLatitude());
-                AndroidUtils.ShowToast("location:" + aMapLocation.getLatitude() + "," + aMapLocation.getLongitude());
+//                AndroidUtils.ShowToast("location:" + aMapLocation.getLatitude() + "," + aMapLocation.getLongitude());
             }
         });
     }
