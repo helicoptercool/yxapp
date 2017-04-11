@@ -9,7 +9,7 @@ public class Event {
 
     private int code;
     private String msg;
-    private EventBody body;
+    private List<EventBody> body;
     
     public int getCode() {
         return code;
@@ -27,11 +27,11 @@ public class Event {
         this.msg = msg;
     }
 
-    public EventBody getBody() {
+    public List<EventBody> getBody() {
         return body;
     }
 
-    public void setBody(EventBody body) {
+    public void setBody(List<EventBody> body) {
         this.body = body;
     }
 

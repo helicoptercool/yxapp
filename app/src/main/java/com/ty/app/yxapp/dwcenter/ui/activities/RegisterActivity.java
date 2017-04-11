@@ -1,5 +1,6 @@
 package com.ty.app.yxapp.dwcenter.ui.activities;
 
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -8,11 +9,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.amap.api.maps2d.model.Text;
+import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.ty.app.yxapp.dwcenter.R;
 import com.ty.app.yxapp.dwcenter.network.RequestServer;
+import com.ty.app.yxapp.dwcenter.network.Result;
+import com.ty.app.yxapp.dwcenter.network.RetrofitHelper;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseActivity;
+import com.ty.app.yxapp.dwcenter.ui.activities.base.Constants;
 import com.ty.app.yxapp.dwcenter.ui.im.ChatController;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
+import com.ty.app.yxapp.dwcenter.utils.SPManager;
 import com.yunpian.sdk.model.ResultDO;
 import com.yunpian.sdk.model.SendSingleSmsInfo;
 import com.yunpian.sdk.service.SmsOperator;
@@ -39,17 +46,31 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class RegisterActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG = RegisterActivity.class.getSimpleName();
     private static final String SMS_KEY = "3cd2d05c6da747bb62f35b9b84617009";
-    private EditText etPhone;
-    private EditText etPwd;
-    private EditText etRePwd;
-    private Button btnRegister;
-    private Button btnPhoneClear;
-    private Button btnPwdClear;
-    private Button btnRePwdClear;
 
-    private TextWatcher phoneWatcher;
+    private EditText etUserName;
+    private EditText etPwd;
+    private EditText etName;
+    private EditText etPhone;
+    private EditText etIdCard;
+
+    private Button btnRegister;
+    private Button btnUserNameClear;
+    private Button btnPwdClear;
+    private Button btnNameClear;
+    private Button btnPhoneClear;
+    private Button btnIdCardClear;
+
+    private TextWatcher userNameWatcher;
     private TextWatcher pwdWatcher;
-    private TextWatcher rePwdWatcher;
+    private TextWatcher nameWatcher;
+    private TextWatcher phoneWatcher;
+    private TextWatcher idCardWatcher;
+
+    private String userName;
+    private String password;
+    private String name;
+    private String phone;
+    private String idCard;
 
     @Override
     public void onBeforeCreate() {
@@ -63,56 +84,63 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void initViews(View view) {
-        etPhone = (EditText) view.findViewById(R.id.reg_username);
+        etUserName = (EditText) view.findViewById(R.id.reg_username);
         etPwd = (EditText) view.findViewById(R.id.reg_password);
-        etRePwd = (EditText) view.findViewById(R.id.reg_re_password);
+        etName = (EditText) view.findViewById(R.id.reg_name);
+        etPhone = (EditText) view.findViewById(R.id.reg_phone);
+        etIdCard = (EditText) view.findViewById(R.id.reg_id_card);
+
         btnRegister = (Button) view.findViewById(R.id.btn_register);
-        btnPhoneClear = (Button) view.findViewById(R.id.reg_username_clear);
+        btnUserNameClear = (Button) view.findViewById(R.id.reg_username_clear);
         btnPwdClear = (Button) view.findViewById(R.id.reg_pwd_clear);
-        btnRePwdClear = (Button) view.findViewById(R.id.reg_bt_pwd_clear);
+        btnNameClear = (Button) view.findViewById(R.id.reg_name_clear);
+        btnPhoneClear = (Button) view.findViewById(R.id.reg_phone_clear);
+        btnIdCardClear = (Button) view.findViewById(R.id.reg_id_card_clear);
+
         initWatcher();
-        etPhone.addTextChangedListener(phoneWatcher);
-        etPwd.addTextChangedListener(pwdWatcher);
-        etRePwd.addTextChangedListener(rePwdWatcher);
+
         btnRegister.setOnClickListener(this);
-        btnPhoneClear.setOnClickListener(this);
+        btnUserNameClear.setOnClickListener(this);
         btnPwdClear.setOnClickListener(this);
-        btnRePwdClear.setOnClickListener(this);
+        btnNameClear.setOnClickListener(this);
+        btnPhoneClear.setOnClickListener(this);
+        btnIdCardClear.setOnClickListener(this);
     }
 
     private void initWatcher() {
-        phoneWatcher = new TextWatcher() {
+        userNameWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                etPwd.setText("");
-                etRePwd.setText("");
                 if (s.toString().length() > 0) {
-                    btnPhoneClear.setVisibility(View.VISIBLE);
+                    btnUserNameClear.setVisibility(View.VISIBLE);
                 } else {
-                    btnPhoneClear.setVisibility(View.INVISIBLE);
+                    btnUserNameClear.setVisibility(View.INVISIBLE);
                 }
             }
         };
         pwdWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                etRePwd.setText("");
                 if (s.toString().length() > 0) {
                     btnPwdClear.setVisibility(View.VISIBLE);
                 } else {
@@ -120,35 +148,91 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 }
             }
         };
-        rePwdWatcher = new TextWatcher() {
+        nameWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.toString().length() > 0) {
-                    btnRePwdClear.setVisibility(View.VISIBLE);
+                    btnNameClear.setVisibility(View.VISIBLE);
                 } else {
-                    btnRePwdClear.setVisibility(View.INVISIBLE);
+                    btnNameClear.setVisibility(View.INVISIBLE);
                 }
             }
         };
+        phoneWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().length() > 0) {
+                    btnPhoneClear.setVisibility(View.VISIBLE);
+                } else {
+                    btnPhoneClear.setVisibility(View.INVISIBLE);
+                }
+            }
+        };
+        idCardWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().length() > 0) {
+                    btnIdCardClear.setVisibility(View.VISIBLE);
+                } else {
+                    btnIdCardClear.setVisibility(View.INVISIBLE);
+                }
+            }
+        };
+
+        etUserName.addTextChangedListener(userNameWatcher);
+        etPwd.addTextChangedListener(pwdWatcher);
+        etName.addTextChangedListener(nameWatcher);
+        etPhone.addTextChangedListener(phoneWatcher);
+        etIdCard.addTextChangedListener(idCardWatcher);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_register:
-                singleSend(SMS_KEY, "大哥在测试短信", "15942095489");
+                userName = etUserName.getText().toString().trim();
+                password = etPwd.getText().toString().trim();
+                name = etName.getText().toString().trim();
+                phone = etPhone.getText().toString().trim();
+                idCard = etIdCard.getText().toString().trim();
+//                singleSend(SMS_KEY, "大哥在测试短信", "15942095489");
 
-                if (TextUtils.isEmpty(etPhone.getText().toString()) ||
-                        TextUtils.isEmpty(etPwd.getText().toString()) ||
-                        TextUtils.isEmpty(etRePwd.getText().toString())) {
+                if (TextUtils.isEmpty(userName) ||
+                        TextUtils.isEmpty(password) ||
+                        TextUtils.isEmpty(name) ||
+                        TextUtils.isEmpty(phone) ||
+                        TextUtils.isEmpty(idCard)
+                        ) {
 
                     AndroidUtils.ShowToast(AndroidUtils.getString(R.string.fill_in_error));
 
@@ -157,16 +241,19 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 }
                 break;
             case R.id.reg_username_clear:
-                etPhone.setText("");
-                etPwd.setText("");
-                etRePwd.setText("");
+                etUserName.setText("");
                 break;
             case R.id.reg_pwd_clear:
                 etPwd.setText("");
-                etRePwd.setText("");
                 break;
-            case R.id.reg_bt_pwd_clear:
-                etRePwd.setText("");
+            case R.id.reg_name_clear:
+                etName.setText("");
+                break;
+            case R.id.reg_phone_clear:
+                etPhone.setText("");
+                break;
+            case R.id.reg_id_card_clear:
+                etIdCard.setText("");
                 break;
             default:
                 break;
@@ -175,16 +262,33 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void register() {
+        final SVProgressHUD loading = new SVProgressHUD(this);
+        loading.showWithStatus(AndroidUtils.getString(R.string.requesting));
+        RetrofitHelper.getInstance().register(userName, password, name, phone, idCard, new RetrofitHelper.OnResultListener() {
+            @Override
+            public void onResult(Result result) {
+                loading.dismiss();
+                if (result.isOK()) {
+                    AndroidUtils.ShowToast(result.getMessage());
+                    SPManager manager = new SPManager();
+                    manager.writeSp(Constants.SP_USER_NAME,userName);
+                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }else {
+                    AndroidUtils.ShowToast(result.getMessage());
+                }
+            }
+        });
         //环信注册
         ChatController.getIntance().createAccount(etPhone.getText().toString(), etPwd.getText().toString(), new ChatController.Callback() {
             @Override
             public void success() {
-                Log.d(TAG,"huanxin register success");
+                Log.d(TAG, "huanxin register success");
             }
 
             @Override
             public void failure(int code, String message) {
-                Log.d(TAG,"huanxin register failure");
+                Log.d(TAG, "huanxin register failure");
             }
         });
     }
@@ -196,6 +300,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
      * @param text   需要使用已审核通过的模板或者默认模板
      * @param mobile 接收的手机号,仅支持单号码发送
      */
+
     public static void testSendSms(String apikey, String mobile, String text) {
         YunpianRestClient client = new YunpianRestClient(apikey);//用apikey生成client,可作为全局静态变量
         SmsOperator smsOperator = client.getSmsOperator();//获取所需操作类
@@ -224,7 +329,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     params.put("mobile", mobile);
                     URL url = new URL("https://sms.yunpian.com/v2/sms/single_send.json");
                     String s = submitPostData(params, "utf-8", url);
-                    Log.e(TAG,s);
+                    Log.e(TAG, s);
 
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
@@ -281,9 +386,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 Log.e(TAG, response + "");
                 InputStream inptStream = httpURLConnection.getInputStream();
                 return dealResponseResult(inptStream);                     //处理服务器的响应结果
-            }else {
-                Log.e(TAG,"failuri:" +
-                        ""+httpURLConnection.getResponseCode());
+            } else {
+                Log.e(TAG, "failuri:" +
+                        "" + httpURLConnection.getResponseCode());
             }
         } catch (IOException e) {
             e.printStackTrace();

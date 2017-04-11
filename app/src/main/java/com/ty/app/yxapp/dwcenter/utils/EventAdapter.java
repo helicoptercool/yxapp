@@ -56,17 +56,17 @@ public class EventAdapter extends BaseAdapter {
         if(convertView == null){
             convertView = mInflater.inflate(R.layout.layout_event_item,null);
             viewHolder = new ViewHolder();
-            viewHolder.timeTv = (TextView) convertView.findViewById(R.id.tv_title);
+            viewHolder.titleTv = (TextView) convertView.findViewById(R.id.tv_title);
             viewHolder.timeTv = (TextView) convertView.findViewById(R.id.tv_time);
             viewHolder.reporterTv = (TextView) convertView.findViewById(R.id.tv_reporter);
             viewHolder.effectiveTv = (TextView) convertView.findViewById(R.id.tv_effective);
             convertView.setTag(viewHolder);
         }
         viewHolder = (ViewHolder) convertView.getTag();
-//        viewHolder.titleTv.setText(mList.get(position).getF396());
+        viewHolder.titleTv.setText(mList.get(position).getEvent_title());
         viewHolder.timeTv.setText(mList.get(position).getEvent_creattime());
         viewHolder.reporterTv.setText(mList.get(position).getEvent_account());
-        viewHolder.effectiveTv.setText(mList.get(position).getEvent_district_code());
+        viewHolder.effectiveTv.setText(mList.get(position).getEvent_dz());
 //        viewHolder.contentTv.setText(mList.get(position).getF397());
         return convertView;
     }
@@ -76,7 +76,7 @@ public class EventAdapter extends BaseAdapter {
         private TextView timeTv;
         private TextView reporterTv;
         private TextView effectiveTv;
-        private TextView contentTv;
+//        private TextView contentTv;
 
     }
 }

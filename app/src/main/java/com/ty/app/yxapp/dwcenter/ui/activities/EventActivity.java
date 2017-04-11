@@ -116,8 +116,7 @@ public class EventActivity extends BaseActivity implements AdapterView.OnItemCli
                         public void run() {
                             eventLv.setVisibility(View.GONE);
                             emptyView.setVisibility(View.VISIBLE);
-                            emptyView.setLoadingText(AndroidUtils.getString(R.string.no_network));
-                            Toast.makeText(context,result.getMessage(),Toast.LENGTH_SHORT).show();
+                            emptyView.setLoadingText(AndroidUtils.getString(R.string.no_data));
                         }
                     });
 
@@ -125,22 +124,4 @@ public class EventActivity extends BaseActivity implements AdapterView.OnItemCli
             }
         });
     }
-
-   /* private void getData(int eventType){
-        Retrofit retrofit = RetrofitHelper.getInstance().getRetrofit();
-        RequestServer server =  retrofit.create(RequestServer.class);
-        Call<Event> call = server.getEvents("wangjie",""+eventType);
-        call.enqueue(new Callback<Event>() {
-            @Override
-            public void onResponse(Call<Event> call, Response<Event> response) {
-                Log.e(TAG,call.toString()+"--"+response.code()+",,"+response.message()+",,"+response.body());
-            }
-
-            @Override
-            public void onFailure(Call<Event> call, Throwable t) {
-                Log.e(TAG,t.toString());
-            }
-        });
-
-    }*/
 }

@@ -6,7 +6,7 @@ package com.ty.app.yxapp.dwcenter.bean;
 public class StringResult {
     private int code;
     private String msg;
-    private LoginBody body;
+    private String body;
 
     public int getCode() {
         return code;
@@ -24,24 +24,12 @@ public class StringResult {
         this.msg = msg;
     }
 
-    public LoginBody getBody() {
+    public String getBody() {
         return body;
     }
 
-    public void setBody(LoginBody body) {
+    public void setBody(String body) {
         this.body = body;
     }
 
-    private class LoginBody {
-
-        private String result;
-
-        public String getResult() {
-            return result;
-        }
-
-        public void setResult(String result) {
-            this.result = result;
-        }
-    }
 }

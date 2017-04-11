@@ -43,7 +43,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="@dimen/default_edittext_height"
                 android:layout_marginTop="5dp"
-                android:inputType="number"
                 android:maxLength="20"
                 android:paddingLeft="55dp"
                 android:paddingRight="60dp"/>
@@ -51,7 +50,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/phone"
+                android:text="@string/user_name"
                 android:layout_gravity="center_vertical"
                 android:textColor="@android:color/black"
                 />
@@ -74,7 +73,7 @@
             android:layout_below="@id/username_layout"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:gravity="center">
 
             <EditText
@@ -112,16 +111,15 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/usercode_layout"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:gravity="center">
 
             <EditText
-                android:id="@+id/reg_re_password"
+                android:id="@+id/reg_name"
                 android:layout_width="fill_parent"
                 android:layout_height="@dimen/default_edittext_height"
-                android:inputType="textPassword"
                 android:maxLength="20"
                 android:paddingLeft="55dp"
                 android:paddingRight="60dp"/>
@@ -129,14 +127,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/confirm_password"
+                android:text="@string/name"
                 android:layout_gravity="center_vertical"
                 android:textColor="@android:color/black"
                 />
 
 
             <Button
-                android:id="@+id/reg_bt_pwd_clear"
+                android:id="@+id/reg_name_clear"
                 android:layout_width="23dp"
                 android:layout_height="23dp"
                 android:layout_gravity="end|center_vertical"
@@ -145,12 +143,89 @@
                 android:visibility="invisible" />
         </FrameLayout>
 
+        <FrameLayout
+            android:id="@+id/reg_phone_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/passord_layout"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center">
+
+            <EditText
+                android:id="@+id/reg_phone"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/default_edittext_height"
+                android:layout_marginTop="5dp"
+                android:inputType="phone"
+                android:maxLength="20"
+                android:paddingLeft="55dp"
+                android:paddingRight="60dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/phone"
+                android:layout_gravity="center_vertical"
+                android:textColor="@android:color/black"
+                />
+
+
+            <Button
+                android:id="@+id/reg_phone_clear"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/close"
+                android:visibility="invisible" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/reg_id_card_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@id/reg_phone_layout"
+            android:layout_marginRight="10dp"
+            android:gravity="center">
+
+            <EditText
+                android:id="@+id/reg_id_card"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/default_edittext_height"
+                android:layout_marginTop="5dp"
+                android:inputType="number"
+                android:maxLength="20"
+                android:paddingLeft="55dp"
+                android:paddingRight="60dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/id_card"
+                android:layout_gravity="center_vertical"
+                android:textColor="@android:color/black"
+                />
+
+
+            <Button
+                android:id="@+id/reg_id_card_clear"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/close"
+                android:visibility="invisible" />
+        </FrameLayout>
 
         <Button
             android:id="@+id/btn_register"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
-            android:layout_below="@id/passord_layout"
+            android:layout_below="@id/reg_id_card_layout"
             android:layout_marginTop="30dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"

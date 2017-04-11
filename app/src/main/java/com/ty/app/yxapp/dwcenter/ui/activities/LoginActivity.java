@@ -28,10 +28,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private Button btUsernameClear;
     private Button btPwdClear;
-//    private Button btPwdEye;
+    //    private Button btPwdEye;
     private TextWatcher usernameWatcher;
     private TextWatcher passwordWatcher;
     private SPManager manager;
+    private long exitTime = 0;
 
     @Override
     public void onBeforeCreate() {
@@ -129,24 +130,24 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private void login() {
         final String phone = etName.getText().toString();
         final String password = etPass.getText().toString();
-        Log.e(TAG,"name="+phone+",pwd="+password);
-        if(TextUtils.isEmpty(phone) || TextUtils.isEmpty(password)){
+        Log.e(TAG, "name=" + phone + ",pwd=" + password);
+        if (TextUtils.isEmpty(phone) || TextUtils.isEmpty(password)) {
             AndroidUtils.ShowToast(AndroidUtils.getString(R.string.fill_in_error));
-        }else{
+        } else {
             final SVProgressHUD loading = new SVProgressHUD(this);
             loading.showWithStatus(AndroidUtils.getString(R.string.requesting));
             RetrofitHelper.getInstance().login(phone, password, new RetrofitHelper.OnResultListener() {
                 @Override
                 public void onResult(Result result) {
                     Log.e(TAG, result.getMessage() + "," + result.getCode() + "," + result.getData());
+                    loading.dismiss();
                     if (result.isOK()) {
-                        loading.dismiss();
                         manager.writeSp(Constants.SP_USER_NAME, phone);
                         manager.writeSp(Constants.SP_PASSWORD, password);
                         manager.writeSp(Constants.SP_IS_LOGIN, true);
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
-                        finish();
+//                        finish();
 
 /*                        ChatController.getIntance().login(phone, password, new ChatController.Callback() {
                             @Override
@@ -184,4 +185,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if (System.currentTimeMillis() - exitTime > 2000) {
+            AndroidUtils.ShowToast(AndroidUtils.getString(R.string.press_again_to_exit));
+            exitTime = System.currentTimeMillis();
+        } else {
+            finish();
+            System.exit(0);
+        }
+    }
 }

@@ -13,6 +13,7 @@ import com.ty.app.yxapp.dwcenter.bean.UserInfo;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
 
 import java.io.Serializable;
+import java.io.StringReader;
 
 import retrofit2.Response;
 
@@ -71,9 +72,9 @@ public class Result implements Serializable {
     public Result register(Response response) {
         StringResult result = (StringResult) response.body();
         if (result != null) {
+
             setCode(result.getCode());
             setMessage(result.getMsg());
-            setData(response.body().toString());
         }
         return this;
     }
@@ -138,6 +139,7 @@ public class Result implements Serializable {
     }
 
     public Result getOrgData(Response response) {
+        Log.e(TAG,response.message()+"----"+response.body());
         OrgDataInfo result = (OrgDataInfo) response.body();
         if (result != null) {
             setCode(result.getCode());

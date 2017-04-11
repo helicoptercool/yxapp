@@ -13,14 +13,21 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.ty.app.yxapp.dwcenter.R;
+import com.ty.app.yxapp.dwcenter.bean.OrgDataInfo;
+import com.ty.app.yxapp.dwcenter.bean.User;
+import com.ty.app.yxapp.dwcenter.network.Result;
+import com.ty.app.yxapp.dwcenter.network.RetrofitHelper;
 import com.ty.app.yxapp.dwcenter.ui.activities.SelectAreaActivity;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseFragment;
+import com.ty.app.yxapp.dwcenter.ui.activities.base.Constants;
 import com.ty.app.yxapp.dwcenter.ui.im.VideoChatActivity;
 import com.ty.app.yxapp.dwcenter.ui.widget.DividerSmallCell;
 import com.ty.app.yxapp.dwcenter.ui.widget.EditeItemCell;
 import com.ty.app.yxapp.dwcenter.ui.widget.SectionView;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
+import com.ty.app.yxapp.dwcenter.utils.SPManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +36,7 @@ import java.util.List;
  * Created by kss on 2017/3/26.
  */
 
-public class VideoChatFragment extends BaseFragment implements View.OnClickListener{
+public class VideoChatFragment extends BaseFragment {
     private static final String TAG = VideoChatFragment.class.getSimpleName();
     private static final int AREA_RETURN = 0;
     private static final int STREET_RETURN = 1;
@@ -57,34 +64,31 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
         LinearLayout container = new LinearLayout(context);
         container.setOrientation(LinearLayout.VERTICAL);
 
-        LinearLayout headView = new LinearLayout(context);
+/*        LinearLayout headView = new LinearLayout(context);
         headView.setOrientation(LinearLayout.VERTICAL);
 
-        areaCon = new EditeItemCell(context,AndroidUtils.getString(R.string.area));
-        areaCon.setOnClickListener(this);
+        areaCon = new EditeItemCell(context, AndroidUtils.getString(R.string.area));
         headView.addView(areaCon);
 
-        street = new EditeItemCell(context,AndroidUtils.getString(R.string.street));
-        street.setOnClickListener(this);
+        street = new EditeItemCell(context, AndroidUtils.getString(R.string.street));
         headView.addView(street);
 
-        village = new EditeItemCell(context,AndroidUtils.getString(R.string.village));
-        village.setOnClickListener(this);
-        headView.addView(village);
+        village = new EditeItemCell(context, AndroidUtils.getString(R.string.village));
+        headView.addView(village);*/
 
         ListView listView = new ListView(context);
         listView.setDivider(null);
         listView.setDividerHeight(0);
         myAdapter = new MyAdapter();
         listView.setAdapter(myAdapter);
-        listView.addHeaderView(headView);
+//        listView.addHeaderView(headView);
         container.addView(listView);
 
         initData();
         return container;
     }
 
-    private class MyAdapter extends BaseAdapter{
+    private class MyAdapter extends BaseAdapter {
 
         @Override
         public int getCount() {
@@ -108,13 +112,13 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent();
-                    if(i == 1){
-                        intent.putExtra("userName","wangjie123456");
-                    }else if(i == 3){
-                        intent.putExtra("userName","wangqing");
+                    if (i == 1) {
+                        intent.putExtra("userName", "wangjie123456");
+                    } else if (i == 3) {
+                        intent.putExtra("userName", "wangqing");
                     }
                     intent.putExtra("flag", VideoChatActivity.FLAG_OUT);
-                    intent.setClass(getActivity(),VideoChatActivity.class);
+                    intent.setClass(getActivity(), VideoChatActivity.class);
                     startActivity(intent);
                 }
             });
@@ -131,27 +135,43 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
                     AndroidUtils.dp(45)));
 
             DividerSmallCell div = new DividerSmallCell(context);
-            peopleCon.addView(div,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,1));
+            peopleCon.addView(div, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1));
             return peopleCon;
         }
     }
 
 
-    private void initData(){
-        if(peopleList.size() > 0) peopleList.clear();
-        for(int i=0;i<20;i++){
-            if(i == 1){
-                peopleList.add("kangshengsheng");
-            }else if(i == 2){
-                peopleList.add("wangqing");
+    private void initData() {
+        if (peopleList.size() > 0) peopleList.clear();
+        SPManager spManager = new SPManager();
+        String username = spManager.readSp(Constants.SP_USER_NAME);
+        final SVProgressHUD loading = new SVProgressHUD(context);
+        loading.showWithStatus(AndroidUtils.getString(R.string.requesting));
+        RetrofitHelper.getInstance().getOrgData("0001", "wangjie", new RetrofitHelper.OnResultListener() {
+            @Override
+            public void onResult(Result result) {
+                loading.dismiss();
+                Log.e(TAG, result.getMessage());
+                if (result.isOK()) {
+                    List<OrgDataInfo.OrgDataBody> orgDataList = (List<OrgDataInfo.OrgDataBody>) result.getData();
+                    if (orgDataList != null) {
+                        for (OrgDataInfo.OrgDataBody orgDataBody : orgDataList) {
+
+                            List<User> userList = orgDataBody.getUsers();
+                            if (userList != null && userList.size() != 0) {
+                                peopleList.add(userList.get(0).getUserName());
+                            }
+                        }
+                        myAdapter.notifyDataSetChanged();
+                    }
+                }
             }
-            peopleList.add("people "+i);
-        }
-        myAdapter.notifyDataSetChanged();
+        });
+
     }
 
 
-
+/*
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(context, SelectAreaActivity.class);
@@ -166,9 +186,9 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
             intent.putExtra("from","village");
         }
         startActivityForResult(intent,0);
-    }
+    }*/
 
-    @Override
+/*    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(data == null){
             return;
@@ -189,5 +209,5 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
                 break;
         }
         if(myAdapter != null) myAdapter.notifyDataSetChanged();
-    }
+    }*/
 }

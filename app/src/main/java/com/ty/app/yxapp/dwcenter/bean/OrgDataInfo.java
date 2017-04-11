@@ -8,7 +8,7 @@ import java.util.List;
 public class OrgDataInfo {
     private int code;
     private String msg;
-    private OrgDataBody body;
+    private List<OrgDataBody> body;
 
     public int getCode() {
         return code;
@@ -26,20 +26,20 @@ public class OrgDataInfo {
         this.msg = msg;
     }
 
-    public OrgDataBody getBody() {
+    public List<OrgDataBody> getBody() {
         return body;
     }
 
-    public void setBody(OrgDataBody body) {
+    public void setBody(List<OrgDataBody> body) {
         this.body = body;
     }
 
-    private class OrgDataBody {
+    public class OrgDataBody {
         private String id;
         private String name;
         private String type;
         private String pid;
-        private List<User> users;
+        public List<User> users;
 
         public String getName() {
             return name;

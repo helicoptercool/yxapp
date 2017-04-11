@@ -8,6 +8,7 @@ import com.ty.app.yxapp.dwcenter.bean.StringResult;
 import com.ty.app.yxapp.dwcenter.bean.UserInfo;
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
