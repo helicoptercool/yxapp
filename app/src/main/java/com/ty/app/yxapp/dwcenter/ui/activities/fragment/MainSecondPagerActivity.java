@@ -27,7 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ty.app.yxapp.dwcenter.R;
-import com.ty.app.yxapp.dwcenter.ui.activities.BasicMapActivity;
+import com.ty.app.yxapp.dwcenter.network.MapService;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseFragment;
 import com.ty.app.yxapp.dwcenter.ui.widget.AddMoreCell;
 import com.ty.app.yxapp.dwcenter.ui.widget.EditeItemCell;
@@ -51,7 +51,7 @@ import java.util.List;
  * Created by kss on 2017/3/26.
  */
 
-public class MainSecondPagerActivity extends BaseFragment implements View.OnClickListener {
+public class MainSecondPagerActivity extends BaseFragment {
     private static final String TAG = "MainSecondPagerActivity";
     private static final int GET_PICTURE = 1;
     private static final int TAKE_PICTURE = 2;
@@ -63,7 +63,7 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
     //    private RelativeLayout rl;
     private LinearLayout container;
     private Context context;
-    private EditeItemCell loaction;
+    private EditeItemCell loactionCell;
     private EditText name;
     private EditText desc;
     private AddMoreCell video;
@@ -226,9 +226,9 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
         scrollView.addView(container);
 
         SectionView myLocation = new SectionView(context, AndroidUtils.getString(R.string.my_location));
-        loaction = new EditeItemCell(context, AndroidUtils.getString(R.string.my_location));
-        loaction.setOnClickListener(this);
-        myLocation.addView(loaction);
+        loactionCell = new EditeItemCell(context, "");
+        loactionCell.hideRightImg();
+        myLocation.addView(loactionCell);
         container.addView(myLocation);
 
         SectionView smName = new SectionView(context, AndroidUtils.getString(R.string.event_name));
@@ -340,6 +340,12 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
                 mTextView.setText(TimeUtils.long2String(0));
             }
         });
+        MapService.setMyLocationListener(new MyLocationListener() {
+            @Override
+            public void getLocation(String location) {
+                loactionCell.setTitle(location);
+            }
+        });
     }
 
     private void requestPermissions() {
@@ -406,17 +412,6 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
             } else {
                 Toast.makeText(context, AndroidUtils.getString(R.string.per_tip), Toast.LENGTH_SHORT).show();
             }
-        }
-    }
-
-
-    @Override
-    public void onClick(View view) {
-
-        if (view == loaction) {
-            //TODO:
-            Intent intent = new Intent(context, BasicMapActivity.class);
-            startActivity(intent);
         }
     }
 
@@ -508,4 +503,7 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
         }
     }
 
+    public interface MyLocationListener{
+        void getLocation(String location);
+    }
 }

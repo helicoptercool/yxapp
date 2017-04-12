@@ -1,10 +1,7 @@
 package com.ty.app.yxapp.dwcenter.network;
 
-import android.app.Activity;
-import android.app.IntentService;
 import android.app.Service;
 import android.content.Intent;
-import android.content.Context;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -14,26 +11,22 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.amap.api.maps2d.AMap;
-import com.amap.api.maps2d.CameraUpdate;
-import com.amap.api.maps2d.CameraUpdateFactory;
-import com.amap.api.maps2d.model.CameraPosition;
-import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.services.weather.LocalWeatherForecastResult;
 import com.amap.api.services.weather.LocalWeatherLive;
 import com.amap.api.services.weather.LocalWeatherLiveResult;
 import com.amap.api.services.weather.WeatherSearch;
 import com.amap.api.services.weather.WeatherSearchQuery;
-import com.ty.app.yxapp.dwcenter.ui.activities.MainActivity;
-import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
+import com.ty.app.yxapp.dwcenter.ui.activities.fragment.MainSecondPagerActivity;
 import com.ty.app.yxapp.dwcenter.utils.GetWeatherListener;
 
 public class MapService extends Service implements AMapLocationListener, WeatherSearch.OnWeatherSearchListener {
 
     private static final String TAG = "MapService";
     private static GetWeatherListener mWeatherListener;
+    private static String address = "";
     private String city = "";
     private Handler mHandler;
+    private static MainSecondPagerActivity.MyLocationListener myLocationListener;
 
     @Nullable
     @Override
@@ -56,6 +49,10 @@ public class MapService extends Service implements AMapLocationListener, Weather
 
     public static void setGetWeatherListener(GetWeatherListener weatherListener) {
         mWeatherListener = weatherListener;
+    }
+
+    public static void setMyLocationListener(MainSecondPagerActivity.MyLocationListener locationListener){
+        myLocationListener = locationListener;
     }
 
     private void setUpLocation() {
@@ -86,16 +83,14 @@ public class MapService extends Service implements AMapLocationListener, Weather
     @Override
     public void onLocationChanged(final AMapLocation aMapLocation) {
         city = aMapLocation.getCity();
-        //41.0025080755,122.0824301944
-        Log.e(TAG, "location info: " + aMapLocation.getErrorCode() + "," + aMapLocation.getErrorInfo());
-        CameraUpdate mCameraUpdate = CameraUpdateFactory.newCameraPosition(new CameraPosition(new LatLng(aMapLocation.getLatitude(),aMapLocation.getLongitude()),18,30,0));
-
+        address = aMapLocation.getAddress();
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                Log.e(TAG, "locationChanged-->>" + aMapLocation.getLongitude() + ",," + aMapLocation.getLatitude());
-                Log.e(TAG, "city = " + aMapLocation.getCity() + ", address=" + aMapLocation.getAddress());
-//                AndroidUtils.ShowToast("location:" + aMapLocation.getLatitude() + "," + aMapLocation.getLongitude());
+                Log.e(TAG, "locationChanged-->>" + aMapLocation.getLongitude() + ",," + aMapLocation.getLatitude() + "city = " + aMapLocation.getCity() + ", address=" + aMapLocation.getAddress());
+                if(myLocationListener != null) {
+                    myLocationListener.getLocation(address);
+                }
             }
         });
     }
