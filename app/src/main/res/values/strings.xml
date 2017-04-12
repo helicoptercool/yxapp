@@ -4,8 +4,6 @@
 
     <!-- the buttom items-->
     <string name="events">事件</string>
-    <string name="done">事件</string>
-    <string name="self_info">事件</string>
 
     <string name="weather">天气信息</string>
     <string name="first_pager">首页</string>
@@ -27,8 +25,8 @@
     <string name="manager">网格员</string>
 
     <string name="my_location">我的位置</string>
-    <string name="sm_name">事件名称</string>
-    <string name="sm_desc">事件描述</string>
+    <string name="event_name">事件名称</string>
+    <string name="event_desc">事件描述</string>
     <string name="take_photo">拍照上传</string>
     <string name="voice_push">语音上传</string>
     <string name="video_push">视频上传</string>
@@ -90,7 +88,6 @@
     <!--system-->
     <string name="press_again_to_exit">再按一次退出</string>
     <string name="set">设置</string>
-
     <string name="call_other_refuse">对方拒绝接听</string>
     <string name="call_error">连接失败</string>
     <string name="call_other_no_online">对方不在线</string>
@@ -111,9 +108,15 @@
     <string name="accept">接受</string>
     <string name="err_request_permission">抱歉, 我们需要获取权限才能继续</string>
 
-    <!--地址-->
+    <!--事件详情-->
     <string name="event_address">事件地址</string>
     <string name="event_status">事件状态</string>
     <string name="event_execute_time">执行时间</string>
+    <string name="event_detail">事件详情</string>
+    <string name="image">图片</string>
+    <string name="voice">语音</string>
+    <string name="video">视频</string>
+    <string name="deal_msg">处理意见</string>
+    <string name="no_deal_msg">暂无意见</string>
 
 </resources>
