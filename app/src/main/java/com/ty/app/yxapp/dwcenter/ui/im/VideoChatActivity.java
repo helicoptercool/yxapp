@@ -469,6 +469,7 @@ public class VideoChatActivity extends BaseActivity implements View.OnClickListe
         CallManager.getInstance().removeCallStateChangeListener(callStateListener);
         CallController.getInstance().stopCallSounds(streamID);
         CallController.getInstance().stopCallMeSounds();
+        super.onBackPressed();
     }
 
 

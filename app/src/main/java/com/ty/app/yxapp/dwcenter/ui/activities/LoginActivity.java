@@ -1,5 +1,6 @@
 package com.ty.app.yxapp.dwcenter.ui.activities;
 
+import android.app.Application;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -16,6 +17,7 @@ import com.ty.app.yxapp.dwcenter.network.Result;
 import com.ty.app.yxapp.dwcenter.network.RetrofitHelper;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseActivity;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.Constants;
+import com.ty.app.yxapp.dwcenter.ui.activities.base.MyApplication;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
 import com.ty.app.yxapp.dwcenter.utils.SPManager;
 import com.ty.app.yxapp.dwcenter.ui.im.ChatController;
@@ -147,7 +149,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         manager.writeSp(Constants.SP_IS_LOGIN, true);
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
-//                        finish();
+                        MyApplication.handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                finish();
+                            }
+                        },100);
 
 /*                        ChatController.getIntance().login(phone, password, new ChatController.Callback() {
                             @Override

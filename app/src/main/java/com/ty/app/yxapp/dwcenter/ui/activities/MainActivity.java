@@ -44,6 +44,7 @@ public class MainActivity extends BaseActivity {
         container.setOrientation(LinearLayout.VERTICAL);
 
         viewPager = new MyViewPager(context);
+        viewPager.setOffscreenPageLimit(4);
         viewPager.setId(R.id.main_pager);
         viewPager.setOnPageChangeListener(onPagerChangerListener);
         LinearLayout.LayoutParams pagerLl = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);

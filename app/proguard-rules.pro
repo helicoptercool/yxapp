@@ -15,3 +15,26 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Application
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep public class * extends android.content.ContentProvider
+-keep public class * extends android.app.backup.BackupAgentHelper
+-keep public class * extends android.preference.Preference
+
+
+#####Hyphenate
+-keep class com.hyphenate.** {*;}
+-keep class com.superrtc.** {*;}
+-dontwarn  com.hyphenate.**
+
+#retrofit
+-dontwarn retrofit.**
+-keep class retrofit.** { *; }
+-keepattributes Signature
+-keepattributes Exceptions
+-dontwarn okio.**
+
+

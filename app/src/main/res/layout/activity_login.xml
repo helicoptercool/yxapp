@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:gravity="center"
-                android:text="@string/phone"
+                android:text="@string/user_name"
                 android:textColor="@android:color/black"/>
 
             <Button

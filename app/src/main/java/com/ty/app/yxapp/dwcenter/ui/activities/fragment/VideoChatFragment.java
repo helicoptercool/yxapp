@@ -112,11 +112,7 @@ public class VideoChatFragment extends BaseFragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent();
-                    if (i == 1) {
-                        intent.putExtra("userName", "wangjie123456");
-                    } else if (i == 3) {
-                        intent.putExtra("userName", "wangqing");
-                    }
+                    intent.putExtra("userName", peopleList.get(i));
                     intent.putExtra("flag", VideoChatActivity.FLAG_OUT);
                     intent.setClass(getActivity(), VideoChatActivity.class);
                     startActivity(intent);

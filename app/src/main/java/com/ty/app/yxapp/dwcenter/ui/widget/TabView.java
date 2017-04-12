@@ -1,6 +1,7 @@
 package com.ty.app.yxapp.dwcenter.ui.widget;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -116,17 +117,22 @@ public class TabView extends LinearLayout {
             super(context);
             this.defaultRes = defaultRes;
             this.pressRes = pressRes;
+            setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT));
             setGravity(Gravity.CENTER);
 
             LinearLayout container = new LinearLayout(context);
             container.setOrientation(VERTICAL);
             container.setGravity(Gravity.CENTER_HORIZONTAL);
-            addView(container);
+            RelativeLayout.LayoutParams rl = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT);
+            rl.addRule(RelativeLayout.CENTER_IN_PARENT);
+            addView(container,rl);
 
             imageView = new ImageView(context);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setBackgroundResource(defaultRes);
-            imageView.setLayoutParams(new ViewGroup.LayoutParams(AndroidUtils.dp(30), AndroidUtils.dp(30)));
+            imageView.setLayoutParams(new ViewGroup.LayoutParams(AndroidUtils.dp(25), AndroidUtils.dp(25)));
             container.addView(imageView);
 
             textView = new TextView(context);
@@ -136,7 +142,7 @@ public class TabView extends LinearLayout {
             textView.setGravity(Gravity.CENTER_HORIZONTAL);
             LinearLayout.LayoutParams tvll = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT);
-            tvll.setMargins(0, 0, 0, AndroidUtils.dp(5));
+//            tvll.setMargins(0, 0, 0, AndroidUtils.dp(5));
             container.addView(textView, tvll);
         }
 
