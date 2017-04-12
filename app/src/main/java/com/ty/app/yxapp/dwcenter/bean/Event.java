@@ -1,11 +1,14 @@
 package com.ty.app.yxapp.dwcenter.bean;
 
+import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by heli on 2017/4/3.
  */
-public class Event {
+public class Event  implements Serializable {
 
     private int code;
     private String msg;
@@ -35,7 +38,7 @@ public class Event {
         this.body = body;
     }
 
-    public class EventBody {
+    public class EventBody implements Serializable{
         private String event_id;
         private String event_title;
         private String event_mc;
@@ -272,7 +275,7 @@ public class Event {
         }
     }
 
-    public class EventRecord{
+    public class EventRecord implements Serializable{
         private String record_account;
         private String record_xm;
         private String record_czsj;

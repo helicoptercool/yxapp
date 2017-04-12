@@ -11,7 +11,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
@@ -29,7 +28,6 @@ import android.widget.Toast;
 
 import com.ty.app.yxapp.dwcenter.R;
 import com.ty.app.yxapp.dwcenter.ui.activities.BasicMapActivity;
-import com.ty.app.yxapp.dwcenter.ui.activities.EditeActivity;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseFragment;
 import com.ty.app.yxapp.dwcenter.ui.widget.AddMoreCell;
 import com.ty.app.yxapp.dwcenter.ui.widget.EditeItemCell;
@@ -233,7 +231,7 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
         myLocation.addView(loaction);
         container.addView(myLocation);
 
-        SectionView smName = new SectionView(context, AndroidUtils.getString(R.string.sm_name));
+        SectionView smName = new SectionView(context, AndroidUtils.getString(R.string.event_name));
         name = new EditText(context);
         name.setBackgroundColor(0xFFFFFFFF);
         name.setTextSize(16);
@@ -247,7 +245,7 @@ public class MainSecondPagerActivity extends BaseFragment implements View.OnClic
         smName.addView(name);
         container.addView(smName);
 
-        SectionView smDesc = new SectionView(context, AndroidUtils.getString(R.string.sm_desc));
+        SectionView smDesc = new SectionView(context, AndroidUtils.getString(R.string.event_desc));
         desc = new EditText(context);
         desc.setBackgroundColor(0xFFFFFFFF);
         desc.setTextSize(16);
