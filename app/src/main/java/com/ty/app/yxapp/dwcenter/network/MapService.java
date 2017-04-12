@@ -15,6 +15,10 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps2d.AMap;
+import com.amap.api.maps2d.CameraUpdate;
+import com.amap.api.maps2d.CameraUpdateFactory;
+import com.amap.api.maps2d.model.CameraPosition;
+import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.services.weather.LocalWeatherForecastResult;
 import com.amap.api.services.weather.LocalWeatherLive;
 import com.amap.api.services.weather.LocalWeatherLiveResult;
@@ -64,22 +68,12 @@ public class MapService extends Service implements AMapLocationListener, Weather
         mLocationClient.startLocation();
 
 
-//        AMapLocationClient mlocationClient;
-//        AMapLocationClientOption mLocationOption = null;
-//        mlocationClient = new AMapLocationClient(this);
-//        mLocationOption = new AMapLocationClientOption();
-//        mlocationClient.setLocationListener(this);
-//        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-//        mLocationOption.setInterval(5000);
-//        mlocationClient.setLocationOption(mLocationOption);
-//        mlocationClient.startLocation();
-
     }
 
     private void setUpWeather() {
         WeatherSearchQuery mquery = null;
         if (city.equals("")) {
-            mquery = new WeatherSearchQuery("北京", WeatherSearchQuery.WEATHER_TYPE_LIVE);
+            mquery = new WeatherSearchQuery("盘锦市", WeatherSearchQuery.WEATHER_TYPE_LIVE);
         } else {
             mquery = new WeatherSearchQuery(city, WeatherSearchQuery.WEATHER_TYPE_LIVE);
         }
@@ -92,12 +86,15 @@ public class MapService extends Service implements AMapLocationListener, Weather
     @Override
     public void onLocationChanged(final AMapLocation aMapLocation) {
         city = aMapLocation.getCity();
-        Log.e(TAG, aMapLocation.getErrorCode() + "," + aMapLocation.getErrorInfo());
+        //41.0025080755,122.0824301944
+        Log.e(TAG, "location info: " + aMapLocation.getErrorCode() + "," + aMapLocation.getErrorInfo());
+        CameraUpdate mCameraUpdate = CameraUpdateFactory.newCameraPosition(new CameraPosition(new LatLng(aMapLocation.getLatitude(),aMapLocation.getLongitude()),18,30,0));
 
         mHandler.post(new Runnable() {
             @Override
             public void run() {
                 Log.e(TAG, "locationChanged-->>" + aMapLocation.getLongitude() + ",," + aMapLocation.getLatitude());
+                Log.e(TAG, "city = " + aMapLocation.getCity() + ", address=" + aMapLocation.getAddress());
 //                AndroidUtils.ShowToast("location:" + aMapLocation.getLatitude() + "," + aMapLocation.getLongitude());
             }
         });
