@@ -65,15 +65,19 @@ public class EventDetailActivity extends BaseActivity {
         scrollView.addView(container);
 
         EditeItemCell name = new EditeItemCell(this, AndroidUtils.getString(R.string.event_name) + ": " + eventName);
+        name.hideRightImg();
         container.addView(name);
 
         EditeItemCell desc = new EditeItemCell(this, AndroidUtils.getString(R.string.event_desc) + ": " + eventDesc);
+        desc.hideRightImg();
         container.addView(desc);
 
         EditeItemCell address = new EditeItemCell(this, AndroidUtils.getString(R.string.event_address) + ": " + eventAddr);
+        address.hideRightImg();
         container.addView(address);
 
         EditeItemCell status = new EditeItemCell(this, AndroidUtils.getString(R.string.event_status) + ": " + eventStatus);
+        status.hideRightImg();
         container.addView(status);
 
         EditeItemCell time = new EditeItemCell(this, AndroidUtils.getString(R.string.event_execute_time) + ": " + eventTime);
@@ -132,8 +136,10 @@ public class EventDetailActivity extends BaseActivity {
                 recordCon.addView(recordC, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT));
                 EditeItemCell rdName = new EditeItemCell(this, recordName + " " + recordTime + " " + AndroidUtils.getString(R.string.deal_msg));
+                rdName.hideRightImg();
                 recordCon.addView(rdName);
                 EditeItemCell rdMsg = new EditeItemCell(this, dealMsg);
+                rdMsg.hideRightImg();
                 recordCon.addView(rdMsg);
                 container.addView(recordCon);
 
