@@ -3,11 +3,16 @@ package com.ty.app.yxapp.dwcenter.ui.activities.base;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
+import android.os.Environment;
 import android.os.Handler;
 
 import com.ty.app.yxapp.dwcenter.ui.im.ChatController;
 
+
+import java.io.File;
 import java.util.List;
+
+import de.mindpipe.android.logging.log4j.LogConfigurator;
 //import com.crashlytics.android.Crashlytics;
 //import io.fabric.sdk.android.Fabric;
 

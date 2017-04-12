@@ -118,5 +118,9 @@
     <string name="video">视频</string>
     <string name="deal_msg">处理意见</string>
     <string name="no_deal_msg">暂无意见</string>
+    <string name="verify_failure">验证失败</string>
+    <string name="input_correct_phone">请输入正确的电话号码</string>
+    <string name="input_verify_code">请输入验证码</string>
+    <string name="verify_code_error">验证码错误</string>
 
 </resources>

@@ -20,7 +20,7 @@ android {
     }
     defaultConfig {
         applicationId "com.ty.app.yxapp.dwcenter"
-        minSdkVersion 15
+        minSdkVersion 19
         targetSdkVersion 23
         versionCode 12
         versionName "1.2"
@@ -31,6 +31,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
+    }
+    productFlavors {
     }
 }
 
@@ -44,4 +46,6 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-scalars:2.0.0-beta4'
     compile 'com.bigkoo:svprogresshud:1.0.6'
     compile files('libs/hyphenatechat_3.3.1.jar')
+    compile files('libs/android-logging-log4j-1.0.3.jar')
+    compile files('libs/log4j-1.2.8.jar')
 }

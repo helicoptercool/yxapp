@@ -27,6 +27,7 @@ public class SetActivity extends BaseActivity implements View.OnClickListener{
 //    private TextWatcher phoneWatcher;
     private TextWatcher pwdWatcher;
     private TextWatcher rePwdWatcher;
+    private boolean modifyPwd;
 
     @Override
     public void onBeforeCreate() {
@@ -35,6 +36,10 @@ public class SetActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     public View onCreate() {
+        Intent intent = getIntent();
+        if(intent.getStringExtra("from") != null && intent.getStringExtra("from").equals("forgetPwd")){
+            modifyPwd = true;
+        }
         actionBar.setVisibility(View.VISIBLE);
         actionBar.setCenterView(AndroidUtils.getString(R.string.set));
         actionBar.setLeftView("", R.mipmap.back, new View.OnClickListener() {
@@ -54,6 +59,9 @@ public class SetActivity extends BaseActivity implements View.OnClickListener{
         etNewPwd = (EditText) view.findViewById(R.id.new_password);
         btnResetPwd = (Button) view.findViewById(R.id.reset_pwd);
         btnLogout = (Button) view.findViewById(R.id.logout);
+        if(modifyPwd){
+            btnLogout.setVisibility(View.INVISIBLE);
+        }
 //        btnPhoneClear = (Button) view.findViewById(R.id.bt_set_username_clear);
         btnPwdClear = (Button) view.findViewById(R.id.bt_original_pwd_clear);
         btnNewPwdClear = (Button) view.findViewById(R.id.bt_new_pwd_clear);
