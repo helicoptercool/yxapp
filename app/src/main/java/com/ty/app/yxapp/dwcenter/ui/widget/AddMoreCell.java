@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.ty.app.yxapp.dwcenter.R;
 
 import java.io.File;
@@ -17,13 +18,14 @@ import java.io.File;
  * Created by kss on 2017/3/27.
  */
 public class AddMoreCell extends SquareRelativeLayout {
+    private Context context;
 
     private final TextView titleView;
     private ImageView selfView;
 
     public AddMoreCell(Context context) {
         super(context);
-
+        this.context = context;
         setBackgroundResource(R.drawable.bg_white_gray_border);
 
         LinearLayout linearLayout = new LinearLayout(context);
@@ -82,6 +84,15 @@ public class AddMoreCell extends SquareRelativeLayout {
         selfView.setLayoutParams(ll);
         selfView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         selfView.setImageURI(file);
+    }
+
+    public void setImg(String file){
+        LinearLayout.LayoutParams ll = (LinearLayout.LayoutParams) selfView.getLayoutParams();
+        ll.weight = LinearLayout.LayoutParams.MATCH_PARENT;
+        ll.height = LinearLayout.LayoutParams.MATCH_PARENT;
+        selfView.setLayoutParams(ll);
+        selfView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        Picasso.with(context).load(file).into(selfView);
     }
 
 }

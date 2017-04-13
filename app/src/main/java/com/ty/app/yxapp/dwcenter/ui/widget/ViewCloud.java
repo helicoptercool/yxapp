@@ -94,9 +94,7 @@ public class ViewCloud extends ViewGroup {
         return totalHeight + mViewBorder;
     }
 
-
-    private OnListener onListener;
-    public void postView(final List<? extends Object> list) {
+    public void postView(final List<? extends Object> list, boolean onlyShowPic) {
         if (list == null) return;
 
         if (getChildCount() > 0) {
@@ -124,12 +122,15 @@ public class ViewCloud extends ViewGroup {
                 }
             } else if (list.get(i) instanceof Bitmap) {
                 addMore.setImg((Bitmap) list.get(i));
-            }else if (list.get(i) instanceof ImageView){
+            } else if (list.get(i) instanceof ImageView) {
                 addMore.setImageView((ImageView) list.get(i));
+            } else if (list.get(i) instanceof String) {
+                addMore.setImg((String) list.get(i));
             }
             frameLayout.addView(addMore, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
             ImageView close = new ImageView(context);
+            close.setVisibility(onlyShowPic ? GONE : VISIBLE);
             close.setImageResource(R.mipmap.ic_launcher);
             FrameLayout.LayoutParams closeFl = new FrameLayout.LayoutParams(AndroidUtils.dp(30), AndroidUtils.dp(30));
             closeFl.gravity = Gravity.RIGHT | Gravity.TOP;
@@ -143,20 +144,27 @@ public class ViewCloud extends ViewGroup {
                 }
             });
 
-            if (i == list.size() - 1) {
-                    addMoreCell = new AddMoreCell(context);
-                    addMoreCell.setOnTouchListener(onTouchListener);
-                    addView(addMoreCell, new LayoutParams(AndroidUtils.dp(70), AndroidUtils.dp(70)));
-            }
-        }
-
-        if (list.isEmpty()) {
+            if (i == list.size() - 1 && !onlyShowPic) {
                 addMoreCell = new AddMoreCell(context);
                 addMoreCell.setOnTouchListener(onTouchListener);
                 addView(addMoreCell, new LayoutParams(AndroidUtils.dp(70), AndroidUtils.dp(70)));
+            }
+        }
+
+        if (list.isEmpty() && !onlyShowPic) {
+            addMoreCell = new AddMoreCell(context);
+            addMoreCell.setOnTouchListener(onTouchListener);
+            addView(addMoreCell, new LayoutParams(AndroidUtils.dp(70), AndroidUtils.dp(70)));
         }
 
         postInvalidate();
+    }
+
+
+    private OnListener onListener;
+
+    public void postView(final List<? extends Object> list) {
+        postView(list, false);
     }
 
     private OnTouchListener onTouchListener = new OnTouchListener() {
@@ -169,7 +177,7 @@ public class ViewCloud extends ViewGroup {
         }
     };
 
-    public void setOnListener(OnListener onListener){
+    public void setOnListener(OnListener onListener) {
         this.onListener = onListener;
     }
 
@@ -181,7 +189,8 @@ public class ViewCloud extends ViewGroup {
 
 
     public void setAddMoreText(String text) {
-        addMoreCell.setText(text);
+        if (addMoreCell != null)
+            addMoreCell.setText(text);
     }
 
 

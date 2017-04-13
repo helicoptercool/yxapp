@@ -1,34 +1,27 @@
 package com.ty.app.yxapp.dwcenter.ui.activities;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.TextView;
-
 import com.squareup.picasso.Picasso;
 import com.ty.app.yxapp.dwcenter.R;
 import com.ty.app.yxapp.dwcenter.bean.Event;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseActivity;
-import com.ty.app.yxapp.dwcenter.ui.widget.AddMoreCell;
 import com.ty.app.yxapp.dwcenter.ui.widget.EditeItemCell;
-import com.ty.app.yxapp.dwcenter.ui.widget.MenuDialog;
 import com.ty.app.yxapp.dwcenter.ui.widget.SectionView;
 import com.ty.app.yxapp.dwcenter.ui.widget.ViewCloud;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
-import com.ty.app.yxapp.dwcenter.utils.AudioRecoderUtils;
-import com.ty.app.yxapp.dwcenter.utils.PopupWindowFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EventDetailActivity extends BaseActivity {
 
-    private List<ImageView> photos = new ArrayList<>();
+    private List<String> photos = new ArrayList<>();
     private List<Uri> videos = new ArrayList<>();
     private List<String> voices = new ArrayList<>();
 
@@ -46,7 +39,10 @@ public class EventDetailActivity extends BaseActivity {
         String eventAddr = (eventBody != null ? eventBody.getEvent_dz() : "");
         String eventStatus = eventBody != null ? eventBody.getEvent_dlmc() : "";
         String eventTime = eventBody != null ? eventBody.getEvent_creattime() : "";
+        String photoUrl = "https://cp.dawawg.com/caseplatform/file-down?id="+eventBody.getEvent_tplj();
         List<Event.EventRecord> recordList = eventBody != null ? eventBody.getEvent_record() : null;
+        photos.add(photoUrl);
+
 
         actionBar.setVisibility(View.VISIBLE);
         actionBar.setLeftView("", R.mipmap.back, new View.OnClickListener() {
@@ -97,7 +93,7 @@ public class EventDetailActivity extends BaseActivity {
         photoCon.addView(pcon, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         ViewCloud photoCloud = new ViewCloud(this);
-        photoCloud.postView(photos);
+        photoCloud.postView(photos,true);
         pcon.addView(photoCloud, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         container.addView(photoCon);
@@ -109,7 +105,7 @@ public class EventDetailActivity extends BaseActivity {
         voiceCon.addView(vcon, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         ViewCloud voiceCloud = new ViewCloud(this);
-        voiceCloud.postView(voices);
+        voiceCloud.postView(photos,true);
         voiceCloud.setAddMoreText(AndroidUtils.getString(R.string.start_recoder));
         vcon.addView(voiceCloud, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -122,7 +118,7 @@ public class EventDetailActivity extends BaseActivity {
         videoCon.addView(videoC, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         ViewCloud videoCloud = new ViewCloud(this);
-        videoCloud.postView(videos);
+        videoCloud.postView(photos,true);
         videoC.addView(videoCloud, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         container.addView(videoCon);
@@ -158,16 +154,14 @@ public class EventDetailActivity extends BaseActivity {
         View view = new View(this);
         container.addView(view, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 AndroidUtils.dp(30)));
-
-        downLoadData();
         return scrollView;
     }
 
-    private void downLoadData() {
-        ImageView imageView = new ImageView(this);
-        String internetUrl = "https://cp.dawawg.com/caseplatform/file-down?id=mobile1489210146705.jpg";
-
-        Picasso.with(this).load(internetUrl).into(imageView);
-        photos.add(imageView);
-    }
+//    private void downLoadData() {
+//        ImageView imageView = new ImageView(this);
+//        String internetUrl = "https://cp.dawawg.com/caseplatform/file-down?id=mobile1489210146705.jpg";
+//
+//        Picasso.with(this).load(internetUrl).into(imageView);
+//        photos.add(imageView);
+//    }
 }
