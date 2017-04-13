@@ -54,6 +54,9 @@ public class MyDialog {
     public String getText() {
         return editText.getText().toString();
     }
+    public void setText(String text){
+        editText.setText(text);
+    }
     public void show() {
         dialog.show();
     }

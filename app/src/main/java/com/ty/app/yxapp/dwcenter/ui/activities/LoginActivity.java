@@ -134,6 +134,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             case R.id.ib_set_server:
                 MyDialog myDialog = new MyDialog(this);
                 myDialog.setDialogCallback(dialogcallback);
+                myDialog.setText(manager.readSp(Constants.SP_SET_SERVER_ADDRESS));
                 myDialog.show();
                 break;
             default:
@@ -145,7 +146,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         @Override
         public void dialogdo(String string) {
             if (string.startsWith("http")) {
-                SPManager manager = new SPManager();
                 manager.writeSp(Constants.SP_SET_SERVER_ADDRESS, string);
             }
         }

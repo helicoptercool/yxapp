@@ -21,7 +21,7 @@ public class SPManager {
     }
 
     public void writeSp(String key, boolean value){
-        preferences.edit().putBoolean(key,value);
+        preferences.edit().putBoolean(key,value).apply();
     }
 
     public String readSp(String key){
