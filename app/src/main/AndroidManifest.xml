@@ -129,6 +129,9 @@
         <activity
             android:name=".ui.activities.FeedBackListActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".ui.activities.MyTaskActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            />
     </application>
 
 </manifest>

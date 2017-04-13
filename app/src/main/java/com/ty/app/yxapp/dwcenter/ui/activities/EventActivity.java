@@ -62,6 +62,13 @@ public class EventActivity extends BaseActivity implements AdapterView.OnItemCli
                 onBackPressed();
             }
         });
+        actionBar.setRightView("", R.mipmap.right_top_set, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(EventActivity.this, MyTaskActivity.class);
+                startActivity(intent);
+            }
+        });
         context = getBaseContext();
         view = (RelativeLayout) getLayoutInflater().inflate(R.layout.activity_all_event, null);
         eventLv = (ListView) view.findViewById(R.id.listview_event);

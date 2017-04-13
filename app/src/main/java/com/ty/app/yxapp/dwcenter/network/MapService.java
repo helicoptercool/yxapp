@@ -51,7 +51,7 @@ public class MapService extends Service implements AMapLocationListener, Weather
         mWeatherListener = weatherListener;
     }
 
-    public static void setMyLocationListener(MainSecondPagerActivity.MyLocationListener locationListener){
+    public static void setMyLocationListener(MainSecondPagerActivity.MyLocationListener locationListener) {
         myLocationListener = locationListener;
     }
 
@@ -88,7 +88,7 @@ public class MapService extends Service implements AMapLocationListener, Weather
             @Override
             public void run() {
                 Log.e(TAG, "locationChanged-->>" + aMapLocation.getLongitude() + ",," + aMapLocation.getLatitude() + "city = " + aMapLocation.getCity() + ", address=" + aMapLocation.getAddress());
-                if(myLocationListener != null) {
+                if (myLocationListener != null) {
                     myLocationListener.getLocation(address);
                 }
             }
@@ -102,7 +102,7 @@ public class MapService extends Service implements AMapLocationListener, Weather
             if (localWeatherLiveResult != null && localWeatherLiveResult.getLiveResult() != null) {
                 LocalWeatherLive weatherlive = localWeatherLiveResult.getLiveResult();
 
-                final String weatherStr = weatherlive.getReportTime() + "发布  " + weatherlive.getWeather() + weatherlive.getTemperature() + "°"
+                final String weatherStr = weatherlive.getReportTime().substring(0, weatherlive.getReportTime().length() - 3) + "发布  " + weatherlive.getWeather() + weatherlive.getTemperature() + "°"
                         + weatherlive.getWindDirection() + "风" + weatherlive.getWindPower() + "级"
                         + "  湿度" + weatherlive.getHumidity() + "%";
                 Log.e(TAG, "weather" + weatherStr);

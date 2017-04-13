@@ -123,5 +123,6 @@
     <string name="verify_code_error">验证码错误</string>
     <string name="feedback_list">反馈列表</string>
     <string name="set_server">设置服务器地址</string>
+    <string name="my_task">我的任务</string>
 
 </resources>
