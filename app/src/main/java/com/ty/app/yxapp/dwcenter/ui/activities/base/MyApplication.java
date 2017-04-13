@@ -12,7 +12,6 @@ import com.ty.app.yxapp.dwcenter.ui.im.ChatController;
 import java.io.File;
 import java.util.List;
 
-import de.mindpipe.android.logging.log4j.LogConfigurator;
 //import com.crashlytics.android.Crashlytics;
 //import io.fabric.sdk.android.Fabric;
 

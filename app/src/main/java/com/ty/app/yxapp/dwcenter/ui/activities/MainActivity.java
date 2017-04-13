@@ -32,6 +32,7 @@ public class MainActivity extends BaseActivity {
     private long exitTime = 0;
     private Intent mapServiceIntent;
 
+
     @Override
     public void onBeforeCreate() {
         requestWindowFeature(false);
@@ -96,6 +97,12 @@ public class MainActivity extends BaseActivity {
         fragmentAdapter.notifyDataSetChanged();
         mapServiceIntent = new Intent(this, MapService.class);
         getApplicationContext().startService(mapServiceIntent);
+        LoginActivity.setFinishListener(new LoginActivity.FinishListener() {
+            @Override
+            public void onFinish() {
+                completeExit();
+            }
+        });
     }
 
     private TabView.OnSelectorListener onSelectorListener = new TabView.OnSelectorListener() {
@@ -128,10 +135,14 @@ public class MainActivity extends BaseActivity {
             AndroidUtils.ShowToast(AndroidUtils.getString(R.string.press_again_to_exit));
             exitTime = System.currentTimeMillis();
         } else {
-            getApplicationContext().stopService(mapServiceIntent);
-            finish();
-            System.exit(0);
+            completeExit();
         }
+    }
+
+    private void completeExit() {
+        getApplicationContext().stopService(mapServiceIntent);
+        finish();
+        System.exit(0);
     }
 
     private class FragmentAdapter extends FragmentPagerAdapter {

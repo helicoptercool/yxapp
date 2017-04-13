@@ -163,45 +163,4 @@ public class VideoChatFragment extends BaseFragment {
         });
 
     }
-
-
-/*
-    @Override
-    public void onClick(View v) {
-        Intent intent = new Intent(context, SelectAreaActivity.class);
-        if(v == areaCon){
-            returnFlag = 0;
-            intent.putExtra("from","area");
-        }else if(v == street){
-            returnFlag = 1;
-            intent.putExtra("from","street");
-        }else if(v == village){
-            returnFlag = 2;
-            intent.putExtra("from","village");
-        }
-        startActivityForResult(intent,0);
-    }*/
-
-/*    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(data == null){
-            return;
-        }
-        Log.e(TAG,"onActivityResult = " + data.getStringExtra("return"));
-        String retStr = data.getStringExtra("return");
-        switch (returnFlag){
-            case AREA_RETURN:
-                areaCon.setTitleValue(retStr);
-                break;
-            case STREET_RETURN:
-                street.setTitleValue(retStr);
-                break;
-            case VILLAGE_RETURN:
-                village.setTitleValue(retStr);
-                break;
-            default:
-                break;
-        }
-        if(myAdapter != null) myAdapter.notifyDataSetChanged();
-    }*/
 }

@@ -15,10 +15,6 @@ import com.ty.app.yxapp.dwcenter.network.RegisterCodeTimerService;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseActivity;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
 import com.ty.app.yxapp.dwcenter.utils.RegisterCodeTimer;
-import com.yunpian.sdk.model.ResultDO;
-import com.yunpian.sdk.model.SendSingleSmsInfo;
-import com.yunpian.sdk.service.SmsOperator;
-import com.yunpian.sdk.service.YunpianRestClient;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

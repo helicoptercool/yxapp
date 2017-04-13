@@ -38,6 +38,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private TextWatcher passwordWatcher;
     private SPManager manager;
     private long exitTime = 0;
+    public static FinishListener finishListener;
 
     @Override
     public void onBeforeCreate() {
@@ -104,6 +105,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 }
             }
         };
+    }
+
+    public static void setFinishListener(LoginActivity.FinishListener listener){
+        finishListener = listener;
     }
 
     @Override
@@ -223,8 +228,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             AndroidUtils.ShowToast(AndroidUtils.getString(R.string.press_again_to_exit));
             exitTime = System.currentTimeMillis();
         } else {
+            finishListener.onFinish();
             finish();
             System.exit(0);
         }
+    }
+
+    public interface FinishListener{
+        void onFinish();
     }
 }
