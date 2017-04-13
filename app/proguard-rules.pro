@@ -37,4 +37,4 @@
 -keepattributes Exceptions
 -dontwarn okio.**
 
-
+-dontwarn com.squareup.okhttp.**

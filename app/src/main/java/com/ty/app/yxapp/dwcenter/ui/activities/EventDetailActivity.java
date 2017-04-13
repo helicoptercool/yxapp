@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.ty.app.yxapp.dwcenter.R;
 import com.ty.app.yxapp.dwcenter.bean.Event;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseActivity;
@@ -27,7 +28,7 @@ import java.util.List;
 
 public class EventDetailActivity extends BaseActivity {
 
-    private List<Bitmap> photos = new ArrayList<>();
+    private List<ImageView> photos = new ArrayList<>();
     private List<Uri> videos = new ArrayList<>();
     private List<String> voices = new ArrayList<>();
 
@@ -157,6 +158,16 @@ public class EventDetailActivity extends BaseActivity {
         View view = new View(this);
         container.addView(view, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 AndroidUtils.dp(30)));
+
+        downLoadData();
         return scrollView;
+    }
+
+    private void downLoadData() {
+        ImageView imageView = new ImageView(this);
+        String internetUrl = "https://cp.dawawg.com/caseplatform/file-down?id=mobile1489210146705.jpg";
+
+        Picasso.with(this).load(internetUrl).into(imageView);
+        photos.add(imageView);
     }
 }

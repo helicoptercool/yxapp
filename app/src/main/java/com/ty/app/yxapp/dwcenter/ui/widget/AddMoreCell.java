@@ -71,6 +71,10 @@ public class AddMoreCell extends SquareRelativeLayout {
         selfView.setImageBitmap(res);
     }
 
+    public void setImageView(ImageView imageView){
+        selfView = imageView;
+    }
+
     public void setImg(Uri file){
         LinearLayout.LayoutParams ll = (LinearLayout.LayoutParams) selfView.getLayoutParams();
         ll.weight = LinearLayout.LayoutParams.MATCH_PARENT;

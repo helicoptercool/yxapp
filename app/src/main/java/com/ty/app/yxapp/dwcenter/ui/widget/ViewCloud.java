@@ -124,6 +124,8 @@ public class ViewCloud extends ViewGroup {
                 }
             } else if (list.get(i) instanceof Bitmap) {
                 addMore.setImg((Bitmap) list.get(i));
+            }else if (list.get(i) instanceof ImageView){
+                addMore.setImageView((ImageView) list.get(i));
             }
             frameLayout.addView(addMore, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
