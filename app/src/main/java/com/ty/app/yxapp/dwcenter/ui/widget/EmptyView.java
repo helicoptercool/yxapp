@@ -32,6 +32,9 @@ public class EmptyView extends RelativeLayout {
         addView(textView,rl);
     }
 
+    public void setText(String text){
+        textView.setText(text);
+    }
 
     public void setLoadingText(String str){
         textView.setText(str);

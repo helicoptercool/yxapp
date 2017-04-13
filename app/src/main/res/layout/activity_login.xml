@@ -11,6 +11,14 @@
     android:orientation="vertical"
     tools:context="com.ty.app.yxapp.dwcenter.ui.activities.LoginActivity">
 
+    <ImageButton
+        android:id="@+id/ib_set_server"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:background="@mipmap/set"
+        />
+
     <RelativeLayout
         android:id="@+id/register_layout"
         android:layout_width="wrap_content"

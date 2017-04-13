@@ -124,7 +124,11 @@
         <service
             android:name=".network.RegisterCodeTimerService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <activity
+            android:name=".ui.activities.FeedBackListActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
 
 </manifest>

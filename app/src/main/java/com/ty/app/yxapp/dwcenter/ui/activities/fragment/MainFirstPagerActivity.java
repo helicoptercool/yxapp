@@ -54,7 +54,7 @@ public class MainFirstPagerActivity extends BaseFragment implements View.OnClick
                 ViewGroup.LayoutParams.MATCH_PARENT));
 
         actionBar.setVisibility(View.VISIBLE);
-        actionBar.setCenterView(AndroidUtils.getString(R.string.first_pager));
+        actionBar.setCenterView(AndroidUtils.getString(R.string.my_work));
         actionBar.setRightView("", R.mipmap.right_top_set, new View.OnClickListener() {
             @Override
             public void onClick(View view) {

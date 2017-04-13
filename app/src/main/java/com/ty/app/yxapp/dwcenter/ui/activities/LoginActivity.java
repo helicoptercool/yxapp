@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.bigkoo.svprogresshud.SVProgressHUD;
@@ -18,6 +19,7 @@ import com.ty.app.yxapp.dwcenter.network.RetrofitHelper;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseActivity;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.Constants;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.MyApplication;
+import com.ty.app.yxapp.dwcenter.ui.widget.MyDialog;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
 import com.ty.app.yxapp.dwcenter.utils.SPManager;
 import com.ty.app.yxapp.dwcenter.ui.im.ChatController;
@@ -30,6 +32,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private Button btUsernameClear;
     private Button btPwdClear;
+    private ImageButton ibSet;
     //    private Button btPwdEye;
     private TextWatcher usernameWatcher;
     private TextWatcher passwordWatcher;
@@ -46,6 +49,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         View loginView = this.getLayoutInflater().inflate(R.layout.activity_login, null);
         etName = (EditText) loginView.findViewById(R.id.username);
         etPass = (EditText) loginView.findViewById(R.id.password);
+        ibSet = (ImageButton) loginView.findViewById(R.id.ib_set_server);
         manager = new SPManager();
         etName.setText(manager.readSp(Constants.SP_USER_NAME));
 
@@ -53,6 +57,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         btPwdClear = (Button) loginView.findViewById(R.id.bt_pwd_clear);
         btUsernameClear.setOnClickListener(this);
         btPwdClear.setOnClickListener(this);
+        ibSet.setOnClickListener(this);
         initWatcher();
         etName.addTextChangedListener(usernameWatcher);
         etPass.addTextChangedListener(passwordWatcher);
@@ -126,8 +131,25 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             case R.id.bt_pwd_clear:
                 etPass.setText("");
                 break;
+            case R.id.ib_set_server:
+                MyDialog myDialog = new MyDialog(this);
+                myDialog.setDialogCallback(dialogcallback);
+                myDialog.show();
+                break;
+            default:
+                break;
         }
     }
+
+    MyDialog.Dialogcallback dialogcallback = new MyDialog.Dialogcallback() {
+        @Override
+        public void dialogdo(String string) {
+            if (string.startsWith("http")) {
+                SPManager manager = new SPManager();
+                manager.writeSp(Constants.SP_SET_SERVER_ADDRESS, string);
+            }
+        }
+    };
 
     private void login() {
         final String phone = etName.getText().toString();
@@ -147,6 +169,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         manager.writeSp(Constants.SP_USER_NAME, phone);
                         manager.writeSp(Constants.SP_PASSWORD, password);
                         manager.writeSp(Constants.SP_IS_LOGIN, true);
+                        if (manager.readSp(Constants.SP_SET_SERVER_ADDRESS).equals("")) {
+                            manager.writeSp(Constants.SP_SET_SERVER_ADDRESS, Constants.BASE_SEVICE_ADDRESS);
+                        }
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
                         MyApplication.handler.postDelayed(new Runnable() {
@@ -154,7 +179,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                             public void run() {
                                 finish();
                             }
-                        },100);
+                        }, 100);
 
 /*                        ChatController.getIntance().login(phone, password, new ChatController.Callback() {
                             @Override

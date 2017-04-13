@@ -8,6 +8,7 @@ public class Constants {
     public static final String SP_USER_NAME = "userName";
     public static final String SP_PASSWORD = "password";
     public static final String SP_IS_LOGIN = "isLogin";
+    public static final String SP_SET_SERVER_ADDRESS = "setServerAddress";
 
     public static final String BASE_SEVICE_ADDRESS = "https://cp.dawawg.com/";
     public static final String TEST_SEVICE_ADDRESS = "https://test.ssdser.com/";

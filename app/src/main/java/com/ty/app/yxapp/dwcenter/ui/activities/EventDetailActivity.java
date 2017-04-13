@@ -55,6 +55,13 @@ public class EventDetailActivity extends BaseActivity {
             }
         });
         actionBar.setCenterView(AndroidUtils.getString(R.string.event_detail));
+        actionBar.setRightView(AndroidUtils.getString(R.string.feedback_list), 0, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent feedBackIntent = new Intent(EventDetailActivity.this, FeedBackListActivity.class);
+                startActivity(feedBackIntent);
+            }
+        });
 
         ScrollView scrollView = new ScrollView(this);
         LinearLayout container = new LinearLayout(this);

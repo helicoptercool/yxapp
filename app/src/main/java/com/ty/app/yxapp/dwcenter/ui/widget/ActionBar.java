@@ -69,6 +69,7 @@ public class ActionBar extends LinearLayout {
     public void setCenterView(String name){
         centerImg.setVisibility(VISIBLE);
         centerImg.setText(name);
+        centerImg.setTextSize(18);
     }
 
 }
