@@ -89,7 +89,7 @@ public class MapService extends Service implements AMapLocationListener, Weather
             public void run() {
                 Log.e(TAG, "locationChanged-->>" + aMapLocation.getLongitude() + ",," + aMapLocation.getLatitude() + "city = " + aMapLocation.getCity() + ", address=" + aMapLocation.getAddress());
                 if (myLocationListener != null) {
-                    myLocationListener.getLocation(address);
+                    myLocationListener.getLocation(address + "；" + aMapLocation.getLatitude() + "；" + aMapLocation.getLongitude());
                 }
             }
         });

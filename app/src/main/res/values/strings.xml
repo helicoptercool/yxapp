@@ -51,6 +51,7 @@
     <string name="success">成功</string>
     <string name="failure">失败</string>
     <string name="requesting">数据请求中</string>
+    <string name="uploading">上传中…</string>
     <string name="loading">数据加载中…</string>
     <string name="no_data">暂无数据</string>
     <string name="no_network">网络异常</string>

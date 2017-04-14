@@ -26,9 +26,13 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.ty.app.yxapp.dwcenter.R;
 import com.ty.app.yxapp.dwcenter.network.MapService;
+import com.ty.app.yxapp.dwcenter.network.Result;
+import com.ty.app.yxapp.dwcenter.network.RetrofitHelper;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseFragment;
+import com.ty.app.yxapp.dwcenter.ui.activities.base.Constants;
 import com.ty.app.yxapp.dwcenter.ui.widget.AddMoreCell;
 import com.ty.app.yxapp.dwcenter.ui.widget.EditeItemCell;
 import com.ty.app.yxapp.dwcenter.ui.widget.MenuDialog;
@@ -37,6 +41,7 @@ import com.ty.app.yxapp.dwcenter.ui.widget.ViewCloud;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
 import com.ty.app.yxapp.dwcenter.utils.AudioRecoderUtils;
 import com.ty.app.yxapp.dwcenter.utils.PopupWindowFactory;
+import com.ty.app.yxapp.dwcenter.utils.SPManager;
 import com.ty.app.yxapp.dwcenter.utils.TimeUtils;
 
 import java.io.File;
@@ -81,6 +86,9 @@ public class MainSecondPagerActivity extends BaseFragment {
     private AudioRecoderUtils mAudioRecoderUtils;
     private PopupWindowFactory mPop;
     private MenuDialog dialog;
+    private String address = "";
+    private String eventX = "";
+    private String eventY = "";
     private ViewCloud.OnListener onListener = new ViewCloud.OnListener() {
         Long time = 0L;
 
@@ -211,7 +219,6 @@ public class MainSecondPagerActivity extends BaseFragment {
             @Override
             public void onClick(View view) {
                 uploadEvent();
-                Toast.makeText(context, "提交...", Toast.LENGTH_SHORT).show();
             }
         });
         actionBar.setCenterView(AndroidUtils.getString(R.string.push_work));
@@ -308,6 +315,31 @@ public class MainSecondPagerActivity extends BaseFragment {
     }
 
     private void uploadEvent() {
+        SPManager manager = new SPManager();
+        String account = manager.readSp(Constants.SP_USER_NAME);
+        String eventType = "";
+        String eventMs = desc.getText().toString();
+        String eventMc = name.getText().toString();
+        String eventId = "";
+        String eventClyj = "";
+        if(TextUtils.isEmpty(eventMc) || TextUtils.isEmpty(eventMs)){
+            AndroidUtils.ShowToast(AndroidUtils.getString(R.string.fill_in_error));
+            return;
+        }
+        final SVProgressHUD loading = new SVProgressHUD(context);
+        loading.showWithStatus(AndroidUtils.getString(R.string.uploading));
+        RetrofitHelper.getInstance().reportEvent(account, eventType, address, eventX, eventY, eventMs, eventMc, eventId, eventClyj, new RetrofitHelper.OnResultListener() {
+            @Override
+            public void onResult(Result result) {
+                loading.dismiss();
+                if(result.isOK()){
+                    AndroidUtils.ShowToast(AndroidUtils.getString(R.string.success));
+                }else {
+                    AndroidUtils.ShowToast(result.getMessage());
+                }
+            }
+        });
+        //// TODO: 17-4-14 将图片，音频，视频上传,
 
     }
 
@@ -343,7 +375,11 @@ public class MainSecondPagerActivity extends BaseFragment {
         MapService.setMyLocationListener(new MyLocationListener() {
             @Override
             public void getLocation(String location) {
-                loactionCell.setTitle(location);
+                String[] loc = location.split("；");
+                loactionCell.setTitle(loc[0]);
+                address = loc[0];
+                eventX = loc[1];
+                eventY = loc[2];
             }
         });
     }
