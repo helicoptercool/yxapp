@@ -47,6 +47,7 @@
     <string name="forget_password">忘记密码</string>
     <string name="confirm_password">确认密码</string>
     <string name="find_password">找回密码</string>
+    <string name="reset_password_success">重置密码成功</string>
     <string name="success">成功</string>
     <string name="failure">失败</string>
     <string name="requesting">数据请求中</string>

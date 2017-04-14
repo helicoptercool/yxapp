@@ -2,6 +2,7 @@ package com.ty.app.yxapp.dwcenter.ui.activities;
 
 import android.content.Intent;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
@@ -9,6 +10,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ty.app.yxapp.dwcenter.R;
+import com.ty.app.yxapp.dwcenter.network.Result;
+import com.ty.app.yxapp.dwcenter.network.RetrofitHelper;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseActivity;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.Constants;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
@@ -28,6 +31,7 @@ public class SetActivity extends BaseActivity implements View.OnClickListener{
     private TextWatcher pwdWatcher;
     private TextWatcher rePwdWatcher;
     private boolean modifyPwd;
+    private SPManager manager;
 
     @Override
     public void onBeforeCreate() {
@@ -72,9 +76,9 @@ public class SetActivity extends BaseActivity implements View.OnClickListener{
         btnLogout.setOnClickListener(this);
         initWatcher();
 //        btnPhoneClear.addTextChangedListener(phoneWatcher);
-        btnPwdClear.addTextChangedListener(pwdWatcher);
-        btnNewPwdClear.addTextChangedListener(rePwdWatcher);
-        SPManager manager = new SPManager();
+        etPwd.addTextChangedListener(pwdWatcher);
+        etNewPwd.addTextChangedListener(rePwdWatcher);
+        manager = new SPManager();
         tvPhone.setText(manager.readSp(Constants.SP_USER_NAME));
     }
 
@@ -148,16 +152,39 @@ public class SetActivity extends BaseActivity implements View.OnClickListener{
                 etNewPwd.setText("");
                 break;
             case R.id.reset_pwd:
-
-                finish();
+                resetPwd();
                 break;
             case R.id.logout:
-                Intent intent = new Intent(this, LoginActivity.class);
-                startActivity(intent);
-                finish();
+                gotoLoginActivity();
                 break;
             default:
                 break;
+        }
+    }
+
+    private void gotoLoginActivity() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void resetPwd() {
+        if(TextUtils.isEmpty(etPwd.getText()) || TextUtils.isEmpty(etNewPwd.getText())){
+            AndroidUtils.ShowToast(AndroidUtils.getString(R.string.fill_in_error));
+        }else if(etPwd.getText().toString().equals(etNewPwd.getText().toString())){
+            RetrofitHelper.getInstance().setPassword(manager.readSp(Constants.SP_USER_NAME), etNewPwd.getText().toString(), etPwd.getText().toString(), new RetrofitHelper.OnResultListener() {
+                @Override
+                public void onResult(Result result) {
+                    if(result.isOK()){
+                        AndroidUtils.ShowToast(AndroidUtils.getString(R.string.reset_password_success));
+                        gotoLoginActivity();
+                    }else {
+                        AndroidUtils.ShowToast(result.getMessage());
+                    }
+                }
+            });
+        }else {
+            AndroidUtils.ShowToast(AndroidUtils.getString(R.string.password_inconsistency));
         }
     }
 }

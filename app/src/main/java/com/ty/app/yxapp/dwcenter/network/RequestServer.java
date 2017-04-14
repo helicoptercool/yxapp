@@ -75,14 +75,4 @@ public interface RequestServer {
                                      @Query("device_id") String device_id
                                      );
 
-    @FormUrlEncoded
-    @POST("v2/sms/single_send.json")
-    Call<String> postSMS(@FieldMap Map<String,String> params);
-
-    @FormUrlEncoded
-    @POST("v2/sms/single_send.json")
-    Call<String> postSMS(@Field("apikey")String apikey, @Field("text")String text,@Field("mobile")String mobile);
-/*    @Multipart
-    @POST("uploadServlet")
-    Call<FileUpload> uploadFile(@PartMap Map<String, RequestBody> params);*/
 }
