@@ -40,7 +40,7 @@ public class EventDetailActivity extends BaseActivity {
         String eventStatus = eventBody != null ? eventBody.getEvent_dlmc() : "";
         String eventTime = eventBody != null ? eventBody.getEvent_creattime() : "";
         String photoUrl = "https://cp.dawawg.com/caseplatform/file-down?id="+eventBody.getEvent_tplj();
-        List<Event.EventRecord> recordList = eventBody != null ? eventBody.getEvent_record() : null;
+        List<Event.EventRecord> recordList = eventBody.getEvent_record();
         photos.add(photoUrl);
 
 
