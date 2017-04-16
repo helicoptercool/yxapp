@@ -15,6 +15,9 @@ import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
 import java.io.File;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -109,9 +112,12 @@ public class RetrofitHelper {
     }
 
     public void reportEvent(String account, String eventType, String address, String eventX, String eventY,
-                            String eventMs, String eventMc, String eventId, String eventClyj, OnResultListener onResultListener) {
+                            String eventMs, String eventMc, String eventId, String eventClyj, String eventImg,
+                            String eventVideo, String eventVoice,OnResultListener onResultListener) {
         OnCallBackListener onCallBackListener = new OnCallBackListener(REPORT_EVENT, onResultListener);
-        Call<EventUpload> call = requestServer.reportEvent(account, eventType, address, eventX, eventY, eventMs, eventMc, eventId, eventClyj);
+        Call<EventUpload> call = requestServer.reportEvent(
+                account, eventType, address, eventX, eventY,
+                eventMs, eventMc, eventId, eventClyj,eventImg,eventVideo,eventVoice);
         if (call != null) {
             call.enqueue(onCallBackListener);
         }
@@ -136,16 +142,23 @@ public class RetrofitHelper {
 
     public void uploadVideo(File file, String fileName, OnResultListener onResultListener) {
         OnCallBackListener onCallBackListener = new OnCallBackListener(UPLOAD_VIDEO, onResultListener);
-        Call<FileUpload> call = requestServer.uploadVideo(file, fileName);
+        RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                .addFormDataPart("videoFileName", fileName)
+                .addFormDataPart("video", file.getName(), RequestBody.create(MediaType.parse("multipart/form-data"), file))
+                .build();
+        Call<FileUpload> call = requestServer.uploadVideo(requestBody);
         if (call != null) {
             call.enqueue(onCallBackListener);
         }
-
     }
 
     public void uploadAudio(File file, String fileName, OnResultListener onResultListener) {
         OnCallBackListener onCallBackListener = new OnCallBackListener(UPLOAD_AUDIO, onResultListener);
-        Call<FileUpload> call = requestServer.uploadAudio(file, fileName);
+        RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                .addFormDataPart("audioFileName", fileName)
+                .addFormDataPart("audio", file.getName(), RequestBody.create(MediaType.parse("multipart/form-data"), file))
+                .build();
+        Call<FileUpload> call = requestServer.uploadAudio(requestBody);
         if (call != null) {
             call.enqueue(onCallBackListener);
         }
@@ -153,7 +166,11 @@ public class RetrofitHelper {
 
     public void uploadImage(File file, String fileName, OnResultListener onResultListener) {
         OnCallBackListener onCallBackListener = new OnCallBackListener(UPLOAD_IMAGE, onResultListener);
-        Call<FileUpload> call = requestServer.uploadImage(file, fileName);
+        RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                .addFormDataPart("imgFileName", fileName)
+                .addFormDataPart("img", file.getName(), RequestBody.create(MediaType.parse("multipart/form-data"), file))
+                .build();
+        Call<FileUpload> call = requestServer.uploadImage(requestBody);
         if (call != null) {
             call.enqueue(onCallBackListener);
         }

@@ -43,6 +43,7 @@ import com.ty.app.yxapp.dwcenter.utils.AudioRecoderUtils;
 import com.ty.app.yxapp.dwcenter.utils.PopupWindowFactory;
 import com.ty.app.yxapp.dwcenter.utils.SPManager;
 import com.ty.app.yxapp.dwcenter.utils.TimeUtils;
+import com.ty.app.yxapp.dwcenter.utils.UpLoadFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -77,6 +78,8 @@ public class MainSecondPagerActivity extends BaseFragment {
     private List<Bitmap> photos = new ArrayList<>();
     private List<Uri> videos = new ArrayList<>();
     private List<String> voices = new ArrayList<>();
+    private List<String> pictures = new ArrayList<>();
+    private List<String> videoPahts = new ArrayList<>();
     private ViewCloud photoCloud;
     private ViewCloud videoCloud;
     private ViewCloud voiceCloud;
@@ -89,6 +92,9 @@ public class MainSecondPagerActivity extends BaseFragment {
     private String address = "";
     private String eventX = "";
     private String eventY = "";
+    private SVProgressHUD loading;
+
+
     private ViewCloud.OnListener onListener = new ViewCloud.OnListener() {
         Long time = 0L;
 
@@ -122,13 +128,13 @@ public class MainSecondPagerActivity extends BaseFragment {
                         requestPermissions();
                         return true;
                     case MotionEvent.ACTION_UP:
-                        Log.d(TAG,"record voice time:"+(System.currentTimeMillis() - time));
-                        if(System.currentTimeMillis() - time < 2000){
+                        Log.d(TAG, "record voice time:" + (System.currentTimeMillis() - time));
+                        if (System.currentTimeMillis() - time < 2000) {
                             mAudioRecoderUtils.cancelRecord();    //取消录音（不保存录音文件）
                             mPop.dismiss();
-                            Toast.makeText(context,"录制时间太短",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "录制时间太短", Toast.LENGTH_SHORT).show();
                             return true;
-                        }else{
+                        } else {
                             mAudioRecoderUtils.stopRecord();        //结束录音（保存录音文件）
 //                        mAudioRecoderUtils.cancelRecord();    //取消录音（不保存录音文件）
                             mPop.dismiss();
@@ -153,7 +159,7 @@ public class MainSecondPagerActivity extends BaseFragment {
 
                             Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
                             try {
-                                Uri fileUri = Uri.fromFile(createMediaFile());
+                                Uri fileUri = Uri.fromFile(createMediaFile(true));
                                 intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
                                 intent.addCategory("android.intent.category.DEFAULT");
                                 startActivityForResult(intent, TAKE_VIDEO);
@@ -178,6 +184,10 @@ public class MainSecondPagerActivity extends BaseFragment {
                     photos.remove(i);
                 }
                 photoCloud.postView(photos);
+
+                if (pictures != null && !pictures.isEmpty()) {
+                    pictures.remove(i);
+                }
             } else if (view == voiceCloud) {
                 if (!voices.isEmpty()) {
                     if (!TextUtils.isEmpty(voices.get(i))) {
@@ -200,6 +210,9 @@ public class MainSecondPagerActivity extends BaseFragment {
                         }
                     }
                     videos.remove(i);
+                }
+                if (!videoPahts.isEmpty()) {
+                    videoPahts.remove(i);
                 }
                 videoCloud.postView(videos);
             }
@@ -314,33 +327,109 @@ public class MainSecondPagerActivity extends BaseFragment {
         return scrollView;
     }
 
+
+    private List<String> imgSuccessList = new ArrayList<>();
+    private List<String> videoSuccessList = new ArrayList<>();
+    private List<String> voiceSuccessList = new ArrayList<>();
+
     private void uploadEvent() {
+        if (TextUtils.isEmpty(name.getText().toString()) || TextUtils.isEmpty(desc.getText().toString())) {
+            AndroidUtils.ShowToast(AndroidUtils.getString(R.string.fill_in_error));
+            return;
+        }
+//        if(TextUtils.isEmpty(eventX) || TextUtils.isEmpty(eventY)){
+//            AndroidUtils.ShowToast(AndroidUtils.getString(R.string.location_empty));
+//            return;
+//        }
+
+        loading = new SVProgressHUD(context);
+        loading.showWithStatus(AndroidUtils.getString(R.string.uploading));
+
+        imgSuccessList.clear();
+        videoSuccessList.clear();
+        voiceSuccessList.clear();
+
+        Log.d(TAG,"开始上传事件....");
+        UpLoadFile.getInstance().upLoadImg(pictures, new UpLoadFile.OnListener() {
+            @Override
+            public void onSuccess(List<String> list) {
+                imgSuccessList.addAll(list);
+                Log.d(TAG,"img success:"+imgSuccessList.toString());
+                UpLoadFile.getInstance().upLoadVideo(videoPahts, new UpLoadFile.OnListener() {
+                    @Override
+                    public void onSuccess(List<String> list) {
+                        videoSuccessList.addAll(list);
+                        Log.d(TAG,"video success:"+videoSuccessList.toString());
+                        UpLoadFile.getInstance().upLoadVoice(voices, new UpLoadFile.OnListener() {
+                            @Override
+                            public void onSuccess(List<String> list) {
+                                voiceSuccessList.addAll(list);
+                                Log.d(TAG,"voice success:"+voiceSuccessList.toString());
+                                upLoadEvent();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+    }
+
+    private String getFileString(List<String> list){
+        if(!list.isEmpty()){
+            String str = list.toString();
+            return str.substring(1,str.length()-1);
+        }else{
+            return "";
+        }
+    }
+
+
+    private void upLoadEvent() {
         SPManager manager = new SPManager();
         String account = manager.readSp(Constants.SP_USER_NAME);
-        String eventType = "";
+        String eventType = "4";
         String eventMs = desc.getText().toString();
         String eventMc = name.getText().toString();
         String eventId = "";
         String eventClyj = "";
-        if(TextUtils.isEmpty(eventMc) || TextUtils.isEmpty(eventMs)){
-            AndroidUtils.ShowToast(AndroidUtils.getString(R.string.fill_in_error));
-            return;
-        }
-        final SVProgressHUD loading = new SVProgressHUD(context);
-        loading.showWithStatus(AndroidUtils.getString(R.string.uploading));
-        RetrofitHelper.getInstance().reportEvent(account, eventType, address, eventX, eventY, eventMs, eventMc, eventId, eventClyj, new RetrofitHelper.OnResultListener() {
-            @Override
-            public void onResult(Result result) {
-                loading.dismiss();
-                if(result.isOK()){
-                    AndroidUtils.ShowToast(AndroidUtils.getString(R.string.success));
-                }else {
-                    AndroidUtils.ShowToast(result.getMessage());
-                }
-            }
-        });
-        //// TODO: 17-4-14 将图片，音频，视频上传,
+        String eventImg = getFileString(imgSuccessList);
+        String eventVideo = getFileString(videoSuccessList);
+        String eventVoice = getFileString(voiceSuccessList);
+        Log.d(TAG,"upload file : img :"+eventImg+" ,video:"+eventVideo+" ,voice:"+eventVoice);
 
+
+        RetrofitHelper.getInstance().reportEvent(account, eventType, address, eventX, eventY, eventMs,
+                eventMc, eventId, eventClyj, eventImg, eventVideo, eventVoice, new RetrofitHelper.OnResultListener() {
+                    @Override
+                    public void onResult(Result result) {
+                        loading.dismiss();
+                        if (result.isOK()) {
+                            clearData();
+                            Log.d(TAG,"上传事件成功");
+                            AndroidUtils.ShowToast(AndroidUtils.getString(R.string.success));
+                        } else {
+                            Log.d(TAG,"上传事件失败 message："+result.getMessage());
+                            AndroidUtils.ShowToast(result.getMessage());
+                        }
+                    }
+                });
+    }
+
+    private void clearData(){
+        photos.clear();
+        videos.clear();
+        voices.clear();
+        pictures.clear();
+        videoPahts.clear();
+        imgSuccessList.clear();
+        videoSuccessList.clear();
+        voiceSuccessList.clear();
+        name.setText("");
+        desc.setText("");
+        voiceCloud.postView(voices);
+        photoCloud.postView(photos);
+        videoCloud.postView(videos);
     }
 
     public void init() {
@@ -438,7 +527,7 @@ public class MainSecondPagerActivity extends BaseFragment {
             if ((grantResults[0] == PackageManager.PERMISSION_GRANTED) && (grantResults[1] == PackageManager.PERMISSION_GRANTED)) {
                 Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
                 try {
-                    Uri fileUri = Uri.fromFile(createMediaFile());
+                    Uri fileUri = Uri.fromFile(createMediaFile(true));
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
                     intent.addCategory("android.intent.category.DEFAULT");
                     startActivityForResult(intent, TAKE_VIDEO);
@@ -463,8 +552,17 @@ public class MainSecondPagerActivity extends BaseFragment {
                     startActivityForResult(intent, GET_PICTURE);
                     break;
                 case TAKE_PICTURE:
-                    intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(intent, TAKE_PICTURE);
+                    File file = null;
+                    try {
+                        file = createMediaFile(false);
+                        Uri imageUri = Uri.fromFile(file);
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                        intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+                        pictures.add(file.getPath());
+                        startActivityForResult(intent, TAKE_PICTURE);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 default:
                     break;
@@ -481,21 +579,32 @@ public class MainSecondPagerActivity extends BaseFragment {
         }
     }
 
-    private File createMediaFile() throws IOException {
-        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_MOVIES), "Camera");
-        if (!mediaStorageDir.exists()) {
-            if (!mediaStorageDir.mkdirs()) {
-                Log.d(TAG, "failed to create directory");
-                return null;
+    private File createMediaFile(boolean isVideo) throws IOException {
+        try {
+            File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_MOVIES), "Camera");
+            if (!mediaStorageDir.exists()) {
+                if (!mediaStorageDir.mkdirs()) {
+                    Log.d(TAG, "failed to create directory");
+                    return null;
+                }
             }
+            // Create an image file name
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            if (isVideo) {
+                String imageFileName = "VID_" + timeStamp;
+                String suffix = ".mp4";
+                File mediaFile = new File(mediaStorageDir + File.separator + imageFileName + suffix);
+                return mediaFile;
+            } else {
+                String imageFileName = "IMG_" + timeStamp;
+                String suffix = ".jpg";
+                File mediaFile = new File(mediaStorageDir + File.separator + imageFileName + suffix);
+                return mediaFile;
+            }
+        } catch (Exception e) {
+            return null;
         }
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "VID_" + timeStamp;
-        String suffix = ".mp4";
-        File mediaFile = new File(mediaStorageDir + File.separator + imageFileName + suffix);
-        return mediaFile;
     }
 
     @Override
@@ -510,6 +619,8 @@ public class MainSecondPagerActivity extends BaseFragment {
                             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                             inputStream.close();
                             photos.add(bitmap);
+                            String filePath = AndroidUtils.getPath(context, uri);
+                            pictures.add(filePath);
                             photoCloud.postView(photos);
                         }
 
@@ -519,11 +630,13 @@ public class MainSecondPagerActivity extends BaseFragment {
                 }
                 break;
             case TAKE_PICTURE:
-                if (data != null) {
-                    Bundle bundle = data.getExtras();
-                    Bitmap bitmap = (Bitmap) bundle.get("data");
-                    photos.add(bitmap);
-                    photoCloud.postView(photos);
+                if (pictures != null && !pictures.isEmpty()) {
+                    String path = pictures.get(pictures.size() - 1);
+                    if (!TextUtils.isEmpty(path) && new File(path).exists()) {
+                        Bitmap bitmap = BitmapFactory.decodeFile(path);
+                        photos.add(bitmap);
+                        photoCloud.postView(photos);
+                    }
                 }
                 break;
             case TAKE_VIDEO:
@@ -531,7 +644,9 @@ public class MainSecondPagerActivity extends BaseFragment {
                     Bundle b = data.getExtras();
                     if (b != null) {
                         Uri uri = (Uri) b.get("data");
+                        String filePath = AndroidUtils.getPath(context, uri);
                         videos.add(uri);
+                        videoPahts.add(filePath);
                         videoCloud.postView(videos);
                     }
                 }
@@ -539,7 +654,7 @@ public class MainSecondPagerActivity extends BaseFragment {
         }
     }
 
-    public interface MyLocationListener{
+    public interface MyLocationListener {
         void getLocation(String location);
     }
 }

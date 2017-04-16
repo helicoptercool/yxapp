@@ -11,12 +11,16 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 /**
@@ -49,7 +53,11 @@ public interface RequestServer {
             @Query("eventMs") String eventMs,
             @Query("eventMc") String eventMc,
             @Query("eventId") String eventId,
-            @Query("eventClyj") String eventClyj);
+            @Query("eventClyj") String eventClyj,
+            @Query("eventImg") String eventImg,
+            @Query("eventVideo") String eventVideo,
+            @Query("eventVoice") String eventVoice
+    );
 
     @GET("caseplatform/mobile/system-eventapp!getUserInfo.action")
     Call<UserInfo> getUserInfo(@Query("orgNo") String orgNo, @Query("account") String account);
@@ -57,14 +65,24 @@ public interface RequestServer {
     @GET("caseplatform/mobile/system-eventapp!getOrgDataInfo.action")
     Call<OrgDataInfo> getOrgData(@Query("orgNo") String orgNo, @Query("account") String account);
 
-    @GET("caseplatform/mobile/video-upload!uplodVideo.action")
-    Call<FileUpload> uploadVideo(@Query("video") File video, @Query("videoFileName") String videoFileName);
+    @Multipart
+    @POST("caseplatform/mobile/video-upload!uplodVideo.action")
+    Call<FileUpload> uploadVideo(@Part("video") File video, @Part("videoFileName") String videoFileName);
 
-    @GET("caseplatform/mobile/video -upload!uplodAudio.action")
+    @POST("caseplatform/mobile/video-upload!uplodVideo.action")
+    Call<FileUpload> uploadVideo(@Body RequestBody requestBody);
+
+    @GET("caseplatform/mobile/video-upload!uplodAudio.action")
     Call<FileUpload> uploadAudio(@Query("audio") File audio, @Query("audioFileName") String audioFileName);
 
-    @GET("caseplatform/mobile/file -upload!uplodFile.action")
+    @POST("caseplatform/mobile/video-upload!uplodAudio.action")
+    Call<FileUpload> uploadAudio(@Body RequestBody requestBody);
+
+    @GET("caseplatform/mobile/file-upload!uplodFile.action")
     Call<FileUpload> uploadImage(@Query("img") File img, @Query("imgFileName") String imgFileName);
+
+    @POST("caseplatform/mobile/file-upload!uplodFile.action")
+    Call<FileUpload> uploadImage(@Body RequestBody requestBody);
 
     @GET("caseplatform/mobile/system-eventapp!jobgps.action")
     Call<StringResult> setCoordinate(@Query("account") String account,
