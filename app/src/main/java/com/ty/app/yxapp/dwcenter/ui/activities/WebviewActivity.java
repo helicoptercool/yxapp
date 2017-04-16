@@ -1,11 +1,15 @@
 package com.ty.app.yxapp.dwcenter.ui.activities;
 
+import android.graphics.Bitmap;
+import android.net.http.SslError;
 import android.util.Log;
 import android.view.View;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.ty.app.yxapp.dwcenter.R;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseActivity;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.Constants;
@@ -37,7 +41,6 @@ public class WebviewActivity extends BaseActivity {
         settings.setLoadWithOverviewMode(true);
         settings.setJavaScriptEnabled(true);
         settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-
         int urlAddr = getIntent().getIntExtra("url",4);
         switch (urlAddr){
             case Constants.EMS_INDEX:
@@ -74,17 +77,46 @@ public class WebviewActivity extends BaseActivity {
             case Constants.SAME_CITY_INDEX:
                 webView.loadUrl(Constants.URL_SAME_CITY);
                 break;
-            case Constants.BAIDU_YUN:
+            case Constants.BAIDU_YUN_INDEX:
                 webView.loadUrl(Constants.URL_BAIDU_YUN);
+                break;
+            case Constants.TMALL_INDEX:
+                webView.loadUrl(Constants.URL_TIANMAO);
+                break;
+            case Constants.ELEM_INDEX:
+                webView.loadUrl(Constants.URL_ELEME);
+                break;
+            case Constants.JINGDONG_INDEX:
+                webView.loadUrl(Constants.URL_JINGDONG);
+                break;
+            case Constants.YOUKU_INDEX:
+                webView.loadUrl(Constants.URL_YOUKU);
                 break;
             default:
                 break;
         }
         webView.setWebViewClient(new WebViewClient(){
+        SVProgressHUD loading = new SVProgressHUD(WebviewActivity.this);
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 return true;
+            }
+
+            @Override
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                handler.proceed();
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                loading.showWithStatus(AndroidUtils.getString(R.string.requesting));
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                loading.dismiss();
             }
         });
         return view;

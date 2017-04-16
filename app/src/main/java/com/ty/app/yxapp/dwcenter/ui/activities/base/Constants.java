@@ -31,7 +31,12 @@ public class Constants {
     public static final int US_GROUP_INDEX = 21;
     public static final int CTRIP_INDEX = 22;
     public static final int SAME_CITY_INDEX = 23;
-    public static final int BAIDU_YUN = 24;
+    public static final int BAIDU_YUN_INDEX = 24;
+
+    public static final int TMALL_INDEX = 25;
+    public static final int ELEM_INDEX = 26;
+    public static final int JINGDONG_INDEX = 27;
+    public static final int YOUKU_INDEX = 28;
 
     public static final String URL_EMS = "http://www.kuaidi100.com/";
     public static final String URL_PHONE_BILL = "http://www.10086.cn/ln/index_240_240.html";
@@ -47,4 +52,9 @@ public class Constants {
     public static final String URL_CTRIP = "http://www.ctrip.com/";
     public static final String URL_SAME_CITY = "http://bj.58.com/";
     public static final String URL_BAIDU_YUN = "https://pan.baidu.com";
+
+    public static final String URL_TIANMAO = "https://www.tmall.com";
+    public static final String URL_ELEME = "https://www.ele.me/home/";
+    public static final String URL_JINGDONG = "http://www.jd.com";
+    public static final String URL_YOUKU = "https://www.youku.com";
 }
