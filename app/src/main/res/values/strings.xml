@@ -18,9 +18,9 @@
     <string name="video_chat">视频通话</string>
 
     <!-- video chat-->
-    <string name="area">区 域</string>
-    <string name="street">镇/街道</string>
-    <string name="village">村/社区</string>
+    <string name="area">一级部门</string>
+    <string name="street">二级部门</string>
+    <string name="village">三级部门</string>
     <string name="manager">网格员</string>
 
     <string name="my_location">我的位置</string>
