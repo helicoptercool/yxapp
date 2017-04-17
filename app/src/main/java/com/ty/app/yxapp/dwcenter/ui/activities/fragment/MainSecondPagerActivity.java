@@ -36,6 +36,7 @@ import com.ty.app.yxapp.dwcenter.ui.activities.base.Constants;
 import com.ty.app.yxapp.dwcenter.ui.widget.AddMoreCell;
 import com.ty.app.yxapp.dwcenter.ui.widget.EditeItemCell;
 import com.ty.app.yxapp.dwcenter.ui.widget.MenuDialog;
+import com.ty.app.yxapp.dwcenter.ui.widget.RoundButton;
 import com.ty.app.yxapp.dwcenter.ui.widget.SectionView;
 import com.ty.app.yxapp.dwcenter.ui.widget.ViewCloud;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
@@ -228,12 +229,6 @@ public class MainSecondPagerActivity extends BaseFragment {
     public View onCreate() {
         context = getContext();
         actionBar.setVisibility(View.VISIBLE);
-        actionBar.setRightView(AndroidUtils.getString(R.string.submit), 0, new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                uploadEvent();
-            }
-        });
         actionBar.setCenterView(AndroidUtils.getString(R.string.push_work));
 
         ScrollView scrollView = new ScrollView(context);
@@ -319,14 +314,26 @@ public class MainSecondPagerActivity extends BaseFragment {
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         container.addView(videoCon);
 
-        View view = new View(context);
-        container.addView(view, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                AndroidUtils.dp(30)));
-
+        RoundButton button = new RoundButton(context, 0xFF2d2d34, 0x302d2d34, 0x00000000);
+        button.setOnClickListener(onClick);
+        button.setText(AndroidUtils.getString(R.string.submit));
+        button.setTextSize(16);
+        button.setTextColor(0xffffffff);
+        LinearLayout.LayoutParams ll = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                AndroidUtils.dp(42));
+        ll.setMargins(AndroidUtils.dp(30),AndroidUtils.dp(15),AndroidUtils.dp(30),AndroidUtils.dp(15));
+        container.addView(button,ll);
         init();
         return scrollView;
     }
 
+
+    private View.OnClickListener onClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            uploadEvent();
+        }
+    };
 
     private List<String> imgSuccessList = new ArrayList<>();
     private List<String> videoSuccessList = new ArrayList<>();
