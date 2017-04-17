@@ -123,7 +123,7 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (data.getStringExtra("return") == null) {
+        if (null == data || null == data.getStringExtra("return")) {
             return;
         }
 

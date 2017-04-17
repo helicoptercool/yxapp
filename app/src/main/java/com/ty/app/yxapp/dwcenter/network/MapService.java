@@ -97,7 +97,7 @@ public class MapService extends Service implements AMapLocationListener, Weather
                 }
             }
         });
-        RetrofitHelper.getInstance().setCoordinate(manager.readSp(Constants.SP_USER_NAME), address, aMapLocation.getLongitude() + "", aMapLocation.getLatitude() + "", "", "", new RetrofitHelper.OnResultListener() {
+        RetrofitHelper.getInstance().setCoordinate(manager.readSp(Constants.SP_USER_NAME), address, aMapLocation.getLongitude() + "", aMapLocation.getLatitude() + "", aMapLocation.getCityCode(), aMapLocation.getCityCode(), new RetrofitHelper.OnResultListener() {
             @Override
             public void onResult(Result result) {
                 if(result != null){
