@@ -5,6 +5,7 @@ import com.ty.app.yxapp.dwcenter.bean.EventUpload;
 import com.ty.app.yxapp.dwcenter.bean.FileUpload;
 import com.ty.app.yxapp.dwcenter.bean.OrgDataInfo;
 import com.ty.app.yxapp.dwcenter.bean.StringResult;
+import com.ty.app.yxapp.dwcenter.bean.Task;
 import com.ty.app.yxapp.dwcenter.bean.UserInfo;
 
 import java.io.File;
@@ -92,5 +93,8 @@ public interface RequestServer {
                                      @Query("coordsType") String coordsType,
                                      @Query("device_id") String device_id
                                      );
+
+    @GET("caseplatform/mobile/system-eventapp!Mbtrajectory.action")
+    Call<Task> getTask(@Query("account") String account);
 
 }

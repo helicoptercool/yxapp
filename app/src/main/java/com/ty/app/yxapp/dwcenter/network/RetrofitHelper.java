@@ -8,6 +8,7 @@ import com.ty.app.yxapp.dwcenter.bean.EventUpload;
 import com.ty.app.yxapp.dwcenter.bean.FileUpload;
 import com.ty.app.yxapp.dwcenter.bean.OrgDataInfo;
 import com.ty.app.yxapp.dwcenter.bean.StringResult;
+import com.ty.app.yxapp.dwcenter.bean.Task;
 import com.ty.app.yxapp.dwcenter.bean.UserInfo;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.Constants;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
@@ -42,6 +43,7 @@ public class RetrofitHelper {
     private static final String UPLOAD_AUDIO = "uploadAudio";
     private static final String UPLOAD_IMAGE = "uploadImage";
     private static final String SET_COORDINATE = "setCoordinate";
+    private static final String GET_TASK = "getTask";
 
     private static RetrofitHelper mRetrofitHelper;
     private static Retrofit mRetrofit;
@@ -185,6 +187,14 @@ public class RetrofitHelper {
         }
     }
 
+    public void getTask(String account, OnResultListener onResultListener){
+        OnCallBackListener onCallBackListener = new OnCallBackListener(GET_TASK,onResultListener);
+        Call<Task> call = requestServer.getTask(account);
+        if(call != null){
+            call.enqueue(onCallBackListener);
+        }
+    }
+
     public interface OnResultListener {
         void onResult(Result result);
     }
@@ -248,6 +258,9 @@ public class RetrofitHelper {
                             break;
                         case SET_COORDINATE:
                             result = result.setCoordinate(response);
+                            break;
+                        case GET_TASK:
+                            result = result.getTask(response);
                             break;
                         default:
                             break;

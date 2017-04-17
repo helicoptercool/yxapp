@@ -37,7 +37,7 @@ public class EventDetailActivity extends BaseActivity {
         String eventDesc = eventBody != null ? eventBody.getEvent_district_code() : "";
 //        String eventAddr = (eventBody != null ? eventBody.getEvent_x() : "") + "," + (eventBody != null ? eventBody.getEvent_y() : "");
         String eventAddr = (eventBody != null ? eventBody.getEvent_dz() : "");
-        String eventStatus = eventBody != null ? eventBody.getEvent_dlmc() : "";
+        String eventStatus = eventBody != null ? eventBody.getEvent_sjzt() : "";
         String eventTime = eventBody != null ? eventBody.getEvent_creattime() : "";
         String photoUrl = eventBody.getEvent_tplj();
         String voiceUrl = eventBody.getEvent_yylj();
@@ -85,13 +85,13 @@ public class EventDetailActivity extends BaseActivity {
             }
         });
         actionBar.setCenterView(AndroidUtils.getString(R.string.event_detail));
-        actionBar.setRightView(AndroidUtils.getString(R.string.feedback_list), 0, new View.OnClickListener() {
+/*        actionBar.setRightView(AndroidUtils.getString(R.string.feedback_list), 0, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent feedBackIntent = new Intent(EventDetailActivity.this, FeedBackListActivity.class);
                 startActivity(feedBackIntent);
             }
-        });
+        });*/
 
         ScrollView scrollView = new ScrollView(this);
         LinearLayout container = new LinearLayout(this);
