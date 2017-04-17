@@ -171,7 +171,7 @@ public class SetActivity extends BaseActivity implements View.OnClickListener{
     private void resetPwd() {
         if(TextUtils.isEmpty(etPwd.getText()) || TextUtils.isEmpty(etNewPwd.getText())){
             AndroidUtils.ShowToast(AndroidUtils.getString(R.string.fill_in_error));
-        }else if(etPwd.getText().toString().equals(etNewPwd.getText().toString())){
+        }else {
             RetrofitHelper.getInstance().setPassword(manager.readSp(Constants.SP_USER_NAME), etNewPwd.getText().toString(), etPwd.getText().toString(), new RetrofitHelper.OnResultListener() {
                 @Override
                 public void onResult(Result result) {
@@ -183,8 +183,6 @@ public class SetActivity extends BaseActivity implements View.OnClickListener{
                     }
                 }
             });
-        }else {
-            AndroidUtils.ShowToast(AndroidUtils.getString(R.string.password_inconsistency));
         }
     }
 }
