@@ -22,7 +22,7 @@ import java.util.List;
 public class EventDetailActivity extends BaseActivity {
 
     private List<String> photos = new ArrayList<>();
-    private List<Uri> videos = new ArrayList<>();
+    private List<String> videos = new ArrayList<>();
     private List<String> voices = new ArrayList<>();
 
     @Override
@@ -39,9 +39,42 @@ public class EventDetailActivity extends BaseActivity {
         String eventAddr = (eventBody != null ? eventBody.getEvent_dz() : "");
         String eventStatus = eventBody != null ? eventBody.getEvent_dlmc() : "";
         String eventTime = eventBody != null ? eventBody.getEvent_creattime() : "";
-        String photoUrl = "https://cp.dawawg.com/caseplatform/file-down?id="+eventBody.getEvent_tplj();
+        String photoUrl = eventBody.getEvent_tplj();
+        String voiceUrl = eventBody.getEvent_yylj();
+        String videoUrl = eventBody.getEvent_splj();
         List<Event.EventRecord> recordList = eventBody.getEvent_record();
-        photos.add(photoUrl);
+        if(photoUrl.contains(",")){
+            String[] p = photoUrl.split(",");
+            if(p!= null && p.length > 0){
+                for(String s: p){
+                    photos.add("https://cp.dawawg.com/caseplatform/file-down?id="+s);
+                }
+            }
+        }else{
+            photos.add("https://cp.dawawg.com/caseplatform/file-down?id="+photoUrl);
+        }
+
+        if(voiceUrl.contains(",")){
+            String[] p = voiceUrl.split(",");
+            if(p!= null && p.length > 0){
+                for(String s: p){
+                    voices.add("https://cp.dawawg.com/caseplatform/file-down?id="+s);
+                }
+            }
+        }else{
+            voices.add("https://cp.dawawg.com/caseplatform/file-down?id="+voiceUrl);
+        }
+
+        if(videoUrl.contains(",")){
+            String[] p = videoUrl.split(",");
+            if(p!= null && p.length > 0){
+                for(String s: p){
+                    videos.add("https://cp.dawawg.com/caseplatform/file-down?id="+s);
+                }
+            }
+        }else{
+            videos.add("https://cp.dawawg.com/caseplatform/file-down?id="+videoUrl);
+        }
 
 
         actionBar.setVisibility(View.VISIBLE);
@@ -105,7 +138,7 @@ public class EventDetailActivity extends BaseActivity {
         voiceCon.addView(vcon, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         ViewCloud voiceCloud = new ViewCloud(this);
-        voiceCloud.postView(photos,true);
+        voiceCloud.postView(voices,true);
         voiceCloud.setAddMoreText(AndroidUtils.getString(R.string.start_recoder));
         vcon.addView(voiceCloud, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -118,7 +151,7 @@ public class EventDetailActivity extends BaseActivity {
         videoCon.addView(videoC, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         ViewCloud videoCloud = new ViewCloud(this);
-        videoCloud.postView(photos,true);
+        videoCloud.postView(videos,true);
         videoC.addView(videoCloud, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         container.addView(videoCon);
