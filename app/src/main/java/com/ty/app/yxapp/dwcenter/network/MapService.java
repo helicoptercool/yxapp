@@ -16,8 +16,10 @@ import com.amap.api.services.weather.LocalWeatherLive;
 import com.amap.api.services.weather.LocalWeatherLiveResult;
 import com.amap.api.services.weather.WeatherSearch;
 import com.amap.api.services.weather.WeatherSearchQuery;
+import com.ty.app.yxapp.dwcenter.ui.activities.base.Constants;
 import com.ty.app.yxapp.dwcenter.ui.activities.fragment.MainSecondPagerActivity;
 import com.ty.app.yxapp.dwcenter.utils.GetWeatherListener;
+import com.ty.app.yxapp.dwcenter.utils.SPManager;
 
 public class MapService extends Service implements AMapLocationListener, WeatherSearch.OnWeatherSearchListener {
 
@@ -27,6 +29,7 @@ public class MapService extends Service implements AMapLocationListener, Weather
     private String city = "";
     private Handler mHandler;
     private static MainSecondPagerActivity.MyLocationListener myLocationListener;
+    private SPManager manager;
 
     @Nullable
     @Override
@@ -36,6 +39,7 @@ public class MapService extends Service implements AMapLocationListener, Weather
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        manager = new SPManager();
         mHandler = new Handler(getMainLooper());
         new Thread() {
             @Override
@@ -90,6 +94,16 @@ public class MapService extends Service implements AMapLocationListener, Weather
                 Log.e(TAG, "locationChanged-->>" + aMapLocation.getLongitude() + ",," + aMapLocation.getLatitude() + "city = " + aMapLocation.getCity() + ", address=" + aMapLocation.getAddress());
                 if (myLocationListener != null) {
                     myLocationListener.getLocation(address + "；" + aMapLocation.getLatitude() + "；" + aMapLocation.getLongitude());
+                }
+            }
+        });
+        RetrofitHelper.getInstance().setCoordinate(manager.readSp(Constants.SP_USER_NAME), address, aMapLocation.getLongitude() + "", aMapLocation.getLatitude() + "", "", "", new RetrofitHelper.OnResultListener() {
+            @Override
+            public void onResult(Result result) {
+                if(result != null){
+                    if(result.isOK()){
+                        Log.e(TAG,"coordinate upload success");
+                    }
                 }
             }
         });

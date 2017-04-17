@@ -8,8 +8,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ty.app.yxapp.dwcenter.R;
+import com.ty.app.yxapp.dwcenter.bean.Task;
+import com.ty.app.yxapp.dwcenter.network.Result;
+import com.ty.app.yxapp.dwcenter.network.RetrofitHelper;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseActivity;
+import com.ty.app.yxapp.dwcenter.ui.activities.base.Constants;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
+import com.ty.app.yxapp.dwcenter.utils.SPManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +29,6 @@ import lecho.lib.hellocharts.view.BubbleChartView;
 
 public class MyTaskActivity extends BaseActivity {
 
-    private static final int BUBBLES_NUM = 8;
-
     private BubbleChartView chart;
     private BubbleChartData data;
     private TextView tvChartExplain;
@@ -34,6 +37,7 @@ public class MyTaskActivity extends BaseActivity {
     private ValueShape shape = ValueShape.CIRCLE;
     private boolean hasLabels = false;
     private boolean hasLabelForSelected = false;
+    private List<Task.TaskBody> myTask;
 
     @Override
     public void onBeforeCreate() {
@@ -66,11 +70,32 @@ public class MyTaskActivity extends BaseActivity {
     }
 
     private void generateData() {
+        SPManager manager = new SPManager();
+
+        RetrofitHelper.getInstance().getTask(manager.readSp(Constants.SP_USER_NAME), new RetrofitHelper.OnResultListener() {
+            @Override
+            public void onResult(Result result) {
+                if (result != null && result.isOK()) {
+                    myTask = (List<Task.TaskBody>) result.getData();
+                }else {
+                    tvChartExplain.setText(result.getMessage());
+                }
+            }
+        });
+
+        if(myTask == null){
+            return;
+        }
 
         List<BubbleValue> values = new ArrayList<BubbleValue>();
-        for (int i = 0; i < BUBBLES_NUM; ++i) {
+        for (int i = 0; i < myTask.size(); ++i) {
             BubbleValue value = new BubbleValue(i, (float) Math.random() * 100, (float) Math.random() * 1000);
-            value.setColor(ChartUtils.pickColor());
+            if(myTask.get(i).getBj().equals("no")){
+                value.setColor(Color.GRAY);
+            }else {
+                value.setColor(Color.GREEN);
+            }
+//            value.setColor(ChartUtils.pickColor());
             value.setShape(shape);
             value.setLabel("哈哈");
             values.add(value);
@@ -86,7 +111,7 @@ public class MyTaskActivity extends BaseActivity {
             Axis axisX = new Axis();
 //            Axis axisY = new Axis().setHasLines(true);
             if (hasAxesNames) {
-                axisX.setName("Axis X");
+                axisX.setName("绿色是已完成任务 灰色是未完成任务");
 //                axisY.setName("Axis Y");
             }
             data.setAxisXBottom(axisX);
@@ -161,7 +186,9 @@ public class MyTaskActivity extends BaseActivity {
 
         @Override
         public void onValueSelected(int bubbleIndex, BubbleValue value) {
-            tvChartExplain.setText("任务说明：" + value.toString());
+            if (myTask != null) {
+                tvChartExplain.setText("任务说明：坐标（" + myTask.get(bubbleIndex).getGcjx() + "," + myTask.get(bubbleIndex).getGcjy() + "）");
+            }
         }
 
         @Override

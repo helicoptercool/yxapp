@@ -9,12 +9,14 @@ import com.ty.app.yxapp.dwcenter.bean.FileUpload;
 import com.ty.app.yxapp.dwcenter.bean.OnlyStrResult;
 import com.ty.app.yxapp.dwcenter.bean.OrgDataInfo;
 import com.ty.app.yxapp.dwcenter.bean.StringResult;
+import com.ty.app.yxapp.dwcenter.bean.Task;
 import com.ty.app.yxapp.dwcenter.bean.UserInfo;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
 
 import java.io.Serializable;
 import java.io.StringReader;
 
+import okhttp3.ResponseBody;
 import retrofit2.Response;
 
 /**
@@ -164,6 +166,16 @@ public class Result implements Serializable {
 
     public Result setCoordinate(Response response){
         StringResult result = (StringResult) response.body();
+        if(result != null){
+            setCode(result.getCode());
+            setMessage(result.getMsg());
+            setData(result.getBody());
+        }
+        return this;
+    }
+
+    public Result getTask(Response response){
+        Task result = (Task) response.body();
         if(result != null){
             setCode(result.getCode());
             setMessage(result.getMsg());

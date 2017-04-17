@@ -429,7 +429,9 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
 
         final String[] pid = new String[1];
         final String[] id = new String[1];
-        final Set<String> set = new HashSet<>();
+        final Set<String> pidSet = new HashSet<>();
+        final Set<String> idSet = new HashSet<>();
+        final Map<String,List<String>> idNameMap = new HashMap<>();
         RetrofitHelper.getInstance().getOrgData("0001", username, new RetrofitHelper.OnResultListener() {
             @Override
             public void onResult(Result result) {
@@ -440,17 +442,34 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
                         for (OrgDataInfo.OrgDataBody orgDataBody : orgDataList) {
                             pid[0] = orgDataBody.getPid();
                             id[0] = orgDataBody.getId();
-                            if(set.add(pid[0])){
+                            pidSet.add(pid[0]);
+                            idSet.add(id[0]);
+                            List<String> userNames = new ArrayList<String>();
+                            for(User user : orgDataBody.getUsers()){
+                                userNames.add(user.getUserName());
+                            }
+                            idNameMap.put(id[0],userNames);
+/*                            if(set.add(pid[0])){
                                 Map<String,List<String>> viUsers = new HashMap<String, List<String>>();
                                 List<String> users = new ArrayList<String>();
                                 for(User user : orgDataBody.getUsers()){
                                     users.add(user.getUserName());
                                 }
                                 viUsers.put(orgDataBody.getName(),users);
-                            }
-                            List<User> userList = orgDataBody.getUsers();
+                            }else {
+
+                            }*/
+
+/*                            List<User> userList = orgDataBody.getUsers();
                             if (userList != null && userList.size() != 0) {
                                 peopleList.add(userList.get(0).getUserName());
+                            }*/
+                        }
+                        for(String id : idSet){
+                            for (String pid : pidSet){
+                                if (pid.equals(id)){
+
+                                }
                             }
                         }
                         myAdapter.notifyDataSetChanged();
