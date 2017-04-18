@@ -54,7 +54,8 @@ public class Constants {
     public static final String URL_BAIDU_YUN = "https://pan.baidu.com";
 
     public static final String URL_TIANMAO = "https://www.tmall.com";
-    public static final String URL_ELEME = "https://www.ele.me/home/";
+    //改为大众点评
+    public static final String URL_ELEME = "https://www.dianping.com/";
     public static final String URL_JINGDONG = "http://www.jd.com";
     public static final String URL_YOUKU = "https://www.youku.com";
 }

@@ -219,12 +219,12 @@ public class MainThirdPagerActivity extends BaseFragment implements View.OnClick
         tianmao.setPicture(R.mipmap.tm_logo, 40, 40);
         commonSfCon1.addView(tianmao, tianmaoll);
 
-        eleme = new ImageButtonCell(context, AndroidUtils.getString(R.string.eleme));
+        eleme = new ImageButtonCell(context, AndroidUtils.getString(R.string.dazhongdianping));
         eleme.setTextType();
         eleme.setOnClickListener(this);
         LinearLayout.LayoutParams elemell = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
         elemell.weight = 1;
-        eleme.setPicture(R.mipmap.elm_logo, 40, 40);
+        eleme.setPicture(R.mipmap.dazhongdianping, 40, 40);
         commonSfCon1.addView(eleme, elemell);
 
         jingdong = new ImageButtonCell(context, AndroidUtils.getString(R.string.jingdong));
