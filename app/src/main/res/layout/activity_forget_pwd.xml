@@ -77,7 +77,6 @@
                 android:id="@+id/foget_pwd_password"
                 android:layout_width="fill_parent"
                 android:layout_height="@dimen/default_edittext_height"
-                android:inputType="textPassword"
                 android:maxLength="20"
                 android:paddingLeft="45dp"
                 android:paddingRight="60dp"/>
