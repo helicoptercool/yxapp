@@ -5,6 +5,8 @@ import android.net.http.SslError;
 import android.util.Log;
 import android.view.View;
 import android.webkit.SslErrorHandler;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -95,8 +97,8 @@ public class WebviewActivity extends BaseActivity {
             default:
                 break;
         }
+        final SVProgressHUD loading = new SVProgressHUD(WebviewActivity.this);
         webView.setWebViewClient(new WebViewClient(){
-        SVProgressHUD loading = new SVProgressHUD(WebviewActivity.this);
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
@@ -104,7 +106,13 @@ public class WebviewActivity extends BaseActivity {
             }
 
             @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                loading.dismiss();
+            }
+
+            @Override
             public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                loading.dismiss();
                 handler.proceed();
             }
 
@@ -116,7 +124,7 @@ public class WebviewActivity extends BaseActivity {
 
             @Override
             public void onPageFinished(WebView view, String url) {
-                loading.dismiss();
+                loading.dismissImmediately();
             }
         });
         return view;
