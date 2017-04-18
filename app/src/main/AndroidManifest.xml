@@ -133,6 +133,12 @@
         <activity android:name=".ui.activities.MyTaskActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             />
+        <activity android:name=".ui.activities.PhotoActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            />
+        <activity android:name=".ui.activities.VideoActiv"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            />
     </application>
 
 </manifest>

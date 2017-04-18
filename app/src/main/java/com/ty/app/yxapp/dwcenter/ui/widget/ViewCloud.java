@@ -109,6 +109,9 @@ public class ViewCloud extends ViewGroup {
 
             AddMoreCell addMore = new AddMoreCell(context);
             addMore.setImg(R.drawable.timg);
+            if(onItemClickListener != null){
+                onItemClickListener.onClick(i,this);
+            }
             if (list.get(i) instanceof Integer) {
                 addMore.setImg((Integer) list.get(i));
             } else if (list.get(i) instanceof Uri) {
@@ -198,5 +201,15 @@ public class ViewCloud extends ViewGroup {
         boolean onTouch(View view, MotionEvent motionEvent);
 
         void close(int i, View view);
+    }
+
+    private OnItemClickListener onItemClickListener;
+
+    public void setOnItemClickListener( OnItemClickListener onItemClickListener){
+        this.onItemClickListener =  onItemClickListener;
+    }
+
+    public interface OnItemClickListener{
+        void onClick(int pos,View view);
     }
 }
