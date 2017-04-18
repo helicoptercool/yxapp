@@ -3,4 +3,5 @@
     <item name="main_pager" type="id" />
     <item name="second_pager_scroll" type="id" />
     <item name="btncon" type="id" />
+    <item name="chat_head_view" type="id" />
 </resources>
