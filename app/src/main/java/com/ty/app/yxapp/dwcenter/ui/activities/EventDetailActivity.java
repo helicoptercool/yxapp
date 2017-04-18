@@ -2,6 +2,7 @@ package com.ty.app.yxapp.dwcenter.ui.activities;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -15,15 +16,19 @@ import com.ty.app.yxapp.dwcenter.ui.widget.EditeItemCell;
 import com.ty.app.yxapp.dwcenter.ui.widget.SectionView;
 import com.ty.app.yxapp.dwcenter.ui.widget.ViewCloud;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
+import com.ty.app.yxapp.dwcenter.utils.UpLoadFile;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EventDetailActivity extends BaseActivity {
 
-    private List<String> photos = new ArrayList<>();
+    private ArrayList<CharSequence> photos = new ArrayList<>();
     private List<String> videos = new ArrayList<>();
     private List<String> voices = new ArrayList<>();
+    private ViewCloud photoCloud;
+    private ViewCloud voiceCloud;
+    private ViewCloud videoCloud;
 
     @Override
     public void onBeforeCreate() {
@@ -125,8 +130,9 @@ public class EventDetailActivity extends BaseActivity {
         pcon.setPadding(AndroidUtils.dp(15), 0, AndroidUtils.dp(15), 0);
         photoCon.addView(pcon, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
-        ViewCloud photoCloud = new ViewCloud(this);
+        photoCloud = new ViewCloud(this);
         photoCloud.postView(photos,true);
+        photoCloud.setOnListener(onListener);
         pcon.addView(photoCloud, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         container.addView(photoCon);
@@ -137,7 +143,7 @@ public class EventDetailActivity extends BaseActivity {
         vcon.setPadding(AndroidUtils.dp(15), 0, AndroidUtils.dp(15), 0);
         voiceCon.addView(vcon, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
-        ViewCloud voiceCloud = new ViewCloud(this);
+        voiceCloud = new ViewCloud(this);
         voiceCloud.postView(voices,true);
         voiceCloud.setAddMoreText(AndroidUtils.getString(R.string.start_recoder));
         vcon.addView(voiceCloud, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
@@ -150,7 +156,7 @@ public class EventDetailActivity extends BaseActivity {
         videoC.setPadding(AndroidUtils.dp(15), 0, AndroidUtils.dp(15), 0);
         videoCon.addView(videoC, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
-        ViewCloud videoCloud = new ViewCloud(this);
+        videoCloud = new ViewCloud(this);
         videoCloud.postView(videos,true);
         videoC.addView(videoCloud, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -189,6 +195,26 @@ public class EventDetailActivity extends BaseActivity {
                 AndroidUtils.dp(30)));
         return scrollView;
     }
+
+    private ViewCloud.OnListener onListener = new ViewCloud.OnListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            if(view == photoCloud){
+                Intent intent = new Intent();
+                intent.putExtra("cur_position",0);
+                intent.putCharSequenceArrayListExtra("items",photos);
+                intent.setClass(EventDetailActivity.this,PhotoActivity.class);
+                startActivity(intent);
+
+            }
+            return false;
+        }
+
+        @Override
+        public void close(int i, View view) {
+
+        }
+    };
 
 //    private void downLoadData() {
 //        ImageView imageView = new ImageView(this);

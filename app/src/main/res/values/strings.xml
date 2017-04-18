@@ -131,5 +131,7 @@
     <string name="set_server">设置服务器地址</string>
     <string name="my_task">我的任务</string>
     <string name="location_empty">没有获取到当前位置，请确认打开GPS</string>
+    <string name="loading">加载中...</string>
+
 
 </resources>
