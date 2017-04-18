@@ -465,10 +465,10 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
                                 peopleList.add(userList.get(0).getUserName());
                             }*/
                         }
-                        for(String id : idSet){
+                        for(String id : idNameMap.keySet()){
                             for (String pid : pidSet){
                                 if (pid.equals(id)){
-
+                                    Log.e(TAG,idNameMap.get(id).toString());
                                 }
                             }
                         }
