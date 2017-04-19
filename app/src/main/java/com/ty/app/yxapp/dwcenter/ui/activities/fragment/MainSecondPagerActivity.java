@@ -314,13 +314,13 @@ public class MainSecondPagerActivity extends BaseFragment {
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         container.addView(videoCon);
 
-        RoundButton button = new RoundButton(context, 0xFF2d2d34, 0x302d2d34, 0x00000000);
+        RoundButton button = new RoundButton(context, 0xFF3F51B5, 0x302d2d34, 0x00000000);
         button.setOnClickListener(onClick);
         button.setText(AndroidUtils.getString(R.string.submit));
         button.setTextSize(16);
         button.setTextColor(0xffffffff);
         LinearLayout.LayoutParams ll = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                AndroidUtils.dp(42));
+                AndroidUtils.dp(60));
         ll.setMargins(AndroidUtils.dp(30),AndroidUtils.dp(15),AndroidUtils.dp(30),AndroidUtils.dp(15));
         container.addView(button,ll);
         init();

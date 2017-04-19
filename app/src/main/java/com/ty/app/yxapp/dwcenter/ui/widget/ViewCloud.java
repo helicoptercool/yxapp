@@ -140,7 +140,7 @@ public class ViewCloud extends ViewGroup {
 
             ImageView close = new ImageView(context);
             close.setVisibility(onlyShowPic ? GONE : VISIBLE);
-            close.setImageResource(R.mipmap.ic_launcher);
+            close.setImageResource(R.mipmap.close);
             FrameLayout.LayoutParams closeFl = new FrameLayout.LayoutParams(AndroidUtils.dp(30), AndroidUtils.dp(30));
             closeFl.gravity = Gravity.RIGHT | Gravity.TOP;
             frameLayout.addView(close, closeFl);

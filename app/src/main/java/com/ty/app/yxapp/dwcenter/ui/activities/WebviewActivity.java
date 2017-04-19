@@ -2,6 +2,7 @@ package com.ty.app.yxapp.dwcenter.ui.activities;
 
 import android.graphics.Bitmap;
 import android.net.http.SslError;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.webkit.SslErrorHandler;
@@ -20,6 +21,7 @@ import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
 public class WebviewActivity extends BaseActivity {
     private static final String TAG = WebviewActivity.class.getSimpleName();
     private WebView webView;
+    private Handler mHandler;
 
     @Override
     public void onBeforeCreate() {
@@ -28,6 +30,7 @@ public class WebviewActivity extends BaseActivity {
 
     @Override
     public View onCreate() {
+        mHandler = new Handler();
         actionBar.setVisibility(View.VISIBLE);
         actionBar.setCenterView(AndroidUtils.getString(R.string.app_name));
         actionBar.setLeftView("", R.mipmap.back, new View.OnClickListener() {
@@ -43,6 +46,7 @@ public class WebviewActivity extends BaseActivity {
         settings.setLoadWithOverviewMode(true);
         settings.setJavaScriptEnabled(true);
         settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+
         int urlAddr = getIntent().getIntExtra("url",4);
         switch (urlAddr){
             case Constants.EMS_INDEX:
@@ -98,28 +102,47 @@ public class WebviewActivity extends BaseActivity {
                 break;
         }
         final SVProgressHUD loading = new SVProgressHUD(WebviewActivity.this);
+/*        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(loading.isShowing()){
+                    loading.dismissImmediately();
+                    AndroidUtils.ShowToast(AndroidUtils.getString(R.string.no_network));
+                }
+            }
+        },5000);*/
         webView.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(loading.isShowing()){
+                            loading.dismissImmediately();
+                            AndroidUtils.ShowToast(AndroidUtils.getString(R.string.no_network));
+                        }
+                    }
+                },5000);
                 return true;
             }
 
             @Override
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-                loading.dismiss();
+                loading.dismissImmediately();
             }
 
             @Override
             public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-                loading.dismiss();
+                loading.dismissImmediately();
                 handler.proceed();
             }
 
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                super.onPageStarted(view, url, favicon);
+//                super.onPageStarted(view, url, favicon);
                 loading.showWithStatus(AndroidUtils.getString(R.string.requesting));
+
             }
 
             @Override
@@ -127,6 +150,7 @@ public class WebviewActivity extends BaseActivity {
                 loading.dismissImmediately();
             }
         });
+
         return view;
     }
 }

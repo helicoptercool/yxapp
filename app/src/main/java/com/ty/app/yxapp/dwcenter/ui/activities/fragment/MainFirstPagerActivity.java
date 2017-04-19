@@ -133,9 +133,12 @@ public class MainFirstPagerActivity extends BaseFragment implements View.OnClick
 
     private void init() {
         List<Integer> resList = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            resList.add(R.drawable.timg);
-        }
+//        for (int i = 0; i < 3; i++) {
+//            resList.add(R.drawable.timg);
+//        }
+        resList.add(R.mipmap.ad1);
+        resList.add(R.mipmap.ad2);
+        resList.add(R.mipmap.ad3);
         looperImgCell.setResList(resList);
         MapService.setGetWeatherListener(this);
     }
