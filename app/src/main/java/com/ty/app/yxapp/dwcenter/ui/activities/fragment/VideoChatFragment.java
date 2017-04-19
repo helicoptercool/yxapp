@@ -2,6 +2,8 @@ package com.ty.app.yxapp.dwcenter.ui.activities.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -9,8 +11,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.ty.app.yxapp.dwcenter.R;
 import com.ty.app.yxapp.dwcenter.bean.OrgDataInfo;
 import com.ty.app.yxapp.dwcenter.bean.StringResult;
@@ -23,6 +27,7 @@ import com.ty.app.yxapp.dwcenter.ui.activities.base.Constants;
 import com.ty.app.yxapp.dwcenter.ui.im.VideoChatActivity;
 import com.ty.app.yxapp.dwcenter.ui.widget.DividerSmallCell;
 import com.ty.app.yxapp.dwcenter.ui.widget.EditeItemCell;
+import com.ty.app.yxapp.dwcenter.ui.widget.EmptyView;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
 import com.ty.app.yxapp.dwcenter.utils.SPManager;
 
@@ -48,11 +53,33 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
     private EditeItemCell street;
     private EditeItemCell village;
 
-    private List<String> peopleList = new ArrayList<>();
+    private Set<String> peopleList = new HashSet<>();
     private MyAdapter myAdapter;
     private int areaCode = 0;
     private int streetCode = 0;
     private int villageCode = 0;
+    private SVProgressHUD loading;
+
+//    private EmptyView emptyView;
+    private ListView listView;
+/*    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 0:
+                    listView.setVisibility(View.VISIBLE);
+                    emptyView.setVisibility(View.GONE);
+                    myAdapter.notifyDataSetChanged();
+                    break;
+                case 1:
+                    listView.setVisibility(View.GONE);
+                    emptyView.setVisibility(View.VISIBLE);
+                    emptyView.setLoadingText(AndroidUtils.getString(R.string.no_data));
+                    break;
+            }
+        }
+    };*/
+
 
     @Override
     public void onBeforeCreate() {
@@ -64,6 +91,7 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
         context = getContext();
         actionBar.setVisibility(View.VISIBLE);
         actionBar.setCenterView(getString(R.string.video_chat));
+        loading = new SVProgressHUD(context);
 
         LinearLayout container = new LinearLayout(context);
         container.setOrientation(LinearLayout.VERTICAL);
@@ -90,7 +118,7 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
         headView.addView(village);
 
 
-        ListView listView = new ListView(context);
+        listView = new ListView(context);
         listView.setDivider(null);
         listView.setDividerHeight(0);
         myAdapter = new MyAdapter();
@@ -98,6 +126,9 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
         listView.addHeaderView(headView);
         container.addView(listView);
 
+//        emptyView = new EmptyView(context);
+//        container.addView(emptyView,new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+//                ViewGroup.LayoutParams.MATCH_PARENT));
         initData();
         return container;
     }
@@ -117,6 +148,7 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
 
         } else if (v == village) {
             intent.putExtra("from", "village");
+            intent.putExtra("areaStreet", areaCon.getValue() + "," + street.getValue());
         }
         startActivityForResult(intent, 1);
     }
@@ -126,15 +158,67 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
         if (null == data || null == data.getStringExtra("return")) {
             return;
         }
+        if (peopleList.size() > 0) peopleList.clear();
+//        mHandler.sendEmptyMessage(1);
+        loading.showWithStatus(AndroidUtils.getString(R.string.requesting));
+        SPManager spManager = new SPManager();
+        final String username = spManager.readSp(Constants.SP_USER_NAME);
+        if (!village.getValue().equals("暂无三级部门")) {
+            RetrofitHelper.getInstance().getOrgData("0001", username, new RetrofitHelper.OnResultListener() {
+                @Override
+                public void onResult(Result result) {
+                    loading.dismissImmediately();
+                    if (result != null) {
+                        if (result.isOK()) {
+                            List<OrgDataInfo.OrgDataBody> orgDataList = (List<OrgDataInfo.OrgDataBody>) result.getData();
+                            if (orgDataList != null) {
+                                for (OrgDataInfo.OrgDataBody body : orgDataList) {
+                                    if (body.getName().equals(village.getValue())) {
+                                        for (User user : body.getUsers()) {
+                                            peopleList.add(user.getUserName());
+                                        }
+                                    }
+                                }
+                            }
+                        }
+//                        mHandler.sendEmptyMessage(0);
+                        myAdapter.notifyDataSetChanged();
+                    }
+                }
+            });
+        } else {
+            RetrofitHelper.getInstance().getOrgData("0001", username, new RetrofitHelper.OnResultListener() {
+                @Override
+                public void onResult(Result result) {
+                    loading.dismissImmediately();
+                    if (result != null) {
+                        if (result.isOK()) {
+                            List<OrgDataInfo.OrgDataBody> orgDataList = (List<OrgDataInfo.OrgDataBody>) result.getData();
+                            if (orgDataList != null) {
+                                for (OrgDataInfo.OrgDataBody body : orgDataList) {
+                                    if (body.getName().equals(street.getValue())) {
+                                        for (User user : body.getUsers()) {
+                                            peopleList.add(user.getUserName());
+                                        }
+                                    }
+                                }
+                            }
+//                            mHandler.sendEmptyMessage(0);
+                            myAdapter.notifyDataSetChanged();
+                        }
+                    }
+                }
+            });
+        }
 
         switch (resultCode) {
             case AREA_RETURN:
 
-                if (data.getStringExtra("return").equals("大洼智能部门")) {
+                if (data.getStringExtra("return").equals("大洼职能部门")) {
                     areaCode = 1;
                     areaCon.setValue(data.getStringExtra("return"));
                     street.setValue("发改局");
-                    village.setValue("新兴社区");
+                    village.setValue("暂无三级部门");
                 } else {
                     areaCode = 0;
                     areaCon.setValue(data.getStringExtra("return"));
@@ -366,6 +450,7 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
                 break;
             default:
                 break;
+
         }
     }
 
@@ -378,7 +463,8 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
 
         @Override
         public Object getItem(int i) {
-            return peopleList.get(i);
+
+            return peopleList.toArray()[i];
         }
 
         @Override
@@ -393,7 +479,7 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent();
-                    intent.putExtra("userName", peopleList.get(i));
+                    intent.putExtra("userName", (String) peopleList.toArray()[i]);
                     intent.putExtra("flag", VideoChatActivity.FLAG_OUT);
                     intent.setClass(getActivity(), VideoChatActivity.class);
                     startActivity(intent);
@@ -407,7 +493,7 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
             titleView.setTextColor(0xFF8F9098);
             titleView.setTextSize(14);
             titleView.setGravity(Gravity.CENTER);
-            titleView.setText(peopleList.get(i));
+            titleView.setText((String) peopleList.toArray()[i]);
             peopleCon.addView(titleView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                     AndroidUtils.dp(45)));
 
@@ -418,60 +504,29 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
     }
 
 
-    Map<String, List<String>> lvlOne = new HashMap<>();
-    Map<String, List<String>> lvlTwo = new HashMap<>();
-    Map<String, List<String>> lvlThree = new HashMap<>();
-
     private void initData() {
         if (peopleList.size() > 0) peopleList.clear();
         SPManager spManager = new SPManager();
         final String username = spManager.readSp(Constants.SP_USER_NAME);
-
-        final String[] pid = new String[1];
-        final String[] id = new String[1];
-        final Set<String> pidSet = new HashSet<>();
-        final Set<String> idSet = new HashSet<>();
-        final Map<String,List<String>> idNameMap = new HashMap<>();
+//        loading.showWithStatus(AndroidUtils.getString(R.string.requesting));
         RetrofitHelper.getInstance().getOrgData("0001", username, new RetrofitHelper.OnResultListener() {
             @Override
             public void onResult(Result result) {
                 Log.e(TAG, result.getMessage());
+//                loading.dismissImmediately();
                 if (result.isOK()) {
                     List<OrgDataInfo.OrgDataBody> orgDataList = (List<OrgDataInfo.OrgDataBody>) result.getData();
                     if (orgDataList != null) {
                         for (OrgDataInfo.OrgDataBody orgDataBody : orgDataList) {
-                            pid[0] = orgDataBody.getPid();
-                            id[0] = orgDataBody.getId();
-                            pidSet.add(pid[0]);
-                            idSet.add(id[0]);
-                            List<String> userNames = new ArrayList<String>();
-                            for(User user : orgDataBody.getUsers()){
-                                userNames.add(user.getUserName());
-                            }
-                            idNameMap.put(id[0],userNames);
-/*                            if(set.add(pid[0])){
-                                Map<String,List<String>> viUsers = new HashMap<String, List<String>>();
-                                List<String> users = new ArrayList<String>();
-                                for(User user : orgDataBody.getUsers()){
-                                    users.add(user.getUserName());
-                                }
-                                viUsers.put(orgDataBody.getName(),users);
-                            }else {
 
-                            }*/
-
-/*                            List<User> userList = orgDataBody.getUsers();
-                            if (userList != null && userList.size() != 0) {
-                                peopleList.add(userList.get(0).getUserName());
-                            }*/
-                        }
-                        for(String id : idNameMap.keySet()){
-                            for (String pid : pidSet){
-                                if (pid.equals(id)){
-                                    Log.e(TAG,idNameMap.get(id).toString());
+                            if (orgDataBody.getName().equals("新兴社区")) {
+                                List<User> userList = orgDataBody.getUsers();
+                                for (User user : userList) {
+                                    peopleList.add(user.getUserName());
                                 }
                             }
                         }
+//                        mHandler.sendEmptyMessage(0);
                         myAdapter.notifyDataSetChanged();
                     }
                 }

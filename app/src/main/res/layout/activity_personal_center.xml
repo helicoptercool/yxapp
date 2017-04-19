@@ -9,6 +9,7 @@
         android:id="@+id/layout_personal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="20dp"
         android:orientation="horizontal"
         >
         <ImageView
@@ -17,8 +18,11 @@
             android:background="@mipmap/yiwancheng"
             />
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
             android:orientation="vertical"
             >
             <TextView
@@ -30,19 +34,27 @@
             <TextView
                 android:id="@+id/tv_personal_account"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="idididiid"
                 />
 
 
         </LinearLayout>
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:background="@mipmap/right_arrow"
-            android:layout_gravity="right"
+            android:layout_gravity="center_vertical"
             />
     </LinearLayout>
+
+    <Space
+        android:layout_below="@id/layout_personal"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/LightYellow4"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -54,9 +66,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="erweima"
+            android:text="扫码下载新版本"
             />
         <ImageView
+            android:id="@+id/qrcode_iv"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:layout_gravity="center"
@@ -65,12 +78,21 @@
 
     </LinearLayout>
 
+
+
     <Button
         android:id="@+id/btn_logout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:text="logout"
-        />
+        android:background="#ffE54646"
+        android:gravity="center"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="@string/logout"
+        android:textSize="18sp"
+        android:textColor="@android:color/white" />
+
 
 </RelativeLayout>

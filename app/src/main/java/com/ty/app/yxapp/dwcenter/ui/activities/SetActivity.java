@@ -23,7 +23,6 @@ public class SetActivity extends BaseActivity implements View.OnClickListener{
     private EditText etPwd;
     private EditText etNewPwd;
     private Button btnResetPwd;
-    private Button btnLogout;
 //    private Button btnPhoneClear;
     private Button btnPwdClear;
     private Button btnNewPwdClear;
@@ -62,10 +61,7 @@ public class SetActivity extends BaseActivity implements View.OnClickListener{
         etPwd = (EditText) view.findViewById(R.id.original_password);
         etNewPwd = (EditText) view.findViewById(R.id.new_password);
         btnResetPwd = (Button) view.findViewById(R.id.reset_pwd);
-        btnLogout = (Button) view.findViewById(R.id.logout);
-        if(modifyPwd){
-            btnLogout.setVisibility(View.INVISIBLE);
-        }
+
 //        btnPhoneClear = (Button) view.findViewById(R.id.bt_set_username_clear);
         btnPwdClear = (Button) view.findViewById(R.id.bt_original_pwd_clear);
         btnNewPwdClear = (Button) view.findViewById(R.id.bt_new_pwd_clear);
@@ -73,7 +69,6 @@ public class SetActivity extends BaseActivity implements View.OnClickListener{
 //        btnPhoneClear.setOnClickListener(this);
         btnPwdClear.setOnClickListener(this);
         btnNewPwdClear.setOnClickListener(this);
-        btnLogout.setOnClickListener(this);
         initWatcher();
 //        btnPhoneClear.addTextChangedListener(phoneWatcher);
         etPwd.addTextChangedListener(pwdWatcher);
@@ -153,9 +148,6 @@ public class SetActivity extends BaseActivity implements View.OnClickListener{
                 break;
             case R.id.reset_pwd:
                 resetPwd();
-                break;
-            case R.id.logout:
-                gotoLoginActivity();
                 break;
             default:
                 break;

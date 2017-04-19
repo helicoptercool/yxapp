@@ -13,6 +13,7 @@ import com.ty.app.yxapp.dwcenter.R;
 import com.ty.app.yxapp.dwcenter.network.RequestServer;
 import com.ty.app.yxapp.dwcenter.ui.activities.EventActivity;
 import com.ty.app.yxapp.dwcenter.ui.activities.BasicMapActivity;
+import com.ty.app.yxapp.dwcenter.ui.activities.PersonalCenterActivity;
 import com.ty.app.yxapp.dwcenter.ui.activities.SetActivity;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.Constants;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
@@ -58,7 +59,7 @@ public class MainFirstPagerActivity extends BaseFragment implements View.OnClick
         actionBar.setRightView("", R.mipmap.right_top_set, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, SetActivity.class);
+                Intent intent = new Intent(context, PersonalCenterActivity.class);
                 startActivity(intent);
             }
         });

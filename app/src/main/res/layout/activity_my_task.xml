@@ -21,7 +21,7 @@
         android:id="@+id/chart_explain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="wwwwwwww"
+        android:text="我的任务：每个点代表一个任务"
         android:gravity="center"
         android:layout_weight="1"
         />

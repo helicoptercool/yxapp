@@ -130,28 +130,16 @@
         android:id="@+id/reset_pwd"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:layout_below="@id/new_user_pwd_layout"
-        android:layout_marginTop="30dp"
+        android:layout_alignParentBottom="true"
         android:background="#ff336699"
         android:gravity="center"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:layout_marginBottom="30dp"
         android:text="@string/reset_password"
         android:textSize="18sp"
         android:textColor="@android:color/white" />
 
-    <Button
-        android:id="@+id/logout"
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="30dp"
-        android:layout_alignParentBottom="true"
-        android:background="#ffE54646"
-        android:gravity="center"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:text="@string/logout"
-        android:textSize="18sp"
-        android:textColor="@android:color/white" />
+
 
 </RelativeLayout>
