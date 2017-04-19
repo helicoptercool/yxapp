@@ -179,19 +179,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         }
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
-                        MyApplication.handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                finish();
-                            }
-                        }, 100);
 
-/*                        ChatController.getIntance().login(phone, password, new ChatController.Callback() {
+                        ChatController.getIntance().login(phone, password, new ChatController.Callback() {
                             @Override
                             public void success() {
                                 Log.d(TAG, "huanxin login success");
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                startActivity(intent);
                             }
 
                             @Override
@@ -212,7 +204,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                     Log.d(TAG, "huanxin createAccount success");
                                 }
                             }
-                        });*/
+                        });
+
+                        MyApplication.handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                finish();
+                            }
+                        }, 100);
+
+
 
                     } else {
                         AndroidUtils.ShowToast(result.getMessage());
