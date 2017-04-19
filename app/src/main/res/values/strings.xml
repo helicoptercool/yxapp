@@ -52,7 +52,6 @@
     <string name="failure">失败</string>
     <string name="requesting">数据请求中</string>
     <string name="uploading">上传中…</string>
-    <string name="loading">数据加载中…</string>
     <string name="no_data">暂无数据</string>
     <string name="no_network">网络异常</string>
     <string name="start_recoder">长按录制</string>
@@ -87,6 +86,7 @@
     <string name="baidu_yun">百度云</string>
     <string name="tianmao">天猫</string>
     <string name="eleme">饿了么</string>
+    <string name="dazhongdianping">大众点评</string>
     <string name="jingdong">京东</string>
     <string name="youku">优酷</string>
 
@@ -131,5 +131,7 @@
     <string name="set_server">设置服务器地址</string>
     <string name="my_task">我的任务</string>
     <string name="location_empty">没有获取到当前位置，请确认打开GPS</string>
+    <string name="loading">加载中...</string>
+
 
 </resources>

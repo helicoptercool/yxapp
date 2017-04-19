@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.ty.app.yxapp.dwcenter.R;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseActivity;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.MyApplication;
 import com.ty.app.yxapp.dwcenter.utils.SPManager;
@@ -30,7 +31,7 @@ public class GuideActivity extends BaseActivity {
     public View onCreate() {
         ImageView imageView = new ImageView(this);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageView.setBackgroundResource(android.R.mipmap.sym_def_app_icon);
+        imageView.setBackgroundResource(R.mipmap.splash);
         FrameLayout.LayoutParams fl = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         fl.gravity = Gravity.CENTER;

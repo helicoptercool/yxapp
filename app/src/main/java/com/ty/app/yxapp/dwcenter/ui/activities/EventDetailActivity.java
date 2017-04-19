@@ -1,29 +1,46 @@
 package com.ty.app.yxapp.dwcenter.ui.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+
+import com.hyphenate.chat.EMMessage;
 import com.squareup.picasso.Picasso;
 import com.ty.app.yxapp.dwcenter.R;
 import com.ty.app.yxapp.dwcenter.bean.Event;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseActivity;
+import com.ty.app.yxapp.dwcenter.ui.im.ChatController;
+import com.ty.app.yxapp.dwcenter.ui.im.VideoChatActivity;
 import com.ty.app.yxapp.dwcenter.ui.widget.EditeItemCell;
 import com.ty.app.yxapp.dwcenter.ui.widget.SectionView;
 import com.ty.app.yxapp.dwcenter.ui.widget.ViewCloud;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
+import com.ty.app.yxapp.dwcenter.utils.UpLoadFile;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.R.id.icon;
+import static android.R.id.message;
+
 public class EventDetailActivity extends BaseActivity {
 
-    private List<String> photos = new ArrayList<>();
+    private ArrayList<CharSequence> photos = new ArrayList<>();
     private List<String> videos = new ArrayList<>();
     private List<String> voices = new ArrayList<>();
+    private ViewCloud photoCloud;
+    private ViewCloud voiceCloud;
+    private ViewCloud videoCloud;
+    private MediaPlayer mediaPlayer;
 
     @Override
     public void onBeforeCreate() {
@@ -125,8 +142,9 @@ public class EventDetailActivity extends BaseActivity {
         pcon.setPadding(AndroidUtils.dp(15), 0, AndroidUtils.dp(15), 0);
         photoCon.addView(pcon, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
-        ViewCloud photoCloud = new ViewCloud(this);
+        photoCloud = new ViewCloud(this);
         photoCloud.postView(photos,true);
+        photoCloud.setOnItemClickListener(onItemClick);
         pcon.addView(photoCloud, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         container.addView(photoCon);
@@ -137,7 +155,8 @@ public class EventDetailActivity extends BaseActivity {
         vcon.setPadding(AndroidUtils.dp(15), 0, AndroidUtils.dp(15), 0);
         voiceCon.addView(vcon, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
-        ViewCloud voiceCloud = new ViewCloud(this);
+        voiceCloud = new ViewCloud(this);
+        voiceCloud.setOnItemClickListener(onItemClick);
         voiceCloud.postView(voices,true);
         voiceCloud.setAddMoreText(AndroidUtils.getString(R.string.start_recoder));
         vcon.addView(voiceCloud, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
@@ -150,8 +169,9 @@ public class EventDetailActivity extends BaseActivity {
         videoC.setPadding(AndroidUtils.dp(15), 0, AndroidUtils.dp(15), 0);
         videoCon.addView(videoC, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
-        ViewCloud videoCloud = new ViewCloud(this);
+        videoCloud = new ViewCloud(this);
         videoCloud.postView(videos,true);
+        videoCloud.setOnItemClickListener(onItemClick);
         videoC.addView(videoCloud, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         container.addView(videoCon);
@@ -190,11 +210,76 @@ public class EventDetailActivity extends BaseActivity {
         return scrollView;
     }
 
-//    private void downLoadData() {
-//        ImageView imageView = new ImageView(this);
-//        String internetUrl = "https://cp.dawawg.com/caseplatform/file-down?id=mobile1489210146705.jpg";
-//
-//        Picasso.with(this).load(internetUrl).into(imageView);
-//        photos.add(imageView);
-//    }
+
+    private ViewCloud.OnItemClickListener onItemClick = new ViewCloud.OnItemClickListener() {
+        @Override
+        public void onClick(int pos,View v) {
+            if(v == photoCloud){
+                Intent intent = new Intent();
+                intent.putExtra("cur_position",0);
+                intent.putCharSequenceArrayListExtra("items",photos);
+                intent.setClass(EventDetailActivity.this,PhotoActivity.class);
+                startActivity(intent);
+            }else if(v == voiceCloud){
+                playVoice(voices.get(pos));
+            }else if(v == videoCloud){
+                Intent intent = new Intent();
+                intent.putExtra("uri",videos.get(pos));
+                intent.setClass(EventDetailActivity.this,VideoActiv.class);
+                startActivity(intent);
+            }
+        }
+    };
+
+
+
+    public void playVoice(String filePath) {
+        if (!(new File(filePath).exists())) {
+            return;
+        }
+        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+
+        mediaPlayer = new MediaPlayer();
+        boolean isSpeakerOpened = true;
+        //TODO: 判断是否为电话听筒
+        if (isSpeakerOpened) {
+            audioManager.setMode(AudioManager.MODE_NORMAL);
+            audioManager.setSpeakerphoneOn(true);
+            mediaPlayer.setAudioStreamType(AudioManager.STREAM_RING);
+        } else {
+            audioManager.setSpeakerphoneOn(false);// 关闭扬声器
+            // 把声音设定成Earpiece（听筒）出来，设定为正在通话中
+            audioManager.setMode(AudioManager.MODE_IN_CALL);
+            mediaPlayer.setAudioStreamType(AudioManager.STREAM_VOICE_CALL);
+        }
+        try {
+            mediaPlayer.setDataSource(filePath);
+            mediaPlayer.prepare();
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    // TODO Auto-generated method stub
+                    mediaPlayer.release();
+                    mediaPlayer = null;
+                    stopPlayVoice(); // stop animation
+                }
+
+            });
+            mediaPlayer.start();
+
+        } catch (Exception e) {
+            System.out.println();
+        }
+    }
+
+    public void stopPlayVoice() {
+        try{
+            if (mediaPlayer != null) {
+                mediaPlayer.stop();
+                mediaPlayer.release();
+            }
+        }catch (Exception e){}
+    }
+
 }

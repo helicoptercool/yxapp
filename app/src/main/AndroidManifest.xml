@@ -29,7 +29,7 @@
     <application
         android:name=".ui.activities.base.MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/dw_logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -61,7 +61,7 @@
             </intent-filter>
         </receiver>
 
-        <!--191cd7c1b212482ec29addd4f68b5119         79d109f8df7edc028d2954e580e75427      d9d91234c1d8a26e80a79cc8a751342b-->
+        <!-- 191cd7c1b212482ec29addd4f68b5119         79d109f8df7edc028d2954e580e75427      d9d91234c1d8a26e80a79cc8a751342b -->
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="79d109f8df7edc028d2954e580e75427" />
@@ -130,7 +130,16 @@
         <activity
             android:name=".ui.activities.FeedBackListActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".ui.activities.MyTaskActivity"
+        <activity
+            android:name=".ui.activities.MyTaskActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".ui.activities.PersonalCenterActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            />
+        <activity android:name=".ui.activities.PhotoActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            />
+        <activity android:name=".ui.activities.VideoActiv"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             />
     </application>
