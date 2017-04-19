@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.hyphenate.chat.EMMessage;
 import com.squareup.picasso.Picasso;
@@ -41,6 +42,7 @@ public class EventDetailActivity extends BaseActivity {
     private ViewCloud voiceCloud;
     private ViewCloud videoCloud;
     private MediaPlayer mediaPlayer;
+    private Context context;
 
     @Override
     public void onBeforeCreate() {
@@ -48,6 +50,7 @@ public class EventDetailActivity extends BaseActivity {
 
     @Override
     public View onCreate() {
+        context = getBaseContext();
         Intent intent = this.getIntent();
         Event.EventBody eventBody = (Event.EventBody) intent.getSerializableExtra("event");
         String eventName = eventBody != null ? eventBody.getEvent_title() : "";
@@ -215,18 +218,28 @@ public class EventDetailActivity extends BaseActivity {
         @Override
         public void onClick(int pos,View v) {
             if(v == photoCloud){
-                Intent intent = new Intent();
-                intent.putExtra("cur_position",0);
-                intent.putCharSequenceArrayListExtra("items",photos);
-                intent.setClass(EventDetailActivity.this,PhotoActivity.class);
-                startActivity(intent);
+                if(!photos.isEmpty()){
+                    Intent intent = new Intent();
+                    intent.putExtra("cur_position",0);
+                    intent.putCharSequenceArrayListExtra("items",photos);
+                    intent.setClass(EventDetailActivity.this,PhotoActivity.class);
+                    startActivity(intent);
+                }
             }else if(v == voiceCloud){
-                playVoice(voices.get(pos));
+                if(!voices.isEmpty() && voices.size() > 1){
+                    playVoice(voices.get(pos));
+                }else if(voices.size() == 1 && voices.get(0).equals("https://cp.dawawg.com/caseplatform/file-down?id=")){
+                    Toast.makeText(context,"没有上传语音",Toast.LENGTH_SHORT).show();
+                }
             }else if(v == videoCloud){
-                Intent intent = new Intent();
-                intent.putExtra("uri",videos.get(pos));
-                intent.setClass(EventDetailActivity.this,VideoActiv.class);
-                startActivity(intent);
+                if(!videos.isEmpty() && videos.size() > 1){
+                    Intent intent = new Intent();
+                    intent.putExtra("uri",videos.get(pos));
+                    intent.setClass(EventDetailActivity.this,VideoActiv.class);
+                    startActivity(intent);
+                }else if(videos.size() == 1 && videos.get(0).equals("https://cp.dawawg.com/caseplatform/file-down?id=")){
+                    Toast.makeText(context,"没有上传视频",Toast.LENGTH_SHORT).show();
+                }
             }
         }
     };
