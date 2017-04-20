@@ -51,6 +51,7 @@ public class PersonalCenterActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 onBackPressed();
+                finish();
             }
         });
         View view = getLayoutInflater().inflate(R.layout.activity_personal_center, null);
@@ -84,12 +85,17 @@ public class PersonalCenterActivity extends BaseActivity {
                 finish();
             }
         });
-        RetrofitHelper.getInstance().getUserInfo("0001", name, new RetrofitHelper.OnResultListener() {
+        RetrofitHelper.getInstance().getUserInfo("", name, new RetrofitHelper.OnResultListener() {
             @Override
             public void onResult(Result result) {
-                if(result != null && result.isOK()){
-                    String username = ((User)result.getData()).getUserName();
-                    nameTv.setText(username);
+                if (result != null && result.isOK()) {
+                    final String username = ((User) result.getData()).getUserName();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            nameTv.setText(username);
+                        }
+                    });
                 }
             }
         });

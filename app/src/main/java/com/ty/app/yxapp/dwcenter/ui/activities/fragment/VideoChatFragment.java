@@ -147,6 +147,10 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
             }
 
         } else if (v == village) {
+            if(village.getValue().equals("无下属部门")){
+                AndroidUtils.ShowToast("无下属部门");
+                return;
+            }
             intent.putExtra("from", "village");
             intent.putExtra("areaStreet", areaCon.getValue() + "," + street.getValue());
         }
@@ -163,8 +167,8 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
         loading.showWithStatus(AndroidUtils.getString(R.string.requesting));
         SPManager spManager = new SPManager();
         final String username = spManager.readSp(Constants.SP_USER_NAME);
-        if (!village.getValue().equals("暂无三级部门")) {
-            RetrofitHelper.getInstance().getOrgData("0001", username, new RetrofitHelper.OnResultListener() {
+        if (!village.getValue().equals("无下属部门")) {
+            RetrofitHelper.getInstance().getOrgData("", username, new RetrofitHelper.OnResultListener() {
                 @Override
                 public void onResult(Result result) {
                     loading.dismissImmediately();
@@ -218,7 +222,7 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
                     areaCode = 1;
                     areaCon.setValue(data.getStringExtra("return"));
                     street.setValue("发改局");
-                    village.setValue("暂无三级部门");
+                    village.setValue("无下属部门");
                 } else {
                     areaCode = 0;
                     areaCon.setValue(data.getStringExtra("return"));
@@ -380,7 +384,7 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
                     switch (str) {
                         case "大洼街道":
                             streetCode = 35;
-                            village.setValue("无下属部门");
+                            village.setValue("新兴社区");
                             break;
                         case "田家街道":
                             streetCode = 35;

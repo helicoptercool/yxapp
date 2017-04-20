@@ -171,6 +171,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     Log.e(TAG, result.getMessage() + "," + result.getCode() + "," + result.getData());
                     loading.dismiss();
                     if (result.isOK()) {
+                        manager.clearSp();
                         manager.writeSp(Constants.SP_USER_NAME, phone);
                         manager.writeSp(Constants.SP_PASSWORD, password);
                         manager.writeSp(Constants.SP_IS_LOGIN, true);

@@ -359,7 +359,7 @@ public class SelectAreaActivity extends BaseActivity implements AdapterView.OnIt
             "经济办",
             "市场监管所",
             "网格管理服务中心"};
-    private String[] v015 = {"暂无下属区域"};
+    private String[] v015 = {"无下属部门"};
     private String[] v016 = {"办公室",
             "联动指挥中心",
             "发展规划股",
@@ -443,7 +443,7 @@ public class SelectAreaActivity extends BaseActivity implements AdapterView.OnIt
             "西安镇，东风镇",
             "王家镇，唐家镇",
             "不动产登记中心"};
-    private String[] v19 = {"暂无三级部门"};
+    private String[] v19 = {"无下属部门"};
     private String[] v110 = {"西安镇",
             "新兴镇",
             "东风镇",
@@ -460,10 +460,10 @@ public class SelectAreaActivity extends BaseActivity implements AdapterView.OnIt
             "向海街道",
             "三角洲开发区",
             "农监局"};
-    private String[] v111 = {"暂无三级部门"};
+    private String[] v111 = {"无下属部门"};
     private String[] v112 = {"成品油管理", "酒类管理", "散装水泥管理", "煤炭经营监督管理"};
-    private String[] v113 = {"暂无三级部门"};
-    private String[] v114 = {"暂无三级部门"};
+    private String[] v113 = {"无下属部门"};
+    private String[] v114 = {"无下属部门"};
     private String[] v115 = {"第一征收中心", "第二征收中心", "第三征收中心", "第四征收中心"};
     private String[] v116 = {"城市网格", "农村网格"};
     private String[] v117 = {"唐家镇、新开镇、新立镇",
@@ -491,13 +491,13 @@ public class SelectAreaActivity extends BaseActivity implements AdapterView.OnIt
             "新兴镇",
             "清水镇",
             "赵圈河镇"};
-    private String[] v120 = {"暂无三级部门"};
-    private String[] v121 = {"暂无三级部门"};
-    private String[] v122 = {"暂无三级部门"};
-    private String[] v123 = {"暂无三级部门"};
-    private String[] v124 = {"暂无三级部门"};
-    private String[] v125 = {"暂无三级部门"};
-    private String[] v126 = {"暂无三级部门"};
+    private String[] v120 = {"无下属部门"};
+    private String[] v121 = {"无下属部门"};
+    private String[] v122 = {"无下属部门"};
+    private String[] v123 = {"无下属部门"};
+    private String[] v124 = {"无下属部门"};
+    private String[] v125 = {"无下属部门"};
+    private String[] v126 = {"无下属部门"};
     //25 政法委 无三级部门
     //26统计局 无三级部门
     private String[] v127 = {"大洼监督管理所",
@@ -564,7 +564,7 @@ public class SelectAreaActivity extends BaseActivity implements AdapterView.OnIt
             "荣兴镇",
             "唐家镇"};
     private String[] v132 = {"新开环保所", "西安环保所", "新兴环保所", "大洼环保所"};
-    private String[] v133 = {"暂无三级部门"};
+    private String[] v133 = {"无下属部门"};
     private String[] v134 = {"小区物业管理（供暖、维修资金）",
             "城区基础设施建设",
             "房屋质量管理",
@@ -589,7 +589,7 @@ public class SelectAreaActivity extends BaseActivity implements AdapterView.OnIt
             "局属执法大队",
             "局属机动1队",
             "局属机动2队"};
-    private String[] v136 = {"暂无三级部门"};
+    private String[] v136 = {"无下属部门"};
 
     private ArrayList<String[]> village = new ArrayList<>();
     private ArrayList<String[]> village1 = new ArrayList<>();

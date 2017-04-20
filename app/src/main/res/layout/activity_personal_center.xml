@@ -29,13 +29,13 @@
                 android:id="@+id/tv_personal_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="wangjie"
+                android:text="name"
                 />
             <TextView
                 android:id="@+id/tv_personal_account"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="idididiid"
+                android:text="account"
                 />
 
 
