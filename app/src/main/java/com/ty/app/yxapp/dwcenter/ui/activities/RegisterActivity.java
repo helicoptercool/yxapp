@@ -264,6 +264,18 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             public void onResult(Result result) {
                 loading.dismiss();
                 if (result.isOK()) {
+                    //环信注册
+                    ChatController.getIntance().createAccount(userName, password, new ChatController.Callback() {
+                        @Override
+                        public void success() {
+                            Log.d(TAG, "huanxin register success");
+                        }
+
+                        @Override
+                        public void failure(int code, String message) {
+                            Log.d(TAG, "huanxin register failure");
+                        }
+                    });
                     AndroidUtils.ShowToast(result.getMessage());
                     SPManager manager = new SPManager();
                     manager.writeSp(Constants.SP_USER_NAME,userName);
@@ -274,18 +286,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 }
             }
         });
-        //环信注册
-        ChatController.getIntance().createAccount(etPhone.getText().toString(), etPwd.getText().toString(), new ChatController.Callback() {
-            @Override
-            public void success() {
-                Log.d(TAG, "huanxin register success");
-            }
 
-            @Override
-            public void failure(int code, String message) {
-                Log.d(TAG, "huanxin register failure");
-            }
-        });
     }
 
 

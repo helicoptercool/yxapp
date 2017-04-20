@@ -171,16 +171,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     Log.e(TAG, result.getMessage() + "," + result.getCode() + "," + result.getData());
                     loading.dismiss();
                     if (result.isOK()) {
-                        manager.clearSp();
-                        manager.writeSp(Constants.SP_USER_NAME, phone);
-                        manager.writeSp(Constants.SP_PASSWORD, password);
-                        manager.writeSp(Constants.SP_IS_LOGIN, true);
-                        if (manager.readSp(Constants.SP_SET_SERVER_ADDRESS).equals("")) {
-                            manager.writeSp(Constants.SP_SET_SERVER_ADDRESS, Constants.BASE_SEVICE_ADDRESS);
-                        }
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
-
                         ChatController.getIntance().login(phone, password, new ChatController.Callback() {
                             @Override
                             public void success() {
@@ -206,6 +196,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                 }
                             }
                         });
+
+
+                        manager.clearSp();
+                        manager.writeSp(Constants.SP_USER_NAME, phone);
+                        manager.writeSp(Constants.SP_PASSWORD, password);
+                        manager.writeSp(Constants.SP_IS_LOGIN, true);
+                        if (manager.readSp(Constants.SP_SET_SERVER_ADDRESS).equals("")) {
+                            manager.writeSp(Constants.SP_SET_SERVER_ADDRESS, Constants.BASE_SEVICE_ADDRESS);
+                        }
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+
+
 
                         MyApplication.handler.postDelayed(new Runnable() {
                             @Override
