@@ -164,56 +164,7 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
         }
         if (peopleList.size() > 0) peopleList.clear();
 //        mHandler.sendEmptyMessage(1);
-        loading.showWithStatus(AndroidUtils.getString(R.string.requesting));
-        SPManager spManager = new SPManager();
-        final String username = spManager.readSp(Constants.SP_USER_NAME);
-        if (!village.getValue().equals("无下属部门")) {
-            RetrofitHelper.getInstance().getOrgData("", username, new RetrofitHelper.OnResultListener() {
-                @Override
-                public void onResult(Result result) {
-                    loading.dismissImmediately();
-                    if (result != null) {
-                        if (result.isOK()) {
-                            List<OrgDataInfo.OrgDataBody> orgDataList = (List<OrgDataInfo.OrgDataBody>) result.getData();
-                            if (orgDataList != null) {
-                                for (OrgDataInfo.OrgDataBody body : orgDataList) {
-                                    if (body.getName().equals(village.getValue())) {
-                                        for (User user : body.getUsers()) {
-                                            peopleList.add(user.getUserName());
-                                        }
-                                    }
-                                }
-                            }
-                        }
-//                        mHandler.sendEmptyMessage(0);
-                        myAdapter.notifyDataSetChanged();
-                    }
-                }
-            });
-        } else {
-            RetrofitHelper.getInstance().getOrgData("0001", username, new RetrofitHelper.OnResultListener() {
-                @Override
-                public void onResult(Result result) {
-                    loading.dismissImmediately();
-                    if (result != null) {
-                        if (result.isOK()) {
-                            List<OrgDataInfo.OrgDataBody> orgDataList = (List<OrgDataInfo.OrgDataBody>) result.getData();
-                            if (orgDataList != null) {
-                                for (OrgDataInfo.OrgDataBody body : orgDataList) {
-                                    if (body.getName().equals(street.getValue())) {
-                                        for (User user : body.getUsers()) {
-                                            peopleList.add(user.getUserName());
-                                        }
-                                    }
-                                }
-                            }
-//                            mHandler.sendEmptyMessage(0);
-                            myAdapter.notifyDataSetChanged();
-                        }
-                    }
-                }
-            });
-        }
+
 
         switch (resultCode) {
             case AREA_RETURN:
@@ -455,6 +406,56 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
             default:
                 break;
 
+        }
+        loading.showWithStatus(AndroidUtils.getString(R.string.requesting));
+        SPManager spManager = new SPManager();
+        final String username = spManager.readSp(Constants.SP_USER_NAME);
+        if (!village.getValue().equals("无下属部门")) {
+            RetrofitHelper.getInstance().getOrgData("", username, new RetrofitHelper.OnResultListener() {
+                @Override
+                public void onResult(Result result) {
+                    loading.dismissImmediately();
+                    if (result != null) {
+                        if (result.isOK()) {
+                            List<OrgDataInfo.OrgDataBody> orgDataList = (List<OrgDataInfo.OrgDataBody>) result.getData();
+                            if (orgDataList != null) {
+                                for (OrgDataInfo.OrgDataBody body : orgDataList) {
+                                    if (body.getName().equals(village.getValue())) {
+                                        for (User user : body.getUsers()) {
+                                            peopleList.add(user.getUserName());
+                                        }
+                                    }
+                                }
+                            }
+                        }
+//                        mHandler.sendEmptyMessage(0);
+                        myAdapter.notifyDataSetChanged();
+                    }
+                }
+            });
+        } else {
+            RetrofitHelper.getInstance().getOrgData("0001", username, new RetrofitHelper.OnResultListener() {
+                @Override
+                public void onResult(Result result) {
+                    loading.dismissImmediately();
+                    if (result != null) {
+                        if (result.isOK()) {
+                            List<OrgDataInfo.OrgDataBody> orgDataList = (List<OrgDataInfo.OrgDataBody>) result.getData();
+                            if (orgDataList != null) {
+                                for (OrgDataInfo.OrgDataBody body : orgDataList) {
+                                    if (body.getName().equals(street.getValue())) {
+                                        for (User user : body.getUsers()) {
+                                            peopleList.add(user.getUserName());
+                                        }
+                                    }
+                                }
+                            }
+//                            mHandler.sendEmptyMessage(0);
+                            myAdapter.notifyDataSetChanged();
+                        }
+                    }
+                }
+            });
         }
     }
 
