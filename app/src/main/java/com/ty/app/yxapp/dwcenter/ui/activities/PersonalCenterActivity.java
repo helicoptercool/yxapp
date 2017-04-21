@@ -69,6 +69,7 @@ public class PersonalCenterActivity extends BaseActivity {
         Bitmap bitmap = createImage(Constants.BASE_SEVICE_ADDRESS);
         qrcodeIv.setImageBitmap(bitmap);
         accountTv.setText(name);
+        nameTv.setText(name);
         logoutBtn = (Button) view.findViewById(R.id.btn_logout);
         personalLayout.setOnClickListener(new View.OnClickListener() {
             @Override
