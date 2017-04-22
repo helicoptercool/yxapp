@@ -62,6 +62,20 @@ public class PersonalCenterActivity extends BaseActivity {
     private void initViews(View view) {
         SPManager manager = new SPManager();
         String name = manager.readSp(Constants.SP_USER_NAME);
+        RetrofitHelper.getInstance().getUserInfo("", name, new RetrofitHelper.OnResultListener() {
+            @Override
+            public void onResult(Result result) {
+                if (result != null && result.isOK()) {
+                    final String username = ((User) result.getData()).getUserName();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            nameTv.setText(username);
+                        }
+                    });
+                }
+            }
+        });
         personalLayout = (LinearLayout) view.findViewById(R.id.layout_personal);
         nameTv = (TextView) view.findViewById(R.id.tv_personal_name);
         accountTv = (TextView) view.findViewById(R.id.tv_personal_account);
@@ -69,6 +83,7 @@ public class PersonalCenterActivity extends BaseActivity {
         Bitmap bitmap = createImage(Constants.BASE_SEVICE_ADDRESS);
         qrcodeIv.setImageBitmap(bitmap);
         accountTv.setText(name);
+        nameTv.setText(name);
         logoutBtn = (Button) view.findViewById(R.id.btn_logout);
         personalLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,20 +100,7 @@ public class PersonalCenterActivity extends BaseActivity {
                 finish();
             }
         });
-        RetrofitHelper.getInstance().getUserInfo("", name, new RetrofitHelper.OnResultListener() {
-            @Override
-            public void onResult(Result result) {
-                if (result != null && result.isOK()) {
-                    final String username = ((User) result.getData()).getUserName();
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            nameTv.setText(username);
-                        }
-                    });
-                }
-            }
-        });
+
     }
 
     int QR_WIDTH = 300;
