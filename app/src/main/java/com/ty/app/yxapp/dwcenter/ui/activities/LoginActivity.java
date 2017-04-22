@@ -171,7 +171,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     Log.e(TAG, result.getMessage() + "," + result.getCode() + "," + result.getData());
                     loading.dismiss();
                     if (result.isOK()) {
-                        ChatController.getIntance().login(phone, password, new ChatController.Callback() {
+
+                        ChatController.getIntance().login("heli", "123456", new ChatController.Callback() {
                             @Override
                             public void success() {
                                 Log.d(TAG, "huanxin login success");

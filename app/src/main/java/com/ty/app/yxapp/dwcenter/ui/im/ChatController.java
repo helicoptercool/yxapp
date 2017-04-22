@@ -36,6 +36,7 @@ public class ChatController {
         options.setAcceptInvitationAlways(true);
         options.setRequireAck(true);
         options.setRequireDeliveryAck(true);
+        options.setAutoLogin(true);
 
         EMClient.getInstance().init(context, options);
         EMClient.getInstance().setDebugMode(true);

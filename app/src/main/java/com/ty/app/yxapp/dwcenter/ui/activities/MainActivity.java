@@ -6,12 +6,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.ty.app.yxapp.dwcenter.R;
+import com.ty.app.yxapp.dwcenter.ui.activities.base.Constants;
+import com.ty.app.yxapp.dwcenter.ui.im.ChatController;
 import com.ty.app.yxapp.dwcenter.utils.AndroidUtils;
 import com.ty.app.yxapp.dwcenter.ui.activities.fragment.VideoChatFragment;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseActivity;
@@ -20,10 +24,12 @@ import com.ty.app.yxapp.dwcenter.ui.activities.fragment.MainSecondPagerActivity;
 import com.ty.app.yxapp.dwcenter.ui.activities.fragment.MainThirdPagerActivity;
 import com.ty.app.yxapp.dwcenter.ui.widget.TabView;
 import com.ty.app.yxapp.dwcenter.network.MapService;
+import com.ty.app.yxapp.dwcenter.utils.SPManager;
 
 import java.util.ArrayList;
 
 public class MainActivity extends BaseActivity {
+    private static final String TAG = "MainActivity";
     private Context context;
     private ArrayList<Fragment> fragments = new ArrayList<>();
     private FragmentAdapter fragmentAdapter;
@@ -60,7 +66,42 @@ public class MainActivity extends BaseActivity {
         container.addView(tabView, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, AndroidUtils.dp(50)));
 
         init();
+        loginHuanXin();
         return container;
+    }
+
+
+    private void loginHuanXin(){
+        SPManager manager = new SPManager();
+        final String phone = manager.readSp(Constants.SP_USER_NAME);
+        final String password = manager.readSp(Constants.SP_PASSWORD);
+        if(!TextUtils.isEmpty(phone) && !TextUtils.isEmpty(password)){
+            ChatController.getIntance().login("heli", "123456", new ChatController.Callback() {
+                @Override
+                public void success() {
+                    Log.d(TAG, "huanxin login success");
+                }
+
+                @Override
+                public void failure(int code, String message) {
+                    Log.d(TAG, "huanxin login failure:" + code + " ,message:" + message);
+                    if (code == 202) {//当前用户没有环信账号，注册环信账号,注册成功后去登录环信
+                        ChatController.getIntance().createAccount(phone, password, new ChatController.Callback() {
+                            @Override
+                            public void success() {
+                                ChatController.getIntance().login(phone, password,null);
+                            }
+
+                            @Override
+                            public void failure(int code, String message) {
+                                Log.d(TAG, "huanxin createAccount failure");
+                            }
+                        });
+                        Log.d(TAG, "huanxin createAccount success");
+                    }
+                }
+            });
+        }
     }
 
     private class MyViewPager extends ViewPager {

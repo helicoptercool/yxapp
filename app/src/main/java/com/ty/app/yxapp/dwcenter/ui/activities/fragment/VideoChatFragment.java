@@ -484,7 +484,9 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent();
-                    intent.putExtra("userName", (String) peopleList.toArray()[i]);
+//                    intent.putExtra("userName", (String) peopleList.toArray()[i]);
+//                    intent.putExtra("flag", VideoChatActivity.FLAG_OUT);
+                    intent.putExtra("userName", "wangjie");
                     intent.putExtra("flag", VideoChatActivity.FLAG_OUT);
                     intent.setClass(getActivity(), VideoChatActivity.class);
                     startActivity(intent);
