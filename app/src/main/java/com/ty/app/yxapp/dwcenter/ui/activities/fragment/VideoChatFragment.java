@@ -434,7 +434,7 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
                 }
             });
         } else {
-            RetrofitHelper.getInstance().getOrgData("0001", username, new RetrofitHelper.OnResultListener() {
+            RetrofitHelper.getInstance().getOrgData("", username, new RetrofitHelper.OnResultListener() {
                 @Override
                 public void onResult(Result result) {
                     loading.dismissImmediately();
@@ -516,11 +516,13 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
         SPManager spManager = new SPManager();
         final String username = spManager.readSp(Constants.SP_USER_NAME);
 //        loading.showWithStatus(AndroidUtils.getString(R.string.requesting));
-        RetrofitHelper.getInstance().getOrgData("0001", username, new RetrofitHelper.OnResultListener() {
+        RetrofitHelper.getInstance().getOrgData("", username, new RetrofitHelper.OnResultListener() {
             @Override
             public void onResult(Result result) {
                 Log.e(TAG, result.getMessage());
 //                loading.dismissImmediately();
+                String flagPid = "";
+                String flagPPid = "";
                 if (result.isOK()) {
                     List<OrgDataInfo.OrgDataBody> orgDataList = (List<OrgDataInfo.OrgDataBody>) result.getData();
                     if (orgDataList != null) {
@@ -530,7 +532,17 @@ public class VideoChatFragment extends BaseFragment implements View.OnClickListe
                                 List<User> userList = orgDataBody.getUsers();
                                 for (User user : userList) {
                                     peopleList.add(user.getUserName());
+                                    if(user.getId().equals(username)){
+                                        flagPid = orgDataBody.getPid();
+                                        break;
+                                    }
                                 }
+
+                            }
+                        }
+                        for(OrgDataInfo.OrgDataBody orgDataBody : orgDataList){
+                            if(!flagPid.equals("") && orgDataBody.getId().equals(flagPid)){
+                                //// TODO: 17-4-23  
                             }
                         }
 //                        mHandler.sendEmptyMessage(0);
