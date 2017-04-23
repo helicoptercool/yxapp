@@ -18,6 +18,7 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.ty.app.yxapp.dwcenter.R;
 import com.ty.app.yxapp.dwcenter.bean.User;
+import com.ty.app.yxapp.dwcenter.bean.UserInfo;
 import com.ty.app.yxapp.dwcenter.network.Result;
 import com.ty.app.yxapp.dwcenter.network.RetrofitHelper;
 import com.ty.app.yxapp.dwcenter.ui.activities.base.BaseActivity;
@@ -66,7 +67,7 @@ public class PersonalCenterActivity extends BaseActivity {
             @Override
             public void onResult(Result result) {
                 if (result != null && result.isOK()) {
-                    final String username = ((User) result.getData()).getUserName();
+                    final String username = (((UserInfo) result.getData())).getBody().getUserName();
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -83,7 +84,7 @@ public class PersonalCenterActivity extends BaseActivity {
         Bitmap bitmap = createImage(Constants.BASE_SEVICE_ADDRESS);
         qrcodeIv.setImageBitmap(bitmap);
         accountTv.setText(name);
-        nameTv.setText(name);
+//        nameTv.setText(name);
         logoutBtn = (Button) view.findViewById(R.id.btn_logout);
         personalLayout.setOnClickListener(new View.OnClickListener() {
             @Override
